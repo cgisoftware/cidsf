@@ -25,7 +25,7 @@ class MyHome extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (_) => SettingsPage(
-                          password: "Mariana23",
+                          password: "",
                           appBarColor: Theme.of(context).primaryColor, 
                           filled: true,
                           versaoProgramaPacific: 1)),

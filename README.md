@@ -4,7 +4,7 @@ CGI Design System for flutter.
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.0.10` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.0.11` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
