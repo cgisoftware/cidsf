@@ -16,8 +16,9 @@ class Seguranca {
   Future<String> execute() async {
     final firebaseRepository =
         FirebaseRepository(codigoAcesso: await handler.get("edtCodigo"));
-    String diasAutenticacao = await await handler.get("diasAutenticacao");
-    String dtUltimaAutenticacao = await await handler.get("dtUltAutenticacao");
+     String diasAutenticacao = await  handler.get("diasAutenticacao") ?? '';
+     String dtUltimaAutenticacao = await  handler.get("dtUltAutenticacao") ?? '';
+    print(dtUltimaAutenticacao);
     int iDataAtual =
         int.tryParse(dateHandler.getData(dateHandler.getDate())[4]);
     int iDataAutenticacao = int.tryParse(dtUltimaAutenticacao);

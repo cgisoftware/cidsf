@@ -19,7 +19,7 @@ class FirebaseRepository {
 
     try {
       await _auth.signOut();
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: this.codigoAcesso + email, password: password);
 
       return await permissions();
     } catch (e) {

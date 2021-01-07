@@ -1,6 +1,6 @@
 name: cids_cgi
 description: CGI Design System for Flutter
-version: 1.0.11
+version: 1.0.14
 homepage: http://www.webcgi.com.br
 
 
@@ -19,6 +19,7 @@ dependencies:
   device_info: ^1.0.0
   url_launcher: ^5.7.10
   flutter_html: ^1.0.2
+  firebase_core: ^0.5.3
   package_info: ^0.4.3+2
   intl: ^0.16.1
   dio: ^3.0.10

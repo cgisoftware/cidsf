@@ -1,4 +1,3 @@
-import 'package:cids_cgi/device/handler/date_handler.dart';
 import 'package:cids_cgi/device/handler/dialog_handler.dart';
 import 'package:cids_cgi/device/handler/shared_preferences_handler.dart';
 import 'package:cids_cgi/module/settings/domain/usecase/seguranca_usecase.dart';
@@ -12,6 +11,7 @@ import 'package:dio/dio.dart';
 
 const CPF = '###.###.###-##';
 const CNPJ = '###.###.###/####-##';
+
 
 class SettingsPage extends StatefulWidget {
   final int versaoProgramaPacific;
@@ -43,6 +43,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final _handler = SharedPreferencesHandler();
   final _dialogMessage = DialogMessage();
+  
 
   final _edtCodigoText = TextEditingController();
   final _edtUsuarioText = TextEditingController();
@@ -66,8 +67,6 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   setValues() async {
-    final seguranca =
-        new Seguranca(email: "@cgi.com.br", password: widget.password);
     this._edtUsuarioText.text = await _handler.get("edtUsuario");
     this._edtCodigoText.text = await _handler.get("edtCodigo");
     this._edtSenhaText.text = await _handler.get("edtSenha");
