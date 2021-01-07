@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cids_cgi.iml" filepath="$PROJECT_DIR$/cids_cgi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/cids_cgi_android.iml" filepath="$PROJECT_DIR$/android/cids_cgi_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/android/cids_cgi_example_android.iml" filepath="$PROJECT_DIR$/example/android/cids_cgi_example_android.iml" />
+    </modules>
+  </component>
+</project>
