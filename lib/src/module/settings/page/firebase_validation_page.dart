@@ -1,7 +1,9 @@
-import 'package:cids_cgi/device/handler/dialog_handler.dart';
-import 'package:cids_cgi/device/handler/shared_preferences_handler.dart';
-import 'package:cids_cgi/module/settings/domain/usecase/seguranca_usecase.dart';
-import 'package:cids_cgi/module/settings/page/politica_privacidade_page.dart';
+
+library cids_cgi;
+import '../../../device/handler/dialog_handler.dart';
+import '../../../device/handler/shared_preferences_handler.dart';
+import '../../../module/settings/domain/usecase/seguranca_usecase.dart';
+import '../../../module/settings/page/politica_privacidade_page.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -42,7 +44,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final _handler = SharedPreferencesHandler();
-  final _dialogMessage = DialogMessage();
+  final _dialogMessage = DialogHandler();
   
 
   final _edtCodigoText = TextEditingController();

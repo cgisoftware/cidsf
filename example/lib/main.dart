@@ -1,4 +1,4 @@
-import 'package:cids_cgi/module/settings/page/firebase_validation_page.dart';
+import 'package:cids_cgi/cids.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHome extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

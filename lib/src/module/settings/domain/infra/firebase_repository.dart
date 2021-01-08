@@ -1,7 +1,8 @@
-import 'package:cids_cgi/device/handler/date_handler.dart';
-import 'package:cids_cgi/device/handler/shared_preferences_handler.dart';
-import 'package:cids_cgi/module/settings/domain/model/firebase.dart';
-import 'package:cids_cgi/module/settings/error/messages.dart';
+
+import 'package:cids_cgi/src/device/handler/date_handler.dart';
+import 'package:cids_cgi/src/device/handler/shared_preferences_handler.dart';
+import 'package:cids_cgi/src/module/settings/domain/model/firebase.dart';
+import 'package:cids_cgi/src/module/settings/error/messages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:package_info/package_info.dart';

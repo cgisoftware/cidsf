@@ -1,7 +1,8 @@
-import 'package:cids_cgi/device/handler/date_handler.dart';
-import 'package:cids_cgi/device/handler/shared_preferences_handler.dart';
-import 'package:cids_cgi/module/settings/domain/infra/firebase_repository.dart';
-import 'package:cids_cgi/module/settings/domain/infra/gateway_repository.dart';
+library cids_cgi;
+import '../../../../device/handler/date_handler.dart';
+import '../../../../device/handler/shared_preferences_handler.dart';
+import '../../../../module/settings/domain/infra/firebase_repository.dart';
+import '../../../../module/settings/domain/infra/gateway_repository.dart';
 import 'package:package_info/package_info.dart';
 import 'dart:async';
 

@@ -1,47 +1,108 @@
-# CIDS CGI
+# CGI Design System for Flutter
 
 CGI Design System for flutter.
 
+## Sobre o projeto
+
+_"O projeto veio para trazer um conforto a todos os desenvolvedores com casos onde o desenvolvimento se repete constantemente, como em casos de tabelas de CRUD, campos customizados de data, entre outros..."._
+
+<br>
+
 ## Instalação
 
-- Adicione o `cids_cgi: 1.0.14` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.0.16` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
-## Uso
+# Componens
 
-Instancie a classe de configurações:
-
-```dart
-await Navigator.push(context,
-    PageRouteBuilder(
-        pageBuilder: (c, a1, a2) => SettingsPage(),
-        transitionsBuilder: (c, anim, a2, child) =>
-            FadeTransition(opacity: anim, child: child),
-        transitionDuration: Duration(milliseconds: 100)));
-```
-
-Você pode passar alguns paramêtros se precisar:
+## SettingsPage
 
 ```dart
 SettingsPage(
-    motorista: true, 
-    placa: true, 
-    filled: true, 
-    cpf: true,
-    appBarColor: Theme.of(context).primaryColor, 
+    motorista: false,
+    placa: false,
+    filled: false,
+    cpf: false,
+    appBarColor: Colors.transparent,
     appBarTextColor: Colors.white,
+    gateway: true,
+    aplicativo: "nome do app",
+    password: "password",
     versaoProgramaPacific: 1
 );
 ```
 
-Para fazer o uso do gateway basta ativá-lo na chamada da pagina
+<br>
+
+### - Props
+
+| Propriedade           | Required? |  Type   |      Default value |
+| :-------------------- | :-------: | :-----: | -----------------: |
+| motorista             |   false   | Boolean |              false |
+| placa                 |   false   | Boolean |              false |
+| filled                |   false   | Boolean |              false |
+| cpf                   |   false   | Boolean |              false |
+| appBarColor           |   false   |  Color  | Colors.transparent |
+| appBarTextColor       |   false   |  Color  | Colors.transparent |
+| gateway               |   false   | Boolean |              false |
+| aplicativo            |   false   | String  |                 "" |
+| password              |   true    | String  |               null |
+| versaoProgramaPacific |   true    | Integer |               null |
+
+<br>
+<br>
+<br>
+
+# Handler
+
+## SharedPreferences
 
 ```dart
-SettingsPage(
-    gateway: true,
-    aplicativo: "inventario"
-);
+final handler = SharedPreferencesHandler()
+
+// busca e salva qualquer informação
+handler.set("chave", "valor");
+handler.get("chave");
+
+
+handler.getVersaoProgramaPacific(); // busca a versão do programa .r
+handler.getNumDevicesVendedor();    // busca o numero de devices
+handler.getVersaoMinima();          // busca a versão minima do firebase
+handler.getBuildVersion();          // busca a versão de build do app
+handler.getNumDevices();            // busca o numero de dispositivos liberados
+handler.getMotorista();             // busca o motorista nas configs
+handler.getUsuario();               // busca o usuario
+handler.getCodigo();                // busca o codigo da empresa
+handler.getSenha();                 // busca a senha
+handler.getPlaca();                 // busca a placa configurada
+handler.getToken();                 // busca o token de sessão do gateway
+handler.getURL();                   // busca a url do pacific
 ```
 
+<br>
+<br>
+<br>
 
+## DialogHandler
+
+```dart
+final handler = DialogHandler()
+
+// mostra um alert na tela com avisos
+handler.show("mensagem para mostrar pro usuário", context)
+```
+
+<br>
+<br>
+<br>
+
+## FirebaseHandler
+
+```dart
+final handler = FirebaseHandler()
+
+// faz load das configurações do json criado no projeto do firebase
+// necessario usar no metodo main do arquivo main.dart
+handler.initialize()
+```

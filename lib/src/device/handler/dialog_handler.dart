@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DialogMessage {
+class DialogHandler {
   bool _isDialogShowing = false;
 
   void show(message, BuildContext context) {
