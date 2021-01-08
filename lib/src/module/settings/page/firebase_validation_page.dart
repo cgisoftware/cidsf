@@ -1,5 +1,4 @@
 
-library cids_cgi;
 import '../../../device/handler/dialog_handler.dart';
 import '../../../device/handler/shared_preferences_handler.dart';
 import '../../../module/settings/domain/usecase/seguranca_usecase.dart';

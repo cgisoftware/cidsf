@@ -1,5 +1,5 @@
-import 'package:cids_cgi/cids.dart';
 import 'package:flutter/material.dart';
+import 'package:cids_cgi/cids_cgi.dart';
 
 void main() {
   runApp(MyApp());
