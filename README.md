@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.0.16` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.0.17` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -59,7 +59,7 @@ SettingsPage(
 ## SharedPreferences
 
 ```dart
-final handler = SharedPreferencesHandler()
+final handler = SharedPreferencesHandler();
 
 // busca e salva qualquer informação
 handler.set("chave", "valor");
@@ -87,10 +87,13 @@ handler.getURL();                   // busca a url do pacific
 ## DialogHandler
 
 ```dart
-final handler = DialogHandler()
+final handler = DialogHandler();
 
 // mostra um alert na tela com avisos
-handler.show("mensagem para mostrar pro usuário", context)
+handler.show(message: "mensagem para mostrar pro usuário", context: context);
+
+// mostra mensagem para confirmação
+handler.confirm(message: "mensagem para mostrar pro usuário", context: context, textBtn1: "btn1", textBtn2: "btn2");
 ```
 
 <br>

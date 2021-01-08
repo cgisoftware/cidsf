@@ -358,7 +358,7 @@ class _SettingsPageState extends State<SettingsPage> {
       await _handler.set("versaoProgramaPacific", this.widget.versaoProgramaPacific.toString());
       var r = await seguranca.execute();
       if (r != "") {
-        _dialogMessage.show(r, context);
+        _dialogMessage.show(message: r, context: context);
         this._isLoading = false;
         setState(() {});
       } else {
@@ -393,7 +393,7 @@ class _SettingsPageState extends State<SettingsPage> {
               Navigator.pop(context);
             }
           } catch (e) {
-            _dialogMessage.show(e.toString(), context);
+            _dialogMessage.show(message: e.toString(), context: context);
           }
         } else {
           this._isLoading = false;
