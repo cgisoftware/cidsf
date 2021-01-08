@@ -109,3 +109,25 @@ final handler = FirebaseHandler()
 // necessario usar no metodo main do arquivo main.dart
 handler.initialize()
 ```
+
+<br>
+<br>
+<br>
+
+## ErrorHandler
+
+```dart
+try {
+    Dio dio = new Dio();
+    Response response = await dio.get("url");
+
+    return response?.data ?? [];
+} on DioError catch (error) {
+    final handler = ErrorHandler(error.response.data)
+
+    Retorno r = await handler.validaErro();
+    throw r.mensagem;
+} catch (e) {
+    throw e.toString();
+}
+```
