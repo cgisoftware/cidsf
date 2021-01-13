@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.18] - 13/01/2021
+
+### Chanded
+
+ - Alterado para setar a versão do pacific por parâmetro
+
 ## [1.0.17] - 07/01/2021
 
 ### Chanded

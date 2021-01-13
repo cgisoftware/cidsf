@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.0.17` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.0.18` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -28,8 +28,7 @@ SettingsPage(
     appBarTextColor: Colors.white,
     gateway: true,
     aplicativo: "nome do app",
-    password: "password",
-    versaoProgramaPacific: 1
+    password: "password"
 );
 ```
 
@@ -48,7 +47,6 @@ SettingsPage(
 | gateway               |   false   | Boolean |              false |
 | aplicativo            |   false   | String  |                 "" |
 | password              |   true    | String  |               null |
-| versaoProgramaPacific |   true    | Integer |               null |
 
 <br>
 <br>
@@ -65,6 +63,7 @@ final handler = SharedPreferencesHandler();
 handler.set("chave", "valor");
 handler.get("chave");
 
+handler.setVersaoProgramaPacific(1); // seta a versão do programa .r
 
 handler.getVersaoProgramaPacific(); // busca a versão do programa .r
 handler.getNumDevicesVendedor();    // busca o numero de devices

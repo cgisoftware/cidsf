@@ -74,4 +74,8 @@ class SharedPreferencesHandler {
     var token = await this.get('versaoProgramaPacific');
     return int.parse(token);
   }
+
+  Future setVersaoProgramaPacific(int version) async {
+    await this.set('versaoProgramaPacific', version.toString());
+  }
 }

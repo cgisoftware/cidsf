@@ -15,7 +15,6 @@ const CNPJ = '###.###.###/####-##';
 
 
 class SettingsPage extends StatefulWidget {
-  final int versaoProgramaPacific;
   final Color appBarTextColor;
   final String aplicativo;
   final Color appBarColor;
@@ -35,8 +34,7 @@ class SettingsPage extends StatefulWidget {
       this.appBarTextColor = Colors.white,
       this.gateway = false,
       this.aplicativo = "",
-      @required this.password,
-      @required this.versaoProgramaPacific});
+      @required this.password});
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -355,7 +353,6 @@ class _SettingsPageState extends State<SettingsPage> {
       await _handler.set("edtServico", this._edtServicoText.text);
       await _handler.set("edtMotorista", this._edtMotoristaText.text);
       await _handler.set("edtPlaca", this._edtPlacaText.text);
-      await _handler.set("versaoProgramaPacific", this.widget.versaoProgramaPacific.toString());
       var r = await seguranca.execute();
       if (r != "") {
         _dialogMessage.show(message: r, context: context);
@@ -372,7 +369,7 @@ class _SettingsPageState extends State<SettingsPage> {
               "usuario": this._edtUsuarioText.text,
               "senha": this._edtSenhaText.text,
               "pacific": this._edtServicoText.text,
-              "versao": this.widget.versaoProgramaPacific,
+              "versao": await _handler.getVersaoProgramaPacific(),
               "cliente": this._edtCodigoText.text,
               "aplicativo": widget.aplicativo
             });

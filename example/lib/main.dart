@@ -28,8 +28,7 @@ class MyHome extends StatelessWidget {
                       builder: (_) => SettingsPage(
                           password: "",
                           appBarColor: Theme.of(context).primaryColor, 
-                          filled: true,
-                          versaoProgramaPacific: 1)),
+                          filled: true)),
                 );
               })
         ],
