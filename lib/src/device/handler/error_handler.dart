@@ -1,7 +1,7 @@
-class ErrorHander {
+class ErrorHandler {
   var result;
 
-  ErrorHander(this.result);
+  ErrorHandler(this.result);
 
   Future<Retorno> validaErro() async {
     if (result == 'OK') {
