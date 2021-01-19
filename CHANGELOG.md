@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.20] - 19/01/2021
+
+### Chanded
+
+ - Alterado para remover preferências do sharedPreferences
+
 ## [1.0.19] - 13/01/2021
 
 ### Chanded

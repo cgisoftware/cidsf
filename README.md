@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.0.19` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.0.20` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -59,9 +59,10 @@ SettingsPage(
 ```dart
 final handler = SharedPreferencesHandler();
 
-// busca e salva qualquer informação
+// busca, salva e remove qualquer informação
 handler.set("chave", "valor");
 handler.get("chave");
+handler.remove("chave");
 
 handler.setVersaoProgramaPacific(1); // seta a versão do programa .r
 

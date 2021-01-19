@@ -15,6 +15,13 @@ class SharedPreferencesHandler {
     return prefs.getString(key);
   }
 
+  Future remove(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+  }
+
+  
+
   Future<Map<String, dynamic>> getBuildVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return {'b': packageInfo.buildNumber.toString(), 'v': packageInfo.version};
