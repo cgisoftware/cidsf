@@ -1,4 +1,4 @@
-import 'package:cids_cgi/src/device/handler/shared_preferences_handler.dart';
+import 'package:cids_cgi/cids_cgi.dart';
 import 'package:dio/dio.dart';
 
 class GatewayRepository {

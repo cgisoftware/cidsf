@@ -20,7 +20,10 @@ class SharedPreferencesHandler {
     await prefs.remove(key);
   }
 
-  
+  Future clear() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
 
   Future<Map<String, dynamic>> getBuildVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();

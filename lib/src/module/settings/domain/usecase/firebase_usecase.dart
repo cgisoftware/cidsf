@@ -1,4 +1,6 @@
 import 'package:cids_cgi/cids_cgi.dart';
+import 'package:cids_cgi/src/core/domain/device/handler/dialog_handler.dart';
+import 'package:cids_cgi/src/core/domain/device/handler/shared_preferences_handler.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 

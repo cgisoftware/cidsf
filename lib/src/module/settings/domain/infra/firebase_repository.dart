@@ -1,5 +1,5 @@
-import 'package:cids_cgi/src/device/handler/date_handler.dart';
-import 'package:cids_cgi/src/device/handler/shared_preferences_handler.dart';
+import 'package:cids_cgi/cids_cgi.dart';
+import 'package:cids_cgi/src/core/domain/device/handler/date_handler.dart';
 import 'package:cids_cgi/src/module/settings/domain/model/firebase.dart';
 import 'package:cids_cgi/src/module/settings/error/messages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

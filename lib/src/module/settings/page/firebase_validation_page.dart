@@ -1,7 +1,6 @@
+import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/firebase_usecase.dart';
-import '../../../device/handler/dialog_handler.dart';
-import '../../../device/handler/shared_preferences_handler.dart';
 import '../../../module/settings/page/politica_privacidade_page.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter/material.dart';
@@ -22,15 +21,15 @@ class SettingsPage extends StatefulWidget {
   final String password;
 
   SettingsPage(
-      {this.motorista = false,
-      this.placa = false,
-      this.filled = false,
-      this.cpf = false,
-      this.appBarColor = Colors.transparent,
+      {this.appBarColor = Colors.transparent,
       this.appBarTextColor = Colors.white,
-      this.gateway = false,
+      @required this.password,
+      this.motorista = false,
       this.aplicativo = "",
-      @required this.password});
+      this.filled = false,
+      this.placa = false,
+      this.cpf = false,
+      this.gateway});
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }

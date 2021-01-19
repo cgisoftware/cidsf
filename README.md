@@ -10,13 +10,14 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.0.20` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.0.22` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
 # Componens
 
 ## SettingsPage
+Tela de configurações dos aplicativos
 
 ```dart
 SettingsPage(
@@ -53,13 +54,17 @@ SettingsPage(
 <br>
 
 ## AuthPage
+Tela de login dos aplicativos
+
+<br>
+
 
 ```dart
 AuthPage(
-    aplicativo: "Teste",
     gateway: true,
-    password: "Mariana23",
+    aplicativo: "Teste",
     frase: "Frase aqui",
+    password: "Mariana23",
     imagePath: "images/index.jpg",
 );
 ```
@@ -91,6 +96,7 @@ final handler = SharedPreferencesHandler();
 handler.set("chave", "valor");
 handler.get("chave");
 handler.remove("chave");
+handler.clear(); // limpa toda e qualquer chave salva
 
 handler.setVersaoProgramaPacific(1); // seta a versão do programa .r
 
