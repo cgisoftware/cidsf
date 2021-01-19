@@ -18,11 +18,17 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextField(
+        style: TextStyle(color: Colors.black),
         controller: widget.controller,
         obscureText: !_visible,
         onChanged: widget.onChanged,
         cursorColor: Colors.blue,
         decoration: InputDecoration(
+          hintStyle: TextStyle(
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.blue
+                : Colors.black,
+          ),
           hintText: "Sua Senha",
           icon: Icon(
             Icons.lock,

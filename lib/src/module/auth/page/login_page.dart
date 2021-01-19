@@ -42,7 +42,10 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                      height: 70, child: Image.asset("images/consultors.png")),
+                      height: 70,
+                      child: Theme.of(context).brightness == Brightness.light
+                          ? Image.asset("images/consultors.png")
+                          : Image.asset("images/consultors_dark.png")),
                   SizedBox(height: size.height * 0.09),
                   Column(
                     children: [
@@ -64,9 +67,9 @@ class _LoginPageState extends State<LoginPage> {
                   RoundedButton(
                     loading: authController.loading,
                     text: "ENTRAR",
-                    press: ()  {
-                       authController.login(widget.aplicativo, widget.gateway, widget.password);
-                      
+                    press: () {
+                      authController.login(
+                          widget.aplicativo, widget.gateway, widget.password);
                     },
                   ),
                   Row(
@@ -75,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text("Habilitar autenticação por biometria"),
                       Switch(
+                        activeColor: Colors.blue,
                         value: authController.biometria,
                         onChanged: (val) {
                           authController.changeBiometria(val);

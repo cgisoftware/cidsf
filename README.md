@@ -58,6 +58,22 @@ Tela de login dos aplicativos
 
 <br>
 
+Baixe e adicione essas imagens no folder \<projeto>/images/
+<br>
+<br>
+consultors.png:
+
+<img width="400px" src="https://webcrm.cgisoftware.com.br/static/consultors.png"/>
+
+<br>
+
+<br>
+consultors_dark.png:
+<br>
+<img width="400px" src="https://webcrm.cgisoftware.com.br/static/dark.png"/>
+
+<br>
+<br>
 
 ```dart
 AuthPage(

@@ -250,9 +250,11 @@ class _SettingsPageState extends State<SettingsPage> {
                               children: [
                                 Text("Habilitar autenticação por biometria"),
                                 Switch(
+                                  activeColor: Colors.blue,
                                   value: _biometria,
                                   onChanged: (val) {
                                     _biometria = val;
+                                    setState(() {});
                                   },
                                 ),
                               ],
@@ -308,6 +310,8 @@ class _SettingsPageState extends State<SettingsPage> {
         _scaffoldKey.currentState.showSnackBar(snackBar);
         await Future.delayed(new Duration(milliseconds: 2000));
         Navigator.pop(context);
+
+        this._edtServicoText.text = await _handler.getURL();
       }
 
       this._isLoading = false;
