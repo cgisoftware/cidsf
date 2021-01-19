@@ -36,17 +36,45 @@ SettingsPage(
 
 ### - Props
 
-| Propriedade           | Required? |  Type   |      Default value |
-| :-------------------- | :-------: | :-----: | -----------------: |
-| motorista             |   false   | Boolean |              false |
-| placa                 |   false   | Boolean |              false |
-| filled                |   false   | Boolean |              false |
-| cpf                   |   false   | Boolean |              false |
-| appBarColor           |   false   |  Color  | Colors.transparent |
-| appBarTextColor       |   false   |  Color  | Colors.transparent |
-| gateway               |   false   | Boolean |              false |
-| aplicativo            |   false   | String  |                 "" |
-| password              |   true    | String  |               null |
+| Propriedade     | Required? |  Type   |      Default value |
+| :-------------- | :-------: | :-----: | -----------------: |
+| motorista       |   false   | Boolean |              false |
+| placa           |   false   | Boolean |              false |
+| filled          |   false   | Boolean |              false |
+| cpf             |   false   | Boolean |              false |
+| appBarColor     |   false   |  Color  | Colors.transparent |
+| appBarTextColor |   false   |  Color  | Colors.transparent |
+| gateway         |   false   | Boolean |              false |
+| aplicativo      |   false   | String  |                 "" |
+| password        |   true    | String  |               null |
+
+<br>
+<br>
+<br>
+
+## AuthPage
+
+```dart
+AuthPage(
+    aplicativo: "Teste",
+    gateway: true,
+    password: "Mariana23",
+    frase: "Frase aqui",
+    imagePath: "images/index.jpg",
+);
+```
+
+<br>
+
+### - Props
+
+| Propriedade | Required? |  Type   | Default value |
+| :---------- | :-------: | :-----: | ------------: |
+| gateway     |   false   | Boolean |         false |
+| aplicativo  |   false   | String  |            "" |
+| password    |   true    | String  |          null |
+| frase       |   true    | String  |          null |
+| imagePath   |   true    | String  |          null |
 
 <br>
 <br>

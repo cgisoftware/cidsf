@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.21] - 19/01/2021
+
+### Chanded
+
+ - Criado tela para login nos aplicativos
+ - Criado parâmetro para verificar se usa ou não biometria
+
 ## [1.0.20] - 19/01/2021
 
 ### Chanded

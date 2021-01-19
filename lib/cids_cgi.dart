@@ -6,4 +6,5 @@ export 'src/device/handler/shared_preferences_handler.dart';
 export 'src/device/handler/firebase_handler.dart';
 export 'src/device/handler/dialog_handler.dart';
 export 'src/device/handler/error_handler.dart';
+export 'src/module/auth/page/auth_page.dart';
 
