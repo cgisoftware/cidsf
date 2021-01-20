@@ -1,4 +1,3 @@
-import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/domain/device/handler/date_handler.dart';
 import 'package:cids_cgi/src/module/settings/domain/model/firebase.dart';
 import 'package:cids_cgi/src/module/settings/error/messages.dart';
@@ -6,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:package_info/package_info.dart';
 import 'package:device_info/device_info.dart';
+import 'package:cids_cgi/cids_cgi.dart';
 import 'dart:io';
 
 class FirebaseRepository {

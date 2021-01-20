@@ -1,13 +1,12 @@
-import 'dart:io';
-
-import 'package:cids_cgi/cids_cgi.dart';
-import 'package:cids_cgi/src/core/page/widget/router_widget.dart';
 import 'package:cids_cgi/src/module/auth/page/biometrics_error_page.dart';
+import 'package:cids_cgi/src/core/page/widget/router_widget.dart';
+import 'package:local_auth/auth_strings.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:local_auth/auth_strings.dart';
-import 'package:local_auth/local_auth.dart';
+import 'package:cids_cgi/cids_cgi.dart';
+import 'dart:io';
 
 const _iosStrings = const IOSAuthMessages(
     cancelButton: 'Cancelar',
@@ -17,18 +16,19 @@ const _iosStrings = const IOSAuthMessages(
 
 class BiometricsHandler {
   final _localAuth = LocalAuthentication();
+  final _sharedPreferencesHandler = SharedPreferencesHandler();
   WidgetsBindingObserver _observer;
 
   Future<bool> call(BuildContext context) async {
     WidgetsBinding.instance.removeObserver(_observer);
     bool biometriaHabilitada =
-        (await SharedPreferencesHandler().get('biometria')) == "true";
+        (await _sharedPreferencesHandler.get('biometria')) == "true";
 
     print(biometriaHabilitada);
     bool isAuth = false;
 
     if (biometriaHabilitada) {
-      if ((await SharedPreferencesHandler().get('autenticou')) == "false") {
+      if ((await _sharedPreferencesHandler.get('autenticou')) == "false") {
         // try {
 
         // _localAuth.
@@ -88,7 +88,7 @@ class BiometricsHandler {
   listen(BuildContext context) async {
     WidgetsBinding.instance.removeObserver(_observer);
     bool biometriaHabilitada =
-        (await SharedPreferencesHandler().get('biometria')) == "true";
+        (await _sharedPreferencesHandler.get('biometria')) == "true";
     if (biometriaHabilitada) {
       WidgetsBinding.instance.removeObserver(_observer);
       _observer = BiometricsCallback(resumeCallBack: () async {
@@ -98,18 +98,18 @@ class BiometricsHandler {
 
         if (Platform.isIOS) {
           bool paused =
-              (await SharedPreferencesHandler().get('paused')) == "true";
+              (await _sharedPreferencesHandler.get('paused')) == "true";
           if (paused) {
             call(context);
-            await SharedPreferencesHandler().set('paused', "false");
+            await _sharedPreferencesHandler.set('paused', "false");
           }
         }
       }, pausedCallback: () async {
-        await SharedPreferencesHandler().set('paused', "true");
-        await SharedPreferencesHandler().set('autenticou', "false");
+        await _sharedPreferencesHandler.set('paused', "true");
+        await _sharedPreferencesHandler.set('autenticou', "false");
       }, inactiveCallBack: () async {
-        await SharedPreferencesHandler().set('paused', "true");
-        await SharedPreferencesHandler().set('autenticou', "false");
+        await _sharedPreferencesHandler.set('paused', "true");
+        await _sharedPreferencesHandler.set('autenticou', "false");
       });
 
       WidgetsBinding.instance.addObserver(_observer);

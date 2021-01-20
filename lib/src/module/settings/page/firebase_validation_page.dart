@@ -1,6 +1,5 @@
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
-import 'package:cids_cgi/src/module/auth/page/login_page.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/firebase_usecase.dart';
 import '../../../module/settings/page/politica_privacidade_page.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';

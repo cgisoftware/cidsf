@@ -1,5 +1,4 @@
 import 'package:cids_cgi/cids_cgi.dart';
-import 'package:cids_cgi/src/module/auth/page/login_page.dart';
 import 'package:flutter/material.dart';
 
 class BiometricsErrorPage extends StatefulWidget {

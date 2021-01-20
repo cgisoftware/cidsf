@@ -1,8 +1,8 @@
-import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
-import 'package:cids_cgi/src/core/page/widget/rounded_button.dart';
-import 'package:cids_cgi/src/core/page/widget/rounded_input_field.dart';
 import 'package:cids_cgi/src/core/page/widget/rounded_password_field.dart';
 import 'package:cids_cgi/src/module/auth/controller/auth_controller.dart';
+import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
+import 'package:cids_cgi/src/core/page/widget/rounded_input_field.dart';
+import 'package:cids_cgi/src/core/page/widget/rounded_button.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {

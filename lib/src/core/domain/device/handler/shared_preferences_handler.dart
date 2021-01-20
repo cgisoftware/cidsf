@@ -1,5 +1,5 @@
-import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:package_info/package_info.dart';
 
 class SharedPreferencesHandler {
   Future set(

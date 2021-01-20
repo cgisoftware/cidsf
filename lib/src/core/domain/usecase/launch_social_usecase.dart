@@ -15,7 +15,6 @@ class LaunchSocialUseCaseImpl implements LaunchSocialUseCase {
         await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
       }
     } catch (e) {
-      print(e);
       await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
     }
   }
