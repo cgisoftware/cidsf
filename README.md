@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.0.22` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.0.23` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -78,9 +78,9 @@ consultors_dark.png:
 ```dart
 AuthPage(
     gateway: true,
-    aplicativo: "Teste",
+    aplicativo: "nome do app",
     frase: "Frase aqui",
-    password: "Mariana23",
+    password: "password",
     imagePath: "images/index.jpg",
 );
 ```

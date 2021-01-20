@@ -36,9 +36,12 @@ class AuthController {
         this.biometria);
 
     if (response) {
-      Navigator.pop(this.state.context);
-      Navigator.pop(this.state.context);
+      Navigator.of(this.state.context)
+          .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
     }
+
+    this._loading = false;
+    this.state.setState(() {});
   }
 
   changeBiometria(bool biometria) {
