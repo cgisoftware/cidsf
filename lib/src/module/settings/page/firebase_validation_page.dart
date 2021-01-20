@@ -1,5 +1,6 @@
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
+import 'package:cids_cgi/src/module/auth/page/login_page.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/firebase_usecase.dart';
 import '../../../module/settings/page/politica_privacidade_page.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -11,25 +12,20 @@ const CNPJ = '###.###.###/####-##';
 
 class SettingsPage extends StatefulWidget {
   final Color appBarTextColor;
-  final String aplicativo;
   final Color appBarColor;
   final bool motorista;
-  final bool gateway;
   final bool filled;
   final bool placa;
   final bool cpf;
-  final String password;
 
-  SettingsPage(
-      {this.appBarColor = Colors.transparent,
-      this.appBarTextColor = Colors.white,
-      @required this.password,
-      this.motorista = false,
-      this.aplicativo = "",
-      this.filled = false,
-      this.placa = false,
-      this.cpf = false,
-      this.gateway});
+  SettingsPage({
+    this.appBarColor = Colors.transparent,
+    this.appBarTextColor = Colors.white,
+    this.motorista = false,
+    this.filled = false,
+    this.placa = false,
+    this.cpf = false,
+  });
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -275,6 +271,15 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 PoliticaPage()));
                                   }),
                             ),
+                            GestureDetector(
+                                onTap: () {
+                                  SharedPreferencesHandler().clear();
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginPage()),
+                                      (Route<dynamic> route) => false);
+                                },
+                                child: Text("Sair")),
                           ],
                         ),
                       )),
@@ -289,8 +294,12 @@ class _SettingsPageState extends State<SettingsPage> {
     if (_formKey.currentState.validate()) {
       this._isLoading = true;
       setState(() {});
+
+      String senha = await _handler.getPasswordFirebase();
+      String aplicativo = await _handler.getNomeAplicativo();
+      bool gateway = await _handler.getGateway();
       final bool response = await firebaseUseCase(
-          widget.password,
+          senha,
           context,
           this._edtCodigoText.text,
           this._edtUsuarioText.text,
@@ -298,8 +307,8 @@ class _SettingsPageState extends State<SettingsPage> {
           this._edtServicoText.text,
           this._edtMotoristaText.text,
           this._edtPlacaText.text,
-          widget.aplicativo,
-          widget.gateway,
+          aplicativo,
+          gateway,
           this._biometria);
 
       if (response) {

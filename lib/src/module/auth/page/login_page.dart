@@ -6,12 +6,6 @@ import 'package:cids_cgi/src/module/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  final String aplicativo;
-  final bool gateway;
-  final String password;
-
-  LoginPage(
-      {this.gateway = false, this.aplicativo = "", @required this.password});
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -30,69 +24,64 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-      color: Colors.white,
-      child: SafeArea(
-        top: true,
-        child: Scaffold(
-          body: SingleChildScrollView(
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  height: 70,
+                  child: Theme.of(context).brightness == Brightness.light
+                      ? Image.asset("images/consultors.png")
+                      : Image.asset("images/consultors_dark.png")),
+              SizedBox(height: size.height * 0.09),
+              Column(
                 children: [
-                  Container(
-                      height: 70,
-                      child: Theme.of(context).brightness == Brightness.light
-                          ? Image.asset("images/consultors.png")
-                          : Image.asset("images/consultors_dark.png")),
-                  SizedBox(height: size.height * 0.09),
-                  Column(
-                    children: [
-                      RoundedInputField(
-                        controller: authController.codigo,
-                        icon: Icons.lock_open,
-                        hintText: "Código de acesso",
-                      ),
-                      RoundedInputField(
-                        controller: authController.usuario,
-                        hintText: "Usuário",
-                      ),
-                      RoundedPasswordField(
-                        controller: authController.senha,
-                      )
-                    ],
+                  RoundedInputField(
+                    controller: authController.codigo,
+                    icon: Icons.lock_open,
+                    hintText: "Código de acesso",
                   ),
-                  SizedBox(height: size.height * 0.08),
-                  RoundedButton(
-                    loading: authController.loading,
-                    text: "ENTRAR",
-                    press: () {
-                      authController.login(
-                          widget.aplicativo, widget.gateway, widget.password);
-                    },
+                  RoundedInputField(
+                    controller: authController.usuario,
+                    hintText: "Usuário",
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Habilitar autenticação por biometria"),
-                      Switch(
-                        activeColor: Colors.blue,
-                        value: authController.biometria,
-                        onChanged: (val) {
-                          authController.changeBiometria(val);
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.07),
-                  RedesSociaisWidget()
+                  RoundedPasswordField(
+                    controller: authController.senha,
+                  )
                 ],
               ),
-            ),
+              SizedBox(height: size.height * 0.08),
+              RoundedButton(
+                loading: authController.loading,
+                text: "ENTRAR",
+                press: () {
+                  authController.login();
+                },
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Habilitar autenticação por biometria"),
+                  Switch(
+                    activeColor: Colors.blue,
+                    value: authController.biometria,
+                    onChanged: (val) {
+                      authController.changeBiometria(val);
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: size.height * 0.07),
+              RedesSociaisWidget()
+            ],
           ),
-        ),
+        )),
       ),
     );
   }

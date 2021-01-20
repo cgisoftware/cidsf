@@ -88,4 +88,31 @@ class SharedPreferencesHandler {
   Future setVersaoProgramaPacific(int version) async {
     await this.set('versaoProgramaPacific', version.toString());
   }
+
+  Future<String> getNomeAplicativo() async {
+    var token = await this.get('aplicativo');
+    return token;
+  }
+
+  Future<bool> getGateway() async {
+    var token = await this.get('gateway');
+    return token == "true";
+  }
+
+  Future<String> getPasswordFirebase() async {
+    var token = await this.get('senhaFirebase');
+    return token;
+  }
+
+  Future setNomeAplicativo(String nome) async {
+    await this.set('aplicativo', nome);
+  }
+
+  Future setGateway(bool gateway) async {
+    await this.set('gateway', gateway.toString());
+  }
+
+  Future setPasswordFirebase(String password) async {
+    await this.set('senhaFirebase', password);
+  }
 }

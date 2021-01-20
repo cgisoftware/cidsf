@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:cids_cgi/cids_cgi.dart';
+import './router.dart' as r;
+
+final biometricsHandler = BiometricsHandler();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await FirebaseHandler().initialize();
+
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  var temaClaro = ThemeData(
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final temaClaro = ThemeData(
       appBarTheme: AppBarTheme(
           brightness: Brightness.light,
           color: Colors.transparent,
@@ -31,7 +39,7 @@ class MyApp extends StatelessWidget {
       buttonTheme: ButtonThemeData(
           buttonColor: Color(0xffff6600), textTheme: ButtonTextTheme.primary));
 
-  var temaEscuro = ThemeData(
+  final temaEscuro = ThemeData(
       appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(color: Colors.white),
           color: Colors.transparent,
@@ -53,42 +61,41 @@ class MyApp extends StatelessWidget {
       buttonTheme: ButtonThemeData(
           buttonColor: Color(0xffff6600), textTheme: ButtonTextTheme.primary));
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: temaClaro,
-      darkTheme: temaEscuro,
-      themeMode: ThemeMode.system,
-        home: AuthPage(
-      aplicativo: "Teste",
-      gateway: true,
-      password: "Mariana23",
-      frase: "Frase aqui",
-      imagePath: "images/index.jpg",
-    ));
+        theme: temaClaro,
+        darkTheme: temaEscuro,
+        themeMode: ThemeMode.system,
+        home: MyHome(),
+        onGenerateRoute: r.Router.generateRoute);
   }
 }
 
-class MyHome extends StatelessWidget {
+class MyHome extends StatefulWidget {
+  @override
+  _MyHomeState createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<MyHome> {
+  @override
+  void initState() {
+    super.initState();
+
+    biometricsHandler(context);
+    biometricsHandler.listen(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => SettingsPage(
-                          password: "",
-                          appBarColor: Theme.of(context).primaryColor,
-                          filled: true)),
-                );
-              })
-        ],
+        actions: [IconButton(icon: Icon(Icons.settings), onPressed: () {})],
         title: const Text('CIDS for dev'),
       ),
     );

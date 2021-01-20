@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:cids_cgi/cids_cgi.dart';
+import 'package:cids_cgi/src/core/page/widget/router_widget.dart';
+import 'package:cids_cgi/src/module/auth/page/biometrics_error_page.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
@@ -15,17 +17,19 @@ const _iosStrings = const IOSAuthMessages(
 
 class BiometricsHandler {
   final _localAuth = LocalAuthentication();
-  final _sharedHandler = SharedPreferencesHandler();
+  WidgetsBindingObserver _observer;
 
-  Future<bool> call() async {
-    try {
-      bool biometriaHabilitada =
-          (await _sharedHandler.get('biometria')) == "true";
+  Future<bool> call(BuildContext context) async {
+    WidgetsBinding.instance.removeObserver(_observer);
+    if ((await SharedPreferencesHandler().get('autenticou')) == "false") {
+      // try {
+      // bool biometriaHabilitada =
+      //     (await SharedPreferencesHandler().get('biometria')) == "true";
       bool isAuth = false;
 
-      if (biometriaHabilitada) {
+      if (true) {
+        // _localAuth.
         bool biometricCheck = await _localAuth.canCheckBiometrics;
-
         if (biometricCheck) {
           List<BiometricType> availableBiometrics =
               await _localAuth.getAvailableBiometrics();
@@ -53,34 +57,56 @@ class BiometricsHandler {
           }
         }
       }
-      listen(autenticado: isAuth);
+
+      // await SharedPreferencesHandler()
+      //     .set('biometria_autenticada', isAuth.toString());
+
+      if (!isAuth) {
+        Navigator.of(context).pushAndRemoveUntil(
+            SlideRightRoute(widget: BiometricsErrorPage()),
+            (Route<dynamic> route) => false);
+      } else {
+        await SharedPreferencesHandler().set('autenticou', "true");
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+      }
+
       return isAuth;
-    } on PlatformException catch (e) {
-      throw e;
-    } catch (e) {
-      throw e;
     }
+
+    return false;
+
+    // } on PlatformException catch (e) {
+    //   // throw e;
+    // } catch (e) {
+    //   //throw e;
+    // }
   }
 
-  listen({bool autenticado = false}) {
-    WidgetsBinding.instance.addObserver(BiometricsCallback(
-      resumeCallBack: () async {
-        if (Platform.isAndroid) {
-          call();
+  listen(BuildContext context) {
+    WidgetsBinding.instance.removeObserver(_observer);
+    _observer = BiometricsCallback(resumeCallBack: () async {
+      if (Platform.isAndroid) {
+        call(context);
+      }
+
+      if (Platform.isIOS) {
+        bool paused =
+            (await SharedPreferencesHandler().get('paused')) == "true";
+        if (paused) {
+          call(context);
+          await SharedPreferencesHandler().set('paused', "false");
         }
-        if (Platform.isIOS) {
-          if (!autenticado) {
-            call();
-          }
-        }
-        return null;
-      },
-      pausedCallback: () async {
-        if (Platform.isIOS) {
-          call();
-        }
-      },
-    ));
+      }
+    }, pausedCallback: () async {
+      await SharedPreferencesHandler().set('paused', "true");
+      await SharedPreferencesHandler().set('autenticou', "false");
+    }, inactiveCallBack: () async {
+      await SharedPreferencesHandler().set('paused', "true");
+      await SharedPreferencesHandler().set('autenticou', "false");
+    });
+
+    WidgetsBinding.instance.addObserver(_observer);
   }
 }
 

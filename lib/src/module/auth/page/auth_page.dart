@@ -1,21 +1,21 @@
 import 'package:cids_cgi/src/module/auth/page/login_page.dart';
 import 'package:flutter/material.dart';
 
-class AuthPage extends StatelessWidget {
+class AuthPage extends StatefulWidget {
   final String frase;
   final String imagePath;
-  final String aplicativo;
-  final bool gateway;
-  final String password;
 
-  const AuthPage(
-      {Key key,
-      this.frase,
-      this.imagePath,
-      this.gateway = false,
-      this.aplicativo = "",
-      @required this.password})
-      : super(key: key);
+  const AuthPage({Key key, this.frase, this.imagePath}) : super(key: key);
+
+  @override
+  _AuthPageState createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class AuthPage extends StatelessWidget {
               child: Opacity(
                   opacity: 0.3,
                   child: Image.asset(
-                    imagePath,
+                    widget.imagePath,
                     fit: BoxFit.fitHeight,
                   ))),
         ),
@@ -45,7 +45,7 @@ class AuthPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  frase,
+                  widget.frase,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -63,11 +63,7 @@ class AuthPage extends StatelessWidget {
                       child: Center(child: Text('Acessar')),
                       onPressed: () async {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => LoginPage(
-                                  gateway: gateway,
-                                  password: password,
-                                  aplicativo: aplicativo,
-                                )));
+                            builder: (context) => LoginPage()));
                       },
                     ))
               ],

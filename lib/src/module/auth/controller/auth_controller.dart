@@ -1,8 +1,10 @@
+import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/firebase_usecase.dart';
 import 'package:flutter/widgets.dart';
 
 class AuthController {
   final firebaseUseCase = FirebaseUseCase();
+  final _handler = SharedPreferencesHandler();
 
   final codigo = TextEditingController();
   final usuario = TextEditingController();
@@ -18,12 +20,16 @@ class AuthController {
     this.state = state;
   }
 
-  login(String aplicativo, bool gateway, String password) async {
+  login() async {
     this._loading = true;
     this.state.setState(() {});
 
+    String senha = await _handler.getPasswordFirebase();
+    String aplicativo = await _handler.getNomeAplicativo();
+    bool gateway = await _handler.getGateway();
+
     final bool response = await firebaseUseCase(
-        password,
+        senha,
         this.state.context,
         this.codigo.text,
         this.usuario.text,
