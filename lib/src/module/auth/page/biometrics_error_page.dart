@@ -45,11 +45,12 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
                       width: MediaQuery.of(context).size.width * .4,
                       child: OutlineButton(
                         onPressed: () {
-                          SharedPreferencesHandler().clear();
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()),
-                              (Route<dynamic> route) => false);
+                          SharedPreferencesHandler().remove("edtCodigo");
+                          SharedPreferencesHandler().remove("edtSenha");
+                          SharedPreferencesHandler().remove("edtServico");
+                          SharedPreferencesHandler().remove("edtUsuario");
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/', (Route<dynamic> route) => false);
                         },
                         child: Text("Sair do app"),
                       ),
