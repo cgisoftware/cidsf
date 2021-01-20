@@ -10,13 +10,15 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.0.20` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.0.26` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
 # Componens
 
 ## SettingsPage
+
+Tela de configurações dos aplicativos
 
 ```dart
 SettingsPage(
@@ -26,9 +28,6 @@ SettingsPage(
     cpf: false,
     appBarColor: Colors.transparent,
     appBarTextColor: Colors.white,
-    gateway: true,
-    aplicativo: "nome do app",
-    password: "password"
 );
 ```
 
@@ -36,17 +35,66 @@ SettingsPage(
 
 ### - Props
 
-| Propriedade           | Required? |  Type   |      Default value |
-| :-------------------- | :-------: | :-----: | -----------------: |
-| motorista             |   false   | Boolean |              false |
-| placa                 |   false   | Boolean |              false |
-| filled                |   false   | Boolean |              false |
-| cpf                   |   false   | Boolean |              false |
-| appBarColor           |   false   |  Color  | Colors.transparent |
-| appBarTextColor       |   false   |  Color  | Colors.transparent |
-| gateway               |   false   | Boolean |              false |
-| aplicativo            |   false   | String  |                 "" |
-| password              |   true    | String  |               null |
+| Propriedade     | Required? |  Type   |      Default value |
+| :-------------- | :-------: | :-----: | -----------------: |
+| motorista       |   false   | Boolean |              false |
+| placa           |   false   | Boolean |              false |
+| filled          |   false   | Boolean |              false |
+| cpf             |   false   | Boolean |              false |
+| appBarColor     |   false   |  Color  | Colors.transparent |
+| appBarTextColor |   false   |  Color  | Colors.transparent |
+
+<br>
+<br>
+<br>
+
+## AuthPage
+
+Tela de login dos aplicativos
+
+<br>
+
+Baixe e adicione essas imagens no folder \<projeto>/images/
+<br>
+<br>
+consultors.png:
+
+<img width="400px" src="https://webcrm.cgisoftware.com.br/static/consultors.png"/>
+
+<br>
+
+<br>
+consultors_dark.png:
+<br>
+<img width="400px" src="https://webcrm.cgisoftware.com.br/static/dark.png"/>
+
+<br>
+<br>
+
+```dart
+var defaultPage
+final biometricsHandler = BiometricsHandler();
+
+void main() {
+    biometricsHandler();
+    biometricsHandler.listen();
+
+    defaultPage = AuthPage(
+        frase: "Frase aqui",
+        imagePath: "images/index.jpg",
+    );
+}
+
+```
+
+<br>
+
+### - Props
+
+| Propriedade | Required? |  Type  | Default value |
+| :---------- | :-------: | :----: | ------------: |
+| frase       |   true    | String |          null |
+| imagePath   |   true    | String |          null |
 
 <br>
 <br>
@@ -63,21 +111,28 @@ final handler = SharedPreferencesHandler();
 handler.set("chave", "valor");
 handler.get("chave");
 handler.remove("chave");
+handler.clear(); // limpa toda e qualquer chave salva
 
-handler.setVersaoProgramaPacific(1); // seta a versão do programa .r
+handler.setNomeAplicativo("nome app");  // seta o nome do app para aparecer no gateway
+handler.setPasswordFirebase("senha");   // seta a senha default do FIREBASE
+handler.setVersaoProgramaPacific(1);    // seta a versão do programa .r
+handler.setGateway(false);              // seta se utiliza ou não o gateway
 
-handler.getVersaoProgramaPacific(); // busca a versão do programa .r
-handler.getNumDevicesVendedor();    // busca o numero de devices
-handler.getVersaoMinima();          // busca a versão minima do firebase
-handler.getBuildVersion();          // busca a versão de build do app
-handler.getNumDevices();            // busca o numero de dispositivos liberados
-handler.getMotorista();             // busca o motorista nas configs
-handler.getUsuario();               // busca o usuario
-handler.getCodigo();                // busca o codigo da empresa
-handler.getSenha();                 // busca a senha
-handler.getPlaca();                 // busca a placa configurada
-handler.getToken();                 // busca o token de sessão do gateway
-handler.getURL();                   // busca a url do pacific
+handler.getVersaoProgramaPacific();     // busca a versão do programa .r
+handler.getNumDevicesVendedor();        // busca o numero de devices
+handler.getPasswordFirebase();          // busca a senha default do login no FIREBASE
+handler.getNomeAplicativo();            // busca o nome do app configurado
+handler.getVersaoMinima();              // busca a versão minima do firebase
+handler.getBuildVersion();              // busca a versão de build do app
+handler.getNumDevices();                // busca o numero de dispositivos liberados
+handler.getMotorista();                 // busca o motorista nas configs
+handler.getGateway();                   // busca se utiliza o gateway
+handler.getUsuario();                   // busca o usuario
+handler.getCodigo();                    // busca o codigo da empresa
+handler.getSenha();                     // busca a senha
+handler.getPlaca();                     // busca a placa configurada
+handler.getToken();                     // busca o token de sessão do gateway
+handler.getURL();                       // busca a url do pacific
 ```
 
 <br>

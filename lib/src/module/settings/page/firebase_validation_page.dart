@@ -1,48 +1,36 @@
-
-import '../../../device/handler/dialog_handler.dart';
-import '../../../device/handler/shared_preferences_handler.dart';
-import '../../../module/settings/domain/usecase/seguranca_usecase.dart';
+import 'package:cids_cgi/cids_cgi.dart';
+import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
+import 'package:cids_cgi/src/module/settings/domain/usecase/firebase_usecase.dart';
 import '../../../module/settings/page/politica_privacidade_page.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:dio/dio.dart';
 
 const CPF = '###.###.###-##';
 const CNPJ = '###.###.###/####-##';
 
-
 class SettingsPage extends StatefulWidget {
   final Color appBarTextColor;
-  final String aplicativo;
   final Color appBarColor;
   final bool motorista;
-  final bool gateway;
   final bool filled;
   final bool placa;
   final bool cpf;
-  final String password;
 
-  SettingsPage(
-      {this.motorista = false,
-      this.placa = false,
-      this.filled = false,
-      this.cpf = false,
-      this.appBarColor = Colors.transparent,
-      this.appBarTextColor = Colors.white,
-      this.gateway = false,
-      this.aplicativo = "",
-      @required this.password});
+  SettingsPage({
+    this.appBarColor = Colors.transparent,
+    this.appBarTextColor = Colors.white,
+    this.motorista = false,
+    this.filled = false,
+    this.placa = false,
+    this.cpf = false,
+  });
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
   final _handler = SharedPreferencesHandler();
-  final _dialogMessage = DialogHandler();
-  
 
   final _edtCodigoText = TextEditingController();
   final _edtUsuarioText = TextEditingController();
@@ -51,6 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final _edtMotoristaText = TextEditingController();
   final _edtPlacaText = TextEditingController();
 
+  bool _biometria = false;
   bool _isLoading = false;
   Map<String, dynamic> _version = {};
 
@@ -58,6 +47,8 @@ class _SettingsPageState extends State<SettingsPage> {
   final maskFormatter = new MaskTextInputFormatter(mask: CPF);
 
   final _formKey = GlobalKey<FormState>();
+
+  final firebaseUseCase = FirebaseUseCase();
   @override
   void initState() {
     super.initState();
@@ -76,6 +67,8 @@ class _SettingsPageState extends State<SettingsPage> {
     if (this.widget.placa) {
       this._edtPlacaText.text = await _handler.get("edtPlaca");
     }
+
+    this._biometria = (await _handler.get("biometria")) == "true";
 
     _version = await _handler.getBuildVersion();
     setState(() {});
@@ -246,6 +239,21 @@ class _SettingsPageState extends State<SettingsPage> {
                                         : Container(),
                                   ],
                                 )),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Habilitar autenticação por biometria"),
+                                Switch(
+                                  activeColor: Colors.blue,
+                                  value: _biometria,
+                                  onChanged: (val) {
+                                    _biometria = val;
+                                    setState(() {});
+                                  },
+                                ),
+                              ],
+                            ),
                             Container(
                               margin: EdgeInsets.symmetric(vertical: 20),
                               height: 50,
@@ -262,149 +270,64 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 PoliticaPage()));
                                   }),
                             ),
+                            GestureDetector(
+                                onTap: () {
+                                  SharedPreferencesHandler()
+                                      .remove("edtCodigo");
+                                  SharedPreferencesHandler().remove("edtSenha");
+                                  SharedPreferencesHandler()
+                                      .remove("edtUsuario");
+                                  SharedPreferencesHandler()
+                                      .remove("edtServico");
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/', (Route<dynamic> route) => false);
+                                },
+                                child: Text("Sair")),
                           ],
                         ),
                       )),
                   Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            _launchSocial('fb://profile/338379049642068',
-                                'https://www.facebook.com/CGISoftware');
-                          },
-                          child: Icon(
-                            FontAwesomeIcons.facebook,
-                            color: Color(0xff3A5997),
-                            size: 40,
-                          ),
-                        ),
-                        InkWell(
-                            onTap: () {
-                              _launchSocial(
-                                  'https://www.instagram.com/cgisoftware/',
-                                  'https://www.instagram.com/cgisoftware/');
-                            },
-                            child: Icon(
-                              FontAwesomeIcons.instagram,
-                              color: Color(0xff3E729A),
-                              size: 40,
-                            )),
-                        InkWell(
-                            onTap: () {
-                              _launchSocial(
-                                  'linkedin://company/cgisoftware/about/',
-                                  'https://www.linkedin.com/company/cgisoftware/about/');
-                            },
-                            child: Icon(
-                              FontAwesomeIcons.linkedin,
-                              color: Color(0xff027BB6),
-                              size: 40,
-                            )),
-                        InkWell(
-                            onTap: () {
-                              _launchSocial(
-                                  'twitter://user?screen_name=CgiSoftware',
-                                  'https://twitter.com/CgiSoftware');
-                            },
-                            child: Center(
-                              child: Icon(
-                                FontAwesomeIcons.twitter,
-                                color: Color(0xff2995E8),
-                                size: 40,
-                              ),
-                            ))
-                      ],
-                    ),
-                  )
+                      bottom: 0, left: 0, right: 0, child: RedesSociaisWidget())
                 ],
               ),
             )));
   }
 
-  void _launchSocial(String url, String fallbackUrl) async {
-    // Don't use canLaunch because of fbProtocolUrl (fb://)
-    try {
-      bool launched =
-          await launch(url, forceSafariVC: false, forceWebView: false);
-      if (!launched) {
-        await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
-      }
-    } catch (e) {
-      print(e);
-      await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
-    }
-  }
-
   void _grava() async {
     if (_formKey.currentState.validate()) {
-      final seguranca =
-          new Seguranca(email: "@cgi.com.br", password: widget.password);
       this._isLoading = true;
       setState(() {});
-      await _handler.set("edtCodigo", this._edtCodigoText.text);
-      await _handler.set("edtUsuario", this._edtUsuarioText.text);
-      await _handler.set("edtSenha", this._edtSenhaText.text);
-      await _handler.set("edtServico", this._edtServicoText.text);
-      await _handler.set("edtMotorista", this._edtMotoristaText.text);
-      await _handler.set("edtPlaca", this._edtPlacaText.text);
-      var r = await seguranca.execute();
-      if (r != "") {
-        _dialogMessage.show(message: r, context: context);
-        this._isLoading = false;
-        setState(() {});
-      } else {
-        this._edtServicoText.text = await _handler.get("edtServico");
-        if (widget.gateway) {
-          try {
-            Dio dio = new Dio();
 
-            Response response = await dio
-                .post("https://gateway.cgisoftware.com.br/sessao", data: {
-              "usuario": this._edtUsuarioText.text,
-              "senha": this._edtSenhaText.text,
-              "pacific": this._edtServicoText.text,
-              "versao": await _handler.getVersaoProgramaPacific(),
-              "cliente": this._edtCodigoText.text,
-              "aplicativo": widget.aplicativo
-            });
+      String senha = await _handler.getPasswordFirebase();
+      String aplicativo = await _handler.getNomeAplicativo();
+      bool gateway = await _handler.getGateway();
+      final bool response = await firebaseUseCase(
+          senha,
+          context,
+          this._edtCodigoText.text,
+          this._edtUsuarioText.text,
+          this._edtSenhaText.text,
+          this._edtServicoText.text,
+          this._edtMotoristaText.text,
+          this._edtPlacaText.text,
+          aplicativo,
+          gateway,
+          this._biometria);
 
-            if (response.data["token"] != null) {
-              print(response.data["token"]);
-              await _handler.set("token", response.data["token"]);
+      if (response) {
+        final snackBar = SnackBar(
+          content: Text('Configurações salvas com sucesso!'),
+        );
 
-              this._isLoading = false;
-              setState(() {});
+        _scaffoldKey.currentState.showSnackBar(snackBar);
+        await Future.delayed(new Duration(milliseconds: 2000));
+        Navigator.pop(context);
 
-              final snackBar = SnackBar(
-                content: Text('Configurações salvas com sucesso!'),
-              );
-
-              _scaffoldKey.currentState.showSnackBar(snackBar);
-              await Future.delayed(new Duration(milliseconds: 2000));
-              Navigator.pop(context);
-            }
-          } catch (e) {
-            _dialogMessage.show(message: e.toString(), context: context);
-          }
-        } else {
-          this._isLoading = false;
-          setState(() {});
-
-          final snackBar = SnackBar(
-            content: Text('Configurações salvas com sucesso!'),
-          );
-
-          _scaffoldKey.currentState.showSnackBar(snackBar);
-          await Future.delayed(new Duration(milliseconds: 2000));
-          Navigator.pop(context);
-        }
+        this._edtServicoText.text = await _handler.getURL();
       }
+
+      this._isLoading = false;
+      setState(() {});
     }
   }
 }

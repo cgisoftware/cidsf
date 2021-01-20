@@ -1,6 +1,7 @@
 library cids_cgi;
-import '../../../../device/handler/date_handler.dart';
-import '../../../../device/handler/shared_preferences_handler.dart';
+import 'package:cids_cgi/cids_cgi.dart';
+import 'package:cids_cgi/src/core/domain/device/handler/date_handler.dart';
+
 import '../../../../module/settings/domain/infra/firebase_repository.dart';
 import '../../../../module/settings/domain/infra/gateway_repository.dart';
 import 'package:package_info/package_info.dart';
@@ -19,7 +20,6 @@ class Seguranca {
         FirebaseRepository(codigoAcesso: await handler.get("edtCodigo"));
      String diasAutenticacao = await  handler.get("diasAutenticacao") ?? '';
      String dtUltimaAutenticacao = await  handler.get("dtUltAutenticacao") ?? '';
-    print(dtUltimaAutenticacao);
     int iDataAtual =
         int.tryParse(dateHandler.getData(dateHandler.getDate())[4]);
     int iDataAutenticacao = int.tryParse(dtUltimaAutenticacao);

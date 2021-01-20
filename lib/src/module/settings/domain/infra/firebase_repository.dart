@@ -1,12 +1,11 @@
-
-import 'package:cids_cgi/src/device/handler/date_handler.dart';
-import 'package:cids_cgi/src/device/handler/shared_preferences_handler.dart';
+import 'package:cids_cgi/src/core/domain/device/handler/date_handler.dart';
 import 'package:cids_cgi/src/module/settings/domain/model/firebase.dart';
 import 'package:cids_cgi/src/module/settings/error/messages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:package_info/package_info.dart';
 import 'package:device_info/device_info.dart';
+import 'package:cids_cgi/cids_cgi.dart';
 import 'dart:io';
 
 class FirebaseRepository {
@@ -20,7 +19,8 @@ class FirebaseRepository {
 
     try {
       await _auth.signOut();
-      await _auth.signInWithEmailAndPassword(email: this.codigoAcesso + email, password: password);
+      await _auth.signInWithEmailAndPassword(
+          email: this.codigoAcesso + email, password: password);
 
       return await permissions();
     } catch (e) {
@@ -79,12 +79,12 @@ class FirebaseRepository {
 
       if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-        Firestore.instance
+        FirebaseFirestore.instance
             .collection("Permissoes")
-            .document(this.codigoAcesso)
+            .doc(this.codigoAcesso)
             .collection("Devices")
-            .document(iosInfo.identifierForVendor.toString())
-            .setData({
+            .doc(iosInfo.identifierForVendor.toString())
+            .set({
           "identifierForVendor": iosInfo.identifierForVendor.toString(),
           "model": iosInfo.model.toString(),
           "localizedModel": iosInfo.localizedModel.toString(),
@@ -101,12 +101,12 @@ class FirebaseRepository {
         });
       } else {
         AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-        Firestore.instance
+        FirebaseFirestore.instance
             .collection("Permissoes")
-            .document(this.codigoAcesso)
+            .doc(this.codigoAcesso)
             .collection("Devices")
-            .document(androidInfo.androidId.toString())
-            .setData({
+            .doc(androidInfo.androidId.toString())
+            .set({
           "androidId": androidInfo.androidId.toString(),
           "device": androidInfo.device.toString(),
           "model": androidInfo.model.toString(),
