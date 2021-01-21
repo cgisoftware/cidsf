@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class AuthPage extends StatefulWidget {
   final String frase;
   final String imagePath;
+  final Function dropDb;
 
-  const AuthPage({Key key, this.frase, this.imagePath}) : super(key: key);
+  const AuthPage({Key key, this.frase, this.imagePath, this.dropDb}) : super(key: key);
 
   @override
   _AuthPageState createState() => _AuthPageState();
@@ -15,6 +16,8 @@ class _AuthPageState extends State<AuthPage> {
   @override
   void initState() {
     super.initState();
+
+    widget.dropDb();
   }
 
   @override

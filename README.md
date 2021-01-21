@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.1.0` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.1.5` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -72,29 +72,84 @@ consultors_dark.png:
 <br>
 
 ```dart
-var defaultPage
-final biometricsHandler = BiometricsHandler();
 
-void main() {
-    biometricsHandler();
-    biometricsHandler.listen();
+//main.dart
+String defaultRoute = indexRoute;
 
-    defaultPage = AuthPage(
-        frase: "Frase aqui",
-        imagePath: "images/index.jpg",
-    );
+BuildContext biometricsContext;
+final biometricsHandler = BiometricsHandler(autenticacaoPage: () {
+  Navigator.of(biometricsContext).pushNamed('/auth');
+}, homePage: () {
+  Navigator.of(biometricsContext)
+      .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+});
+
+void main() async {
+  biometricsHandler.listen();
+  biometricsHandler();
 }
 
+//routes.dart
+class Router {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case authRoute:
+        return SlideRightRoute(
+          widget: BiometricsErrorPage(
+              biometricsHandler: biometricsHandler,
+              context: (context) {
+                biometricsContext = context;
+              }),
+        );
+
+      case homeRoute:
+        return SlideRightRoute(
+          widget: HomePage(context: (context) {
+            biometricsContext = context;
+          }),
+        );
+
+      default:
+        return SlideRightRoute(
+            widget: AuthPage(
+          dropDb: () async {
+            DatabaseHandler db = DatabaseHandler();
+            await db.deleteDb();
+          },
+          frase: 'Todos os indicadores da sua empresa',
+          imagePath: "images/index.jpg",
+        ));
+    }
+  }
+}
+
+//constants.dart
+const String homeRoute = '/home';
+const String authRoute = '/auth';
+const String indexRoute = '/';
+
+//home.dart sua padina de home do aplicativo
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+
+  final Function(BuildContext) context; // retorno o context quando carregar a tela sempre!!!
+  const HomePage({Key key, @required this.context}) : super(key: key);
+}
+
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+
+    widget.context(context); //adicione isso no initState!!!
+  }
+}
+
+
+
 ```
-
-<br>
-
-### - Props
-
-| Propriedade | Required? |  Type  | Default value |
-| :---------- | :-------: | :----: | ------------: |
-| frase       |   true    | String |          null |
-| imagePath   |   true    | String |          null |
 
 <br>
 <br>
@@ -133,6 +188,9 @@ handler.getSenha();                     // busca a senha
 handler.getPlaca();                     // busca a placa configurada
 handler.getToken();                     // busca o token de sessão do gateway
 handler.getURL();                       // busca a url do pacific
+
+handler.logout();                       // limpa os dados de login
+handler.isAuth();                       // verifica se está logado;
 ```
 
 <br>
@@ -155,14 +213,19 @@ handler.confirm(message: "mensagem para mostrar pro usuário", context: context,
 <br>
 <br>
 
-## FirebaseHandler
+## CidsHandler
 
 ```dart
-final handler = FirebaseHandler()
+final handler = CidsHandler()
 
 // faz load das configurações do json criado no projeto do firebase
 // necessario usar no metodo main do arquivo main.dart
-handler.initialize()
+handler.initialize(
+    gateway: true,
+    aplicativo: "",
+    senha: "",
+    versaoPacific: 2
+)
 ```
 
 <br>

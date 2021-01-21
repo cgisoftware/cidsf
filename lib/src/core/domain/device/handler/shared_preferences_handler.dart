@@ -116,13 +116,19 @@ class SharedPreferencesHandler {
     await this.set('senhaFirebase', password);
   }
 
-
-  Future logout() {
+  logout() {
     this.remove("edtCodigo");
-                                  this.remove("edtSenha");
-                                  this
-                                      .remove("edtUsuario");
-                                  this
-                                      .remove("edtServico");
+    this.remove("edtSenha");
+    this.remove("edtUsuario");
+    this.remove("edtServico");
+    this.remove("biometria");
+  }
+
+  Future<bool> isAuth() async {
+    if ((await this.getURL()) != null && (await this.getURL()).isNotEmpty) {
+      return true;
+    }
+
+    return false;
   }
 }
