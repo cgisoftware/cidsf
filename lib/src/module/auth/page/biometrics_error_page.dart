@@ -8,6 +8,7 @@ class BiometricsErrorPage extends StatefulWidget {
 
 class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
   final biometricsHandler = BiometricsHandler();
+  final _handler = SharedPreferencesHandler();
 
   @override
   void initState() {
@@ -44,10 +45,7 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
                       width: MediaQuery.of(context).size.width * .4,
                       child: OutlineButton(
                         onPressed: () {
-                          SharedPreferencesHandler().remove("edtCodigo");
-                          SharedPreferencesHandler().remove("edtSenha");
-                          SharedPreferencesHandler().remove("edtServico");
-                          SharedPreferencesHandler().remove("edtUsuario");
+                           _handler.logout();
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/', (Route<dynamic> route) => false);
                         },

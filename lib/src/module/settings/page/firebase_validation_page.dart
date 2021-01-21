@@ -272,13 +272,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             GestureDetector(
                                 onTap: () {
-                                  SharedPreferencesHandler()
-                                      .remove("edtCodigo");
-                                  SharedPreferencesHandler().remove("edtSenha");
-                                  SharedPreferencesHandler()
-                                      .remove("edtUsuario");
-                                  SharedPreferencesHandler()
-                                      .remove("edtServico");
+                                  _handler.logout();
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                       '/', (Route<dynamic> route) => false);
                                 },

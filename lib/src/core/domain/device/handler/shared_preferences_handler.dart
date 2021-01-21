@@ -115,4 +115,14 @@ class SharedPreferencesHandler {
   Future setPasswordFirebase(String password) async {
     await this.set('senhaFirebase', password);
   }
+
+
+  Future logout() {
+    this.remove("edtCodigo");
+                                  this.remove("edtSenha");
+                                  this
+                                      .remove("edtUsuario");
+                                  this
+                                      .remove("edtServico");
+  }
 }
