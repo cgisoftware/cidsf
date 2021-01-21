@@ -1,11 +1,12 @@
 # Changelog
 
-## [1.0.37] - 20/01/2021
+## [1.1.0] - 21/01/2021
 
-### Chanded
+### Added
 
 - Criado tela para login nos aplicativos
 - Criado parâmetro para verificar se usa ou não biometria
+- Criado modulo geral para controlar autenticação local com faceID e touchID
 
 ## [1.0.20] - 19/01/2021
 
