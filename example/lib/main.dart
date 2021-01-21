@@ -2,10 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import './router.dart' as r;
 
-final biometricsHandler = BiometricsHandler();
+var defaultPage;
+
+BuildContext biometricsContext;
+
+final biometricsHandler = BiometricsHandler(autenticacaoPage: () {
+  Navigator.of(biometricsContext)
+      .pushNamedAndRemoveUntil('/auth', (Route<dynamic> route) => false);
+}, homePage: () {
+  print(biometricsContext);
+  Navigator.of(biometricsContext)
+      .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+});
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  biometricsHandler.listen();
 
   runApp(MyApp());
 }
@@ -72,12 +84,20 @@ class _MyAppState extends State<MyApp> {
         theme: temaClaro,
         darkTheme: temaEscuro,
         themeMode: ThemeMode.system,
-        home: MyHome(),
+        home: MyHome(
+          context: (context) {
+            biometricsContext = context;
+          },
+        ),
         onGenerateRoute: r.Router.generateRoute);
   }
 }
 
 class MyHome extends StatefulWidget {
+  final Function(BuildContext) context;
+
+  const MyHome({Key key, @required this.context}) : super(key: key);
+
   @override
   _MyHomeState createState() => _MyHomeState();
 }
@@ -87,8 +107,7 @@ class _MyHomeState extends State<MyHome> {
   void initState() {
     super.initState();
 
-    biometricsHandler(context);
-    biometricsHandler.listen(context);
+    widget.context(context);
   }
 
   @override

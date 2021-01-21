@@ -2,21 +2,25 @@ import 'package:cids_cgi/cids_cgi.dart';
 import 'package:flutter/material.dart';
 
 class BiometricsErrorPage extends StatefulWidget {
+  final BiometricsHandler biometricsHandler;
+  final Function(BuildContext) context;
+
+  BiometricsErrorPage(
+      {Key key, @required this.biometricsHandler, @required this.context})
+      : super(key: key);
+
   @override
   _BiometricsErrorPageState createState() => _BiometricsErrorPageState();
 }
 
 class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
-  final biometricsHandler = BiometricsHandler();
   final _handler = SharedPreferencesHandler();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
-    // biometricsHandler(context);
-    biometricsHandler.listen(context);
+    widget.context(context);
   }
 
   @override
@@ -45,7 +49,7 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
                       width: MediaQuery.of(context).size.width * .4,
                       child: OutlineButton(
                         onPressed: () {
-                           _handler.logout();
+                          _handler.logout();
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/', (Route<dynamic> route) => false);
                         },
@@ -57,7 +61,7 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
                         width: MediaQuery.of(context).size.width * .4,
                         child: RaisedButton(
                           onPressed: () async {
-                            biometricsHandler(context);
+                            widget.biometricsHandler();
                           },
                           child: Text("Autenticar"),
                         ))

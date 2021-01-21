@@ -15,16 +15,18 @@ const _iosStrings = const IOSAuthMessages(
     lockOut: 'Por favor permita o uso da sua autenticação');
 
 class BiometricsHandler {
+  final Function autenticacaoPage;
+  final Function homePage;
   final _localAuth = LocalAuthentication();
   final _sharedPreferencesHandler = SharedPreferencesHandler();
   WidgetsBindingObserver _observer;
 
-  Future<bool> call(BuildContext context) async {
-    WidgetsBinding.instance.removeObserver(_observer);
+  BiometricsHandler({this.autenticacaoPage, this.homePage});
+
+  Future<bool> call() async {
+    // WidgetsBinding.instance.removeObserver(_observer);
     bool biometriaHabilitada =
         (await _sharedPreferencesHandler.get('biometria')) == "true";
-
-    print(biometriaHabilitada);
     bool isAuth = false;
 
     if (biometriaHabilitada) {
@@ -60,23 +62,24 @@ class BiometricsHandler {
           }
 
           if (!isAuth) {
-            Navigator.of(context).pushAndRemoveUntil(
-                SlideRightRoute(widget: BiometricsErrorPage()),
-                (Route<dynamic> route) => false);
+            this.autenticacaoPage();
+            await SharedPreferencesHandler().set('autenticou', "false");
+            // Navigator.of(context).pushAndRemoveUntil(
+            //     SlideRightRoute(widget: BiometricsErrorPage()),
+            //     (Route<dynamic> route) => false);
           } else {
             await SharedPreferencesHandler().set('autenticou', "true");
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                '/home', (Route<dynamic> route) => false);
+            // Navigator.of(context).pushNamedAndRemoveUntil(
+            //     '/home', (Route<dynamic> route) => false);
+            this.homePage();
           }
         }
       }
 
-      print(isAuth);
-
       return isAuth;
     }
 
-    return false;
+    // return false;
 
     // } on PlatformException catch (e) {
     //   // throw e;
@@ -85,32 +88,34 @@ class BiometricsHandler {
     // }
   }
 
-  listen(BuildContext context) async {
-    WidgetsBinding.instance.removeObserver(_observer);
+  listen() async {
+    // WidgetsBinding.instance.removeObserver(_observer);
     bool biometriaHabilitada =
         (await _sharedPreferencesHandler.get('biometria')) == "true";
     if (biometriaHabilitada) {
-      WidgetsBinding.instance.removeObserver(_observer);
+      // WidgetsBinding.instance.removeObserver(_observer);
       _observer = BiometricsCallback(resumeCallBack: () async {
         if (Platform.isAndroid) {
-          call(context);
+          call();
         }
 
         if (Platform.isIOS) {
           bool paused =
               (await _sharedPreferencesHandler.get('paused')) == "true";
           if (paused) {
-            call(context);
+            call();
             await _sharedPreferencesHandler.set('paused', "false");
           }
         }
       }, pausedCallback: () async {
         await _sharedPreferencesHandler.set('paused', "true");
         await _sharedPreferencesHandler.set('autenticou', "false");
+        // call();
       }, inactiveCallBack: () async {
-        await _sharedPreferencesHandler.set('paused', "true");
+        // await _sharedPreferencesHandler.set('paused', "true");
         await _sharedPreferencesHandler.set('autenticou', "false");
       });
+      
 
       WidgetsBinding.instance.addObserver(_observer);
     }

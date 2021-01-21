@@ -1,4 +1,5 @@
 import 'package:cids_cgi/cids_cgi.dart';
+import 'package:cids_cgi_example/constants.dart';
 import 'package:cids_cgi_example/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -6,8 +7,20 @@ import 'package:flutter/widgets.dart';
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case authRoute:
+        return SlideRightRoute(
+          widget: BiometricsErrorPage(
+              biometricsHandler: biometricsHandler,
+              context: (context) {
+                biometricsContext = context;
+              }),
+        );
       default:
-        return SlideRightRoute(widget: MyHome());
+        return SlideRightRoute(widget: MyHome(
+          context: (context) {
+            biometricsContext = context;
+          },
+        ));
     }
   }
 }
