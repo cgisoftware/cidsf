@@ -23,17 +23,13 @@ class BiometricsHandler {
 
   BiometricsHandler({this.autenticacaoPage, this.homePage});
 
-  Future<bool> call() async {
-    // WidgetsBinding.instance.removeObserver(_observer);
+  call() async {
     bool biometriaHabilitada =
         (await _sharedPreferencesHandler.get('biometria')) == "true";
     bool isAuth = false;
 
     if (biometriaHabilitada) {
       if ((await _sharedPreferencesHandler.get('autenticou')) == "false") {
-        // try {
-
-        // _localAuth.
         bool biometricCheck = await _localAuth.canCheckBiometrics;
         if (biometricCheck) {
           List<BiometricType> availableBiometrics =
@@ -64,61 +60,36 @@ class BiometricsHandler {
           if (!isAuth) {
             this.autenticacaoPage();
             await SharedPreferencesHandler().set('autenticou', "false");
-            // Navigator.of(context).pushAndRemoveUntil(
-            //     SlideRightRoute(widget: BiometricsErrorPage()),
-            //     (Route<dynamic> route) => false);
           } else {
             await SharedPreferencesHandler().set('autenticou', "true");
-            // Navigator.of(context).pushNamedAndRemoveUntil(
-            //     '/home', (Route<dynamic> route) => false);
             this.homePage();
           }
         }
       }
-
-      return isAuth;
     }
-
-    // return false;
-
-    // } on PlatformException catch (e) {
-    //   // throw e;
-    // } catch (e) {
-    //   //throw e;
-    // }
   }
 
   listen() async {
-    // WidgetsBinding.instance.removeObserver(_observer);
-    bool biometriaHabilitada =
-        (await _sharedPreferencesHandler.get('biometria')) == "true";
-    if (biometriaHabilitada) {
-      // WidgetsBinding.instance.removeObserver(_observer);
-      _observer = BiometricsCallback(resumeCallBack: () async {
-        if (Platform.isAndroid) {
+    _observer = BiometricsCallback(resumeCallBack: () async {
+      if (Platform.isAndroid) {
+        call();
+      }
+
+      if (Platform.isIOS) {
+        bool paused = (await _sharedPreferencesHandler.get('paused')) == "true";
+        if (paused) {
           call();
+          await _sharedPreferencesHandler.set('paused', "false");
         }
+      }
+    }, pausedCallback: () async {
+      await _sharedPreferencesHandler.set('paused', "true");
+      await _sharedPreferencesHandler.set('autenticou', "false");
+    }, inactiveCallBack: () async {
+      await _sharedPreferencesHandler.set('autenticou', "false");
+    });
 
-        if (Platform.isIOS) {
-          bool paused =
-              (await _sharedPreferencesHandler.get('paused')) == "true";
-          if (paused) {
-            call();
-            await _sharedPreferencesHandler.set('paused', "false");
-          }
-        }
-      }, pausedCallback: () async {
-        await _sharedPreferencesHandler.set('paused', "true");
-        await _sharedPreferencesHandler.set('autenticou', "false");
-        // call();
-      }, inactiveCallBack: () async {
-        // await _sharedPreferencesHandler.set('paused', "true");
-        await _sharedPreferencesHandler.set('autenticou', "false");
-      });
-      
-
-      WidgetsBinding.instance.addObserver(_observer);
-    }
+    WidgetsBinding.instance.addObserver(_observer);
   }
 }
 

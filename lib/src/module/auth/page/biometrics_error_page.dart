@@ -51,7 +51,7 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
                         onPressed: () {
                           _handler.logout();
                           Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/', (Route<dynamic> route) => false);
+                              '/index', (Route<dynamic> route) => false);
                         },
                         child: Text("Sair do app"),
                       ),

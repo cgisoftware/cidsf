@@ -274,7 +274,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 onTap: () {
                                   _handler.logout();
                                   Navigator.of(context).pushNamedAndRemoveUntil(
-                                      '/', (Route<dynamic> route) => false);
+                                      '/index', (Route<dynamic> route) => false);
                                 },
                                 child: Text("Sair")),
                           ],

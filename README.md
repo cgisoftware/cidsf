@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.1.6` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.1.7` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -70,71 +70,121 @@ consultors_dark.png:
 
 <br>
 <br>
+<br>
 
+## Permissões
+<br>
+
+### Android
+```xml
+<!-- Arquivo AndroidManifest.xml -->
+<uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+```
+<br>
+
+### iOS
+```plist
+<key>NSFaceIDUsageDescription</key>
+<string>Por que vai usar a autenticação?</string>
+```
+
+<br>
+<br>
+
+No arquivo main.dart adicione:
 ```dart
-
 //main.dart
-String defaultRoute = indexRoute;
+var defaultPage;
 
 BuildContext biometricsContext;
-final biometricsHandler = BiometricsHandler(autenticacaoPage: () {
-  Navigator.of(biometricsContext).pushNamed('/auth');
-}, homePage: () {
-  Navigator.of(biometricsContext)
+final biometricsHandler = BiometricsHandler(
+  autenticacaoPage: () {
+    Navigator.of(biometricsContext).pushNamed('/auth');
+  }, 
+  homePage: () {
+    Navigator.of(biometricsContext)
       .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-});
+  } 
+);
 
 void main() async {
   biometricsHandler.listen();
   biometricsHandler();
 }
 
+```
+<br>
+Crie um arquivo na raiz da pasta lib com o nome page.dart
+
+```dart
+//page.dart
+final biometricsPage = BiometricsErrorPage(
+  biometricsHandler: biometricsHandler,
+  context: (context) {
+    biometricsContext = context;
+  }
+);
+
+final homePage = HomePage(
+  context: (context) {
+    biometricsContext = context;
+  }
+);
+
+final authPage = AuthPage(
+  dropDb: () async {
+    DatabaseHandler db = DatabaseHandler();
+    await db.deleteDb();
+  },
+  frase: 'Todos os indicadores da sua empresa',
+  imagePath: "images/index.jpg",
+)
+```
+<br>
+Crie um arquivo na raiz da pasta lib com o nome constants.dart 
+<br>
+Arquivo para adicionar as strings das rotas do aplicativo
+
+```dart
+//constants.dart
+const String homeRoute = '/home';
+const String authRoute = '/auth';
+const String indexRoute = '/index';
+```
+<br>
+Crie um arquivo na raiz da pasta lib com o nome routes.dart importando as telas do arquivo page.dart
+
+```dart
 //routes.dart
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case authRoute:
-        return SlideRightRoute(
-          widget: BiometricsErrorPage(
-              biometricsHandler: biometricsHandler,
-              context: (context) {
-                biometricsContext = context;
-              }),
-        );
+        return SlideRightRoute(widget: biometricsPage);
 
       case homeRoute:
-        return SlideRightRoute(
-          widget: HomePage(context: (context) {
-            biometricsContext = context;
-          }),
-        );
+        return SlideRightRoute(widget: homePage));
+
+      case indexPage: 
+        return SlideRightRoute(widget: authPage);
 
       default:
-        return SlideRightRoute(
-            widget: AuthPage(
-          dropDb: () async {
-            DatabaseHandler db = DatabaseHandler();
-            await db.deleteDb();
-          },
-          frase: 'Todos os indicadores da sua empresa',
-          imagePath: "images/index.jpg",
-        ));
+        return SlideRightRoute(widget: authPage);
     }
   }
 }
+```
+<br>
+No arquivo da tela principal do aplicativo, geralmente a tela Home, adicione algumas configurações extras para buscar o contexto
 
-//constants.dart
-const String homeRoute = '/home';
-const String authRoute = '/auth';
-const String indexRoute = '/';
-
+```dart
 //home.dart sua padina de home do aplicativo
-
-class HomePage extends StatefulWidget {
+class HomePage extends StatefulWidget { //TORNE A HOME UM STATEFULL WIDGET!!!!
   @override
   _HomePageState createState() => _HomePageState();
 
-  final Function(BuildContext) context; // retorno o context quando carregar a tela sempre!!!
+  //CRIE UMA FUNCTION QUE SERA CHAMADA AO CARREGAR A TELA PASSANDO O CONTEXT!!!!
+  final Function(BuildContext) context; 
   const HomePage({Key key, @required this.context}) : super(key: key);
 }
 
@@ -143,12 +193,19 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
-    widget.context(context); //adicione isso no initState!!!
+    //LEMBRE-SE DE PASSAR O CONTEXT AO CRIAR A TELA, SEM ISSO A BIOMETRIA NUNCA IRÁ FNUNCIONAR CORRETAMENTE!!!!
+    widget.context(context);
   }
 }
+```
+<br>
+Por ultimo e o mais importante, altere o arquivo MainActivity.kt na pasta android do projeto. Necessário para funcionamento no android
 
+```kotlin
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-
+class MainActivity: FlutterFragmentActivity() {
+}
 ```
 
 <br>
@@ -221,10 +278,10 @@ final handler = CidsHandler()
 // faz load das configurações do json criado no projeto do firebase
 // necessario usar no metodo main do arquivo main.dart
 handler.initialize(
-    gateway: true,
-    aplicativo: "",
-    senha: "",
-    versaoPacific: 2
+  gateway: true,
+  aplicativo: "",
+  senha: "",
+  versaoPacific: 2
 )
 ```
 
