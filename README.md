@@ -83,7 +83,7 @@ consultors_dark.png:
 <br>
 
 ### iOS
-```plist
+```xml
 <key>NSFaceIDUsageDescription</key>
 <string>Por que vai usar a autenticação?</string>
 ```
