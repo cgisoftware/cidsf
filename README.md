@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.1.7` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 1.1.12` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -212,6 +212,28 @@ class MainActivity: FlutterFragmentActivity() {
 <br>
 
 ## QRScan
+
+## Permissões
+<br>
+
+### Android
+```xml
+<!-- Arquivo AndroidManifest.xml -->
+<uses-permission android:name="android.permission.CAMERA" />
+```
+<br>
+
+### iOS
+```xml
+<key>NSCameraUsageDescription</key>
+<string>Your Description</string>
+
+<key>io.flutter.embedded_views_preview</key>
+<string>YES</string>
+```
+
+<br>
+<br>
 
 ```dart
 //QRScanType.bar   BARCODE
