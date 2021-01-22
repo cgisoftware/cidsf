@@ -133,12 +133,11 @@ final homePage = HomePage(
 
 final authPage = AuthPage(
   dropDb: () async {
-    DatabaseHandler db = DatabaseHandler();
-    await db.deleteDb();
+    //manupula os dados salvos
   },
   frase: 'Todos os indicadores da sua empresa',
   imagePath: "images/index.jpg",
-)
+);
 ```
 <br>
 Crie um arquivo na raiz da pasta lib com o nome constants.dart 
@@ -163,9 +162,9 @@ class Router {
         return SlideRightRoute(widget: biometricsPage);
 
       case homeRoute:
-        return SlideRightRoute(widget: homePage));
+        return SlideRightRoute(widget: homePage);
 
-      case indexPage: 
+      case indexRoute: 
         return SlideRightRoute(widget: authPage);
 
       default:
@@ -206,6 +205,19 @@ import io.flutter.embedding.android.FlutterFragmentActivity
 
 class MainActivity: FlutterFragmentActivity() {
 }
+```
+
+<br>
+<br>
+<br>
+
+## QRScan
+
+```dart
+//QRScanType.bar   BARCODE
+//QRScanType.code  QRCODE
+String response = await QRScan().startScan(context, QRScanType.bar);
+print(response);
 ```
 
 <br>

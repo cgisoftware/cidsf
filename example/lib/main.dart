@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import './router.dart' as r;
@@ -114,7 +116,15 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(icon: Icon(Icons.settings), onPressed: () {})],
+        actions: [
+          IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () async {
+                String response =
+                    await QRScan().startScan(context, QRScanType.bar);
+                print(response);
+              })
+        ],
         title: const Text('CIDS for dev'),
       ),
     );
