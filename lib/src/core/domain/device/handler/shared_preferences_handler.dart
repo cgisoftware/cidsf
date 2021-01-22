@@ -131,4 +131,16 @@ class SharedPreferencesHandler {
 
     return false;
   }
+
+  Future desabilitarBiometria() async {
+    await this.set('biometria', "false");
+  }
+
+  Future habilitarBiometria() async {
+    await this.set('biometria', "true");
+  }
+
+  Future getBiometria() async {
+    await this.get('biometria');
+  }
 }

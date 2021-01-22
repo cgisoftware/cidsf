@@ -1,7 +1,6 @@
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:qr_mobile_vision/qr_camera.dart';
+import 'package:scan/scan.dart';
 
 class BarScanPage extends StatefulWidget {
   final QRScanType type;
@@ -12,32 +11,23 @@ class BarScanPage extends StatefulWidget {
 }
 
 class _BarScanPageState extends State<BarScanPage> {
-  bool _scan = false;
+  ScanController controller = ScanController();
+  // String qrcode = 'Unknown';
   @override
   void initState() {
-    if (widget.type == QRScanType.bar) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeRight,
-        DeviceOrientation.landscapeLeft,
-      ]);
-    } else {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-      ]);
-    }
+    // if (widget.type == QRScanType.bar) {
+    //   SystemChrome.setPreferredOrientations([
+    //     DeviceOrientation.landscapeRight,
+    //     DeviceOrientation.landscapeLeft,
+    //   ]);
+    // } else {
+    //   SystemChrome.setPreferredOrientations([
+    //     DeviceOrientation.portraitUp,
+    //   ]);
+    // }
 
     super.initState();
   }
-
-  @override
-  void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,23 +39,17 @@ class _BarScanPageState extends State<BarScanPage> {
               right: 0,
               bottom: 0,
               child: Center(
-                child: SizedBox(
-                    width: MediaQuery.of(context).size.width * .75,
-                    height: MediaQuery.of(context).size.height * .4,
-                    child: Card(
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: QrCamera(
-                        qrCodeCallback: (code) {
-                          if (!_scan) {
-                            this._scan = true;
-                            Navigator.pop(context, code);
-                          }
-                        },
-                      ),
-                    )),
-              )),
+                  child: Container(
+               
+                child: ScanView(
+                  controller: controller,
+                  scanAreaScale:.9,
+                  scanLineColor: Colors.blue,
+                  onCapture: (data) {
+                    Navigator.pop(context, data);
+                  },
+                ),
+              ))),
         ],
       ),
     );
