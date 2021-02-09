@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.13] - 09/02/2021
+
+### Added
+
+- Criado metodo para ler se é permitido alterar a quantidade do mais estoque
+
 ## [1.1.12] - 21/01/2021
 
 ### Added

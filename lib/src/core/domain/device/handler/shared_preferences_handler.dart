@@ -143,4 +143,9 @@ class SharedPreferencesHandler {
   Future getBiometria() async {
     await this.get('biometria');
   }
+
+  Future permiteAlterarQuantidadeEscaneada() async {
+    var token = await this.get('permite_alterar_quantidade_escaneada');
+    return token == "true";
+  }
 }

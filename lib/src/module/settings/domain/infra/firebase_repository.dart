@@ -143,6 +143,7 @@ class FirebaseRepository {
           "numDevicesVendedor", firebase.numDevicesVendedor.toString());
 
       await handler.set("versao_minima", firebase.versaoMinima.toString());
+      await handler.set("permite_alterar_quantidade_escaneada", firebase.permiteAlterarQuantidadeEscaneada.toString());
       return '';
     } catch (e) {
       return e.toString();
