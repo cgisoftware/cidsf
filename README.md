@@ -259,29 +259,31 @@ handler.get("chave");
 handler.remove("chave");
 handler.clear(); // limpa toda e qualquer chave salva
 
-handler.setNomeAplicativo("nome app");  // seta o nome do app para aparecer no gateway
-handler.setPasswordFirebase("senha");   // seta a senha default do FIREBASE
-handler.setVersaoProgramaPacific(1);    // seta a versão do programa .r
-handler.setGateway(false);              // seta se utiliza ou não o gateway
 
-handler.getVersaoProgramaPacific();     // busca a versão do programa .r
-handler.getNumDevicesVendedor();        // busca o numero de devices
-handler.getPasswordFirebase();          // busca a senha default do login no FIREBASE
-handler.getNomeAplicativo();            // busca o nome do app configurado
-handler.getVersaoMinima();              // busca a versão minima do firebase
-handler.getBuildVersion();              // busca a versão de build do app
-handler.getNumDevices();                // busca o numero de dispositivos liberados
-handler.getMotorista();                 // busca o motorista nas configs
-handler.getGateway();                   // busca se utiliza o gateway
-handler.getUsuario();                   // busca o usuario
-handler.getCodigo();                    // busca o codigo da empresa
-handler.getSenha();                     // busca a senha
-handler.getPlaca();                     // busca a placa configurada
-handler.getToken();                     // busca o token de sessão do gateway
-handler.getURL();                       // busca a url do pacific
+handler.setNomeAplicativo("nome app");        // seta o nome do app para aparecer no gateway
+handler.setPasswordFirebase("senha");         // seta a senha default do FIREBASE
+handler.setVersaoProgramaPacific(1);          // seta a versão do programa .r
+handler.setGateway(false);                    // seta se utiliza ou não o gateway
 
-handler.logout();                       // limpa os dados de login
-handler.isAuth();                       // verifica se está logado;
+handler.permiteAlterarQuantidadeEscaneada();  // busca se permite alterar a quantidade do mais estoque
+handler.getVersaoProgramaPacific();           // busca a versão do programa .r
+handler.getNumDevicesVendedor();              // busca o numero de devices
+handler.getPasswordFirebase();                // busca a senha default do login no FIREBASE
+handler.getNomeAplicativo();                  // busca o nome do app configurado
+handler.getVersaoMinima();                    // busca a versão minima do firebase
+handler.getBuildVersion();                    // busca a versão de build do app
+handler.getNumDevices();                      // busca o numero de dispositivos liberados
+handler.getMotorista();                       // busca o motorista nas configs
+handler.getGateway();                         // busca se utiliza o gateway
+handler.getUsuario();                         // busca o usuario
+handler.getCodigo();                          // busca o codigo da empresa
+handler.getSenha();                           // busca a senha
+handler.getPlaca();                           // busca a placa configurada
+handler.getToken();                           // busca o token de sessão do gateway
+handler.getURL();                             // busca a url do pacific
+
+handler.logout();                             // limpa os dados de login
+handler.isAuth();                             // verifica se está logado;
 ```
 
 <br>
