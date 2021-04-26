@@ -1,5 +1,19 @@
 # Changelog
 
+
+## [1.1.15] - 12/04/2021
+
+### Chanded
+
+- Atualizado as bibliotecas e dependências do projeto
+
+
+## [1.1.14] - 09/02/2021
+
+### Chanded
+
+- Atualizado as bibliotecas e dependências do projeto
+
 ## [1.1.13] - 09/02/2021
 
 ### Added
