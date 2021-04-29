@@ -21,7 +21,7 @@ class AuthController {
   tryCode(BuildContext context) async {
     final seguranca = new Seguranca(email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
     await _handler.set("edtCodigo", codigo.text);
-    var r = await seguranca.execute();
+    await seguranca.execute();
 
     var login = await _handler.get("login");
 
@@ -39,11 +39,10 @@ class AuthController {
       handlerDialog.show(message: "Autenticação Padrão", context: context);
     }
     this.state.setState(() {});
-    print(r);
     return false;
   }
 
-  initState(state, BuildContext context) {
+  initState(state) {
     this.state = state;
   }
 

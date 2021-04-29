@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
 
     Future.delayed(Duration(seconds: 3))
-        .then((value) => authController.initState(this, context));
+        .then((value) => authController.initState(this));
   }
 
   @override
