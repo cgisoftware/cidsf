@@ -10,6 +10,9 @@ class Firebase {
   int numDevices;
   int numDevicesVendedor;
   bool permiteAlterarQuantidadeEscaneada;
+  String usuario;
+  String senha;
+  bool login;
 
   Firebase(
       {this.ativo,
@@ -22,7 +25,10 @@ class Firebase {
       this.versaoMinima,
       this.numDevices,
       this.numDevicesVendedor,
-      this.permiteAlterarQuantidadeEscaneada});
+      this.permiteAlterarQuantidadeEscaneada,
+      this.usuario,
+      this.senha,
+      this.login});
 
   factory Firebase.fromJson(Map<String, dynamic> json) => Firebase(
       ativo: json["ativo"] == null ? null : json["ativo"],
@@ -40,6 +46,9 @@ class Firebase {
       numDevicesVendedor: json["num_devices_vendedor"] == null
           ? null
           : json["num_devices_vendedor"],
+      usuario: json["usuario"] == null ? null : json["usuario"],
+      senha: json["senha"] == null ? null : json["senha"],
+      login: json["login"] == null ? null : json["login"],
       permiteAlterarQuantidadeEscaneada:
           json["permite_alterar_quantidade_escaneada"] == null
               ? null

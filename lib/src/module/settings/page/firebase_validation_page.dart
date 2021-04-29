@@ -258,7 +258,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               margin: EdgeInsets.symmetric(vertical: 20),
                               height: 50,
                               width: double.infinity,
-                              child: RaisedButton(
+                              child: ElevatedButton(
                                   child: Text(
                                     "Política de Privacidade",
                                     style: TextStyle(fontSize: 20),
@@ -313,7 +313,7 @@ class _SettingsPageState extends State<SettingsPage> {
           content: Text('Configurações salvas com sucesso!'),
         );
 
-        _scaffoldKey.currentState.showSnackBar(snackBar);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
         await Future.delayed(new Duration(milliseconds: 2000));
         Navigator.pop(context);
 

@@ -6,12 +6,16 @@ class RoundedInputField extends StatelessWidget {
   final IconData icon;
   final ValueChanged<String> onChanged;
   final TextEditingController controller;
+  final FocusNode focus;
+  final bool readOnly;
   const RoundedInputField(
       {Key key,
       this.hintText,
       this.icon = Icons.person,
       this.onChanged,
-      this.controller})
+      this.controller,
+      this.focus,
+      this.readOnly})
       : super(key: key);
 
   @override
@@ -21,7 +25,9 @@ class RoundedInputField extends StatelessWidget {
         style: TextStyle(color: Colors.black),
         controller: controller,
         onChanged: onChanged,
+        focusNode: focus,
         cursorColor: Colors.blue,
+        readOnly: readOnly,
         decoration: InputDecoration(
           hintStyle: TextStyle(
             color: Theme.of(context).brightness == Brightness.light

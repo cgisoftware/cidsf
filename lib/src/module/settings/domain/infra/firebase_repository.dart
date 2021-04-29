@@ -141,7 +141,7 @@ class FirebaseRepository {
       await handler.set("numDevices", firebase.numDevices.toString());
       await handler.set(
           "numDevicesVendedor", firebase.numDevicesVendedor.toString());
-
+      await handler.set("login", firebase.login.toString());
       await handler.set("versao_minima", firebase.versaoMinima.toString());
       await handler.set("permite_alterar_quantidade_escaneada", firebase.permiteAlterarQuantidadeEscaneada.toString());
       return '';

@@ -40,6 +40,11 @@ class SharedPreferencesHandler {
     return numDevices;
   }
 
+  Future getLogin() async {
+    var login = await this.get('login');
+    return login;
+  }
+
   Future getCodigo() async {
     var cod = await this.get('edtCodigo');
     return cod;

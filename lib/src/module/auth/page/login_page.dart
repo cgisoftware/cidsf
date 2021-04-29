@@ -12,13 +12,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final authController = AuthController();
-
+  
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero)
-        .then((value) => authController.initState(this));
+    Future.delayed(Duration(seconds: 3))
+        .then((value) => authController.initState(this, context));
   }
 
   @override
@@ -45,13 +45,23 @@ class _LoginPageState extends State<LoginPage> {
                     controller: authController.codigo,
                     icon: Icons.lock_open,
                     hintText: "Código de acesso",
+                    focus: authController.focus,
+                    readOnly: false,
                   ),
+                  authController.loginBool == false ?
                   RoundedInputField(
                     controller: authController.usuario,
                     hintText: "Usuário",
+                    readOnly: false,
+                  ) : Container(
+                     height: 100,
                   ),
+                  authController.loginBool == false ?
                   RoundedPasswordField(
                     controller: authController.senha,
+                    readOnly: false,
+                  ) : Container(
+                    height: 50,
                   )
                 ],
               ),

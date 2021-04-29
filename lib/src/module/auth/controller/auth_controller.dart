@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cids_cgi/src/module/settings/domain/usecase/firebase_usecase.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:flutter/widgets.dart';
@@ -5,19 +7,53 @@ import 'package:flutter/widgets.dart';
 class AuthController {
   final firebaseUseCase = FirebaseUseCase();
   final _handler = SharedPreferencesHandler();
-
   final codigo = TextEditingController();
   final usuario = TextEditingController();
   final senha = TextEditingController();
+  final handlerDialog = DialogHandler();
+  FocusNode focus = FocusNode();
+  bool loginBool = false;
   bool biometria = false;
-
   bool _loading = false;
   bool get loading => this._loading;
+  bool hasFocus = false;
 
   var state;
 
-  initState(state) {
+  onFocusChange(BuildContext context) {
+    if(!focus.hasFocus && this.hasFocus){
+      tryCode(context);
+      this.hasFocus = false;
+    }
+    this.hasFocus = focus.hasFocus;
+  }
+  
+  tryCode(BuildContext context) async {
+    final seguranca = new Seguranca(email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
+    await _handler.set("edtCodigo", codigo.text);
+    var r = await seguranca.execute();
+
+    var login = await _handler.get("login");
+
     this.state = state;
+
+    if(login == null){
+      loginBool = false;
+    } else {
+      loginBool = login == 'true';
+    }
+    print(login);
+
+    this.state.setState(() {});
+
+    handlerDialog.show(message: r, context: context);
+    return false;
+  }
+
+  initState(state, BuildContext context) {
+    this.state = state;
+
+    focus.addListener(onFocusChange(context));
   }
 
   login() async {
