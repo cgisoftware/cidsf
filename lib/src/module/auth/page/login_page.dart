@@ -12,7 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final authController = AuthController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -41,28 +41,37 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: size.height * 0.09),
               Column(
                 children: [
-                  RoundedInputField(
-                    controller: authController.codigo,
-                    icon: Icons.lock_open,
-                    hintText: "Código de acesso",
-                    focus: authController.focus,
-                    readOnly: false,
-                  ),
-                  authController.loginBool == false ?
-                  RoundedInputField(
-                    controller: authController.usuario,
-                    hintText: "Usuário",
-                    readOnly: false,
-                  ) : Container(
-                     height: 100,
-                  ),
-                  authController.loginBool == false ?
-                  RoundedPasswordField(
-                    controller: authController.senha,
-                    readOnly: false,
-                  ) : Container(
-                    height: 50,
-                  )
+                  FocusScope(
+                    child: Focus(
+                    onFocusChange: (focus) {
+                      if(focus == false){
+                        authController.tryCode(context);
+                      }
+                    },
+                    child: RoundedInputField(
+                      controller: authController.codigo,
+                      icon: Icons.lock_open,
+                      hintText: "Código de acesso",
+                      readOnly: false,
+                    ),
+                  )),
+                  authController.loginBool == false
+                      ? RoundedInputField(
+                          controller: authController.usuario,
+                          hintText: "Usuário",
+                          readOnly: false,
+                        )
+                      : Container(
+                          height: 100,
+                        ),
+                  authController.loginBool == false
+                      ? RoundedPasswordField(
+                          controller: authController.senha,
+                          readOnly: false,
+                        )
+                      : Container(
+                          height: 50,
+                        )
                 ],
               ),
               SizedBox(height: size.height * 0.08),

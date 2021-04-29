@@ -6,8 +6,7 @@ class DateHandler {
   }
 
   List<String> getData(String data) {
-    int length = 9;
-    List<String> vRetorno = List<String>.filled(length, data);
+    List<String> vRetorno = List(9);
     int iDia = 0;
     int iMes = 0;
     int iAno = 0;

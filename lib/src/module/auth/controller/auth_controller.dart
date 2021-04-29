@@ -11,22 +11,12 @@ class AuthController {
   final usuario = TextEditingController();
   final senha = TextEditingController();
   final handlerDialog = DialogHandler();
-  FocusNode focus = FocusNode();
-  bool loginBool = false;
+  bool loginBool = true;
   bool biometria = false;
   bool _loading = false;
   bool get loading => this._loading;
-  bool hasFocus = false;
 
   var state;
-
-  onFocusChange(BuildContext context) {
-    if(!focus.hasFocus && this.hasFocus){
-      tryCode(context);
-      this.hasFocus = false;
-    }
-    this.hasFocus = focus.hasFocus;
-  }
   
   tryCode(BuildContext context) async {
     final seguranca = new Seguranca(email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
@@ -42,18 +32,19 @@ class AuthController {
     } else {
       loginBool = login == 'true';
     }
-    print(login);
-
+    
+    if(loginBool) {
+      handlerDialog.show(message: "Autenticação por CPF/CNPJ", context: context);
+    } else {
+      handlerDialog.show(message: "Autenticação Padrão", context: context);
+    }
     this.state.setState(() {});
-
-    handlerDialog.show(message: r, context: context);
+    print(r);
     return false;
   }
 
   initState(state, BuildContext context) {
     this.state = state;
-
-    focus.addListener(onFocusChange(context));
   }
 
   login() async {
