@@ -6,7 +6,7 @@ class DateHandler {
   }
 
   List<String> getData(String data) {
-    List<String> vRetorno = List(9);
+    List<String> vRetorno = List<String>.filled(9, data, growable: false);
     int iDia = 0;
     int iMes = 0;
     int iAno = 0;
@@ -15,9 +15,9 @@ class DateHandler {
     String sDia = "";
 
     if (data.trim().length != 0) {
-      iDia = int.tryParse(data.split("/")[0]);
-      iMes = int.tryParse(data.split("/")[1]);
-      iAno = int.tryParse(data.split("/")[2]);
+      iDia = int.tryParse(data.split("/")[0])!;
+      iMes = int.tryParse(data.split("/")[1])!;
+      iAno = int.tryParse(data.split("/")[2])!;
 
       sDia = data.split("/")[0];
       sMes = data.split("/")[1];

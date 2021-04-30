@@ -8,8 +8,8 @@ import 'package:package_info/package_info.dart';
 import 'dart:async';
 
 class Seguranca {
-  final String email;
-  final String password;
+  final String? email;
+  final String? password;
   final handler = SharedPreferencesHandler();
   final dateHandler = DateHandler();
 
@@ -21,18 +21,18 @@ class Seguranca {
      String diasAutenticacao = await  handler.get("diasAutenticacao") ?? '';
      String dtUltimaAutenticacao = await  handler.get("dtUltAutenticacao") ?? '';
     int iDataAtual =
-        int.tryParse(dateHandler.getData(dateHandler.getDate())[4]);
-    int iDataAutenticacao = int.tryParse(dtUltimaAutenticacao);
-    int iDias = int.tryParse(diasAutenticacao);
+        int.tryParse(dateHandler.getData(dateHandler.getDate())[4])!;
+    int iDataAutenticacao = int.tryParse(dtUltimaAutenticacao)!;
+    int iDias = int.tryParse(diasAutenticacao)!;
 
     if (iDias == 0 || iDias == null) {
-      return await firebaseRepository.auth(email, password);
+      return await firebaseRepository.auth(email!, password!);
     } else {
       if (dtUltimaAutenticacao.trim().length == 0) {
-        return await firebaseRepository.auth(email, password);
+        return await firebaseRepository.auth(email!, password!);
       } else {
         if (iDataAutenticacao + iDias <= iDataAtual) {
-          return await firebaseRepository.auth(email, password);
+          return await firebaseRepository.auth(email!, password!);
         } else {
           PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
@@ -41,7 +41,7 @@ class Seguranca {
           if (sVersao.toLowerCase() == packageInfo.version.toLowerCase()) {
             return '';
           } else {
-            await firebaseRepository.auth(email, password);
+            await firebaseRepository.auth(email!, password!);
           }
         }
 

@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 class CidsHandler {
   final _handler = SharedPreferencesHandler();
   Future initialize(
-      {@required String senha,
-      @required String aplicativo,
-      @required int versaoPacific,
+      {@required String? senha,
+      @required String? aplicativo,
+      @required int? versaoPacific,
       bool gateway = false}) async {
-    await _handler.setVersaoProgramaPacific(versaoPacific);
-    await _handler.setNomeAplicativo(aplicativo);
-    await _handler.setPasswordFirebase(senha);
+    await _handler.setVersaoProgramaPacific(versaoPacific!);
+    await _handler.setNomeAplicativo(aplicativo!);
+    await _handler.setPasswordFirebase(senha!);
     await _handler.setGateway(gateway);
     await Firebase.initializeApp();
   }

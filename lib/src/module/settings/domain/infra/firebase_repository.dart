@@ -11,7 +11,7 @@ import 'dart:io';
 class FirebaseRepository {
   final handler = SharedPreferencesHandler();
   final dateHandler = DateHandler();
-  final String codigoAcesso;
+  final String? codigoAcesso;
   FirebaseRepository({this.codigoAcesso});
 
   Future<String> auth(String email, String password) async {
@@ -20,7 +20,7 @@ class FirebaseRepository {
     try {
       await _auth.signOut();
       await _auth.signInWithEmailAndPassword(
-          email: this.codigoAcesso + email, password: password);
+          email: this.codigoAcesso! + email, password: password);
 
       return await permissions();
     } catch (e) {
@@ -35,10 +35,10 @@ class FirebaseRepository {
           .doc(this.codigoAcesso)
           .get();
 
-      Firebase firebase = Firebase.fromJson(snapshot.data());
+      Firebase firebase = Firebase.fromJson(snapshot.data()!);
 
       // verifica se está ativo
-      if (firebase.ativo.toLowerCase() != "sim") {
+      if (firebase.ativo!.toLowerCase() != "sim") {
         return string002;
       }
 
@@ -47,13 +47,13 @@ class FirebaseRepository {
 
       // verifica a validade do app
       List<String> vDtAtual = dateHandler.getData(dateHandler.getDate());
-      List<String> vDtValidade = dateHandler.getData(firebase.dtValidade);
-      if (int.tryParse(vDtAtual[4]) > int.tryParse(vDtValidade[4])) {
+      List<String> vDtValidade = dateHandler.getData(firebase.dtValidade!);
+      if (int.tryParse(vDtAtual[4])! > int.tryParse(vDtValidade[4])!) {
         return string003;
       }
 
       // black_list
-      List<String> vLista = firebase.blackList.split(",");
+      List<String> vLista = firebase.blackList!.split(",");
       for (int i = 0; i <= vLista.length - 1; i++) {
         if (Platform.isIOS) {
           IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
@@ -69,7 +69,7 @@ class FirebaseRepository {
       }
 
       // versao_minima
-      if (int.tryParse(packageInfo.buildNumber) < firebase.versaoMinima) {
+      if (int.tryParse(packageInfo.buildNumber)! < firebase.versaoMinima!) {
         return string005;
       }
 
@@ -134,7 +134,7 @@ class FirebaseRepository {
 
       await handler.set(
           "diasAutenticacao", firebase.diasAutenticacao.toString());
-      await handler.set("edtServico", firebase.enderecoPacific);
+      await handler.set("edtServico", firebase.enderecoPacific!);
       await handler.set(
           "dtUltAutenticacao", dateHandler.getData(dateHandler.getDate())[4]);
       await handler.set("versao", packageInfo.version);

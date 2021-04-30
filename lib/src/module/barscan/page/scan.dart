@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:scan/scan.dart';
 
 class BarScanPage extends StatefulWidget {
-  final QRScanType type;
+  final QRScanType? type;
 
-  const BarScanPage({Key key, this.type}) : super(key: key);
+  const BarScanPage({Key? key, this.type}) : super(key: key);
   @override
   _BarScanPageState createState() => _BarScanPageState();
 }

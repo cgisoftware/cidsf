@@ -13,11 +13,11 @@ const _iosStrings = const IOSAuthMessages(
     lockOut: 'Por favor permita o uso da sua autenticação');
 
 class BiometricsHandler {
-  final Function autenticacaoPage;
-  final Function homePage;
+  final Function? autenticacaoPage;
+  final Function? homePage;
   final _localAuth = LocalAuthentication();
   final _sharedPreferencesHandler = SharedPreferencesHandler();
-  WidgetsBindingObserver _observer;
+  WidgetsBindingObserver? _observer;
 
   BiometricsHandler({this.autenticacaoPage, this.homePage});
 
@@ -59,11 +59,11 @@ class BiometricsHandler {
           }
 
           if (!isAuth) {
-            this.autenticacaoPage();
+            this.autenticacaoPage!();
             await SharedPreferencesHandler().set('autenticou', "false");
           } else {
             await SharedPreferencesHandler().set('autenticou', "true");
-            this.homePage();
+            this.homePage!();
           }
         }
       }
@@ -90,15 +90,15 @@ class BiometricsHandler {
       await _sharedPreferencesHandler.set('autenticou', "false");
     });
 
-    WidgetsBinding.instance.addObserver(_observer);
+    WidgetsBinding.instance!.addObserver(_observer!);
   }
 }
 
 class BiometricsCallback extends WidgetsBindingObserver {
-  final AsyncCallback resumeCallBack;
-  final AsyncCallback suspendingCallBack;
-  final AsyncCallback pausedCallback;
-  final AsyncCallback inactiveCallBack;
+  final AsyncCallback? resumeCallBack;
+  final AsyncCallback? suspendingCallBack;
+  final AsyncCallback? pausedCallback;
+  final AsyncCallback? inactiveCallBack;
 
   BiometricsCallback(
       {this.resumeCallBack,
@@ -112,25 +112,25 @@ class BiometricsCallback extends WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         print('resume');
         if (resumeCallBack != null) {
-          await resumeCallBack();
+          await resumeCallBack!();
         }
         break;
       case AppLifecycleState.inactive:
         if (inactiveCallBack != null) {
-          await inactiveCallBack();
+          await inactiveCallBack!();
         }
         print('inative');
         break;
       case AppLifecycleState.paused:
         print('paused');
         if (pausedCallback != null) {
-          await pausedCallback();
+          await pausedCallback!();
         }
         break;
       case AppLifecycleState.detached:
         print('detached');
         if (suspendingCallBack != null) {
-          await suspendingCallBack();
+          await suspendingCallBack!();
         }
         break;
     }

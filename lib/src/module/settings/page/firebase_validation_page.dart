@@ -124,7 +124,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 padding: EdgeInsets.symmetric(vertical: 5),
                                 child: TextFormField(
                                     validator: (val) {
-                                      if (val.isEmpty) {
+                                      if (val!.isEmpty) {
                                         return 'Informe o código de acesso';
                                       }
                                       return null;
@@ -139,7 +139,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     child: TextFormField(
                                         validator: (val) {
-                                          if (val.isEmpty) {
+                                          if (val!.isEmpty) {
                                             return 'Informe o código do motorista';
                                           }
                                           return null;
@@ -155,7 +155,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     child: TextFormField(
                                       validator: (val) {
-                                        if (val.isEmpty) {
+                                        if (val!.isEmpty) {
                                           return 'Informe o CPF';
                                         }
 
@@ -172,7 +172,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     child: TextFormField(
                                         validator: (val) {
-                                          if (val.isEmpty) {
+                                          if (val!.isEmpty) {
                                             return 'Informe o usuário';
                                           }
                                           return null;
@@ -186,7 +186,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 padding: EdgeInsets.symmetric(vertical: 5),
                                 child: TextFormField(
                                     validator: (val) {
-                                      if (val.isEmpty) {
+                                      if (val!.isEmpty) {
                                         return 'Informe a senha';
                                       }
                                       return null;
@@ -202,7 +202,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     child: TextFormField(
                                         validator: (val) {
-                                          if (val.isEmpty) {
+                                          if (val!.isEmpty) {
                                             return 'Informe a placa do veiculo';
                                           }
                                           return null;
@@ -288,7 +288,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _grava() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       this._isLoading = true;
       setState(() {});
 

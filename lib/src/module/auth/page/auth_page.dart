@@ -2,11 +2,11 @@ import 'package:cids_cgi/src/module/auth/page/login_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
-  final String frase;
-  final String imagePath;
-  final Function dropDb;
+  final String? frase;
+  final String? imagePath;
+  final Function? dropDb;
 
-  const AuthPage({Key key, this.frase, this.imagePath, this.dropDb})
+  const AuthPage({Key? key, this.frase, this.imagePath, this.dropDb})
       : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class _AuthPageState extends State<AuthPage> {
   void initState() {
     super.initState();
 
-    widget.dropDb();
+    widget.dropDb!();
   }
 
   @override
@@ -37,7 +37,7 @@ class _AuthPageState extends State<AuthPage> {
               child: Opacity(
                   opacity: 0.3,
                   child: Image.asset(
-                    widget.imagePath,
+                    widget.imagePath!,
                     fit: BoxFit.fitHeight,
                   ))),
         ),
@@ -49,7 +49,7 @@ class _AuthPageState extends State<AuthPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  widget.frase,
+                  widget.frase!,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

@@ -2,11 +2,11 @@ import 'package:cids_cgi/src/core/page/widget/text_field_container.dart';
 import 'package:flutter/material.dart';
 
 class RoundedPasswordField extends StatefulWidget {
-  final ValueChanged<String> onChanged;
-  final TextEditingController controller;
-  final bool readOnly;
+  final ValueChanged<String>? onChanged;
+  final TextEditingController? controller;
+  final bool? readOnly;
   const RoundedPasswordField(
-    {Key key,
+    {Key? key,
     this.onChanged,
     this.controller,
     this.readOnly,
@@ -29,7 +29,7 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
         obscureText: !_visible,
         onChanged: widget.onChanged,
         cursorColor: Colors.blue,
-        readOnly: widget.readOnly,
+        readOnly: widget.readOnly!,
         decoration: InputDecoration(
           hintStyle: TextStyle(
             color: Theme.of(context).brightness == Brightness.light
