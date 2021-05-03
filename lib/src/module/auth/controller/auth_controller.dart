@@ -33,8 +33,6 @@ class AuthController {
     
     if(loginBool) {
       handlerDialog.show(message: "Autenticação por CPF/CNPJ", context: context);
-      Navigator.of(this.state.context)
-          .pushNamedAndRemoveUntil('/login_cnpj', (Route<dynamic> route) => false);
     } else {
       handlerDialog.show(message: "Autenticação Padrão", context: context);
     }

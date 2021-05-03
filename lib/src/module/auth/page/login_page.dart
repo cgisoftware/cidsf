@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                       readOnly: false,
                     ),
                   )),
-                  authController.loginBool == false
+                  !authController.loginBool
                       ? RoundedInputField(
                           controller: authController.usuario,
                           hintText: "Usuário",
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                       : Container(
                           height: 100,
                         ),
-                  authController.loginBool == false
+                  !authController.loginBool
                       ? RoundedPasswordField(
                           controller: authController.senha,
                           readOnly: false,
@@ -79,7 +79,11 @@ class _LoginPageState extends State<LoginPage> {
                 loading: authController.loading,
                 text: "ENTRAR",
                 press: () {
-                  authController.login();
+                  if(!authController.loginBool) {
+                    authController.login();
+                  } else {
+                     Navigator.of(context).pushNamedAndRemoveUntil('/login_cnpj', (Route<dynamic> route) => false);
+                  }
                 },
               ),
               Row(
