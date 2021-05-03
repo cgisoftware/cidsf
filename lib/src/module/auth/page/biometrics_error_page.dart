@@ -2,11 +2,11 @@ import 'package:cids_cgi/cids_cgi.dart';
 import 'package:flutter/material.dart';
 
 class BiometricsErrorPage extends StatefulWidget {
-  final BiometricsHandler? biometricsHandler;
-  final Function(BuildContext)? context;
+  final BiometricsHandler biometricsHandler;
+  final Function(BuildContext) context;
 
   BiometricsErrorPage(
-      {Key? key, @required this.biometricsHandler, @required this.context})
+      {Key? key, required this.biometricsHandler, required this.context})
       : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
   void initState() {
     super.initState();
 
-    widget.context!(context);
+    widget.context(context);
   }
 
   @override
@@ -61,7 +61,7 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
                         width: MediaQuery.of(context).size.width * .4,
                         child: ElevatedButton(
                           onPressed: () async {
-                            widget.biometricsHandler!();
+                            widget.biometricsHandler();
                           },
                           child: Text("Autenticar"),
                         ))

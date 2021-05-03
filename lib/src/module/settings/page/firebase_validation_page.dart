@@ -57,15 +57,15 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   setValues() async {
-    this._edtUsuarioText.text = await _handler.get("edtUsuario");
-    this._edtCodigoText.text = await _handler.get("edtCodigo");
-    this._edtSenhaText.text = await _handler.get("edtSenha");
-    this._edtServicoText.text = await _handler.get("edtServico");
+    this._edtUsuarioText.text = await (_handler.get("edtUsuario"));
+    this._edtCodigoText.text = await (_handler.get("edtCodigo"));
+    this._edtSenhaText.text = await (_handler.get("edtSenha"));
+    this._edtServicoText.text = await (_handler.get("edtServico"));
     if (this.widget.motorista) {
-      this._edtMotoristaText.text = await _handler.get("edtMotorista");
+      this._edtMotoristaText.text = await (_handler.get("edtMotorista"));
     }
     if (this.widget.placa) {
-      this._edtPlacaText.text = await _handler.get("edtPlaca");
+      this._edtPlacaText.text = await (_handler.get("edtPlaca"));
     }
 
     this._biometria = (await _handler.get("biometria")) == "true";
@@ -292,11 +292,11 @@ class _SettingsPageState extends State<SettingsPage> {
       this._isLoading = true;
       setState(() {});
 
-      String senha = await _handler.getPasswordFirebase();
-      String aplicativo = await _handler.getNomeAplicativo();
+      String? senha = await _handler.getPasswordFirebase();
+      String? aplicativo = await _handler.getNomeAplicativo();
       bool gateway = await _handler.getGateway();
       final bool response = await firebaseUseCase(
-          senha,
+          senha!,
           context,
           this._edtCodigoText.text,
           this._edtUsuarioText.text,
@@ -304,7 +304,7 @@ class _SettingsPageState extends State<SettingsPage> {
           this._edtServicoText.text,
           this._edtMotoristaText.text,
           this._edtPlacaText.text,
-          aplicativo,
+          aplicativo!,
           gateway,
           this._biometria);
 
@@ -317,7 +317,7 @@ class _SettingsPageState extends State<SettingsPage> {
         await Future.delayed(new Duration(milliseconds: 2000));
         Navigator.pop(context);
 
-        this._edtServicoText.text = await _handler.getURL();
+        this._edtServicoText.text = await (_handler.getURL());
       }
 
       this._isLoading = false;

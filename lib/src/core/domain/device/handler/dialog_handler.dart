@@ -5,19 +5,19 @@ class DialogHandler {
 
   void show(
       {title = "Aviso!",
-      @required String? message,
-      @required BuildContext? context}) {
+      required String message,
+      required BuildContext context}) {
     if (!this._isDialogShowing) {
       this._isDialogShowing = true;
       showDialog(
-        context: context!,
+        context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: new Text(
               title,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            content: new Text(message!),
+            content: new Text(message),
             actions: <Widget>[
               new TextButton(
                 child: new Text(
@@ -38,35 +38,35 @@ class DialogHandler {
 
   Future<int> confirm({
     String title = "Confirme!",
-    @required String? message,
-    @required String? textBtn1,
-    @required String? textBtn2,
-    @required BuildContext? context,
+    required String message,
+    required String textBtn1,
+    required String textBtn2,
+    required BuildContext context,
   }) async {
     int iRetorno = -1;
     AlertDialog dlgConfirmar = AlertDialog(
       title: Text(title),
-      content: Container(child: Text(message!)),
+      content: Container(child: Text(message)),
       actions: <Widget>[
         TextButton(
-          child: Text(textBtn1!),
+          child: Text(textBtn1),
           onPressed: () {
             iRetorno = 1;
-            Navigator.of(context!).pop();
+            Navigator.of(context).pop();
           },
         ),
         TextButton(
-          child: Text(textBtn2!),
+          child: Text(textBtn2),
           onPressed: () {
             iRetorno = 2;
-            Navigator.of(context!).pop();
+            Navigator.of(context).pop();
           },
         ),
       ],
     );
     await showDialog(
         barrierDismissible: false,
-        context: context!,
+        context: context,
         builder: (BuildContext context) => dlgConfirmar);
     return iRetorno;
   }

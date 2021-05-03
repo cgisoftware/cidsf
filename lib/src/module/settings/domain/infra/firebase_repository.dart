@@ -73,9 +73,9 @@ class FirebaseRepository {
         return string005;
       }
 
-      String sUsuario = await handler.get("edtUsuario");
-      String sSenha = await handler.get("edtSenha");
-      String sServico = await handler.get("edtServico");
+      String? sUsuario = await (handler.get("edtUsuario"));
+      String? sSenha = await (handler.get("edtSenha"));
+      String? sServico = await (handler.get("edtServico"));
 
       if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;

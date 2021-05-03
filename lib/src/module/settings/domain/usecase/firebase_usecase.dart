@@ -33,7 +33,7 @@ class FirebaseUseCase {
       handlerDialog.show(message: r, context: context);
       return false;
     } else {
-      servico = await handler.get("edtServico");
+      servico = await (handler.get("edtServico"));
       if (gateway) {
         try {
           Dio dio = new Dio();

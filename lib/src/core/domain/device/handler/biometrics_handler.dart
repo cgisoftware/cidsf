@@ -17,7 +17,7 @@ class BiometricsHandler {
   final Function? homePage;
   final _localAuth = LocalAuthentication();
   final _sharedPreferencesHandler = SharedPreferencesHandler();
-  WidgetsBindingObserver? _observer;
+  late WidgetsBindingObserver _observer;
 
   BiometricsHandler({this.autenticacaoPage, this.homePage});
 
@@ -90,7 +90,7 @@ class BiometricsHandler {
       await _sharedPreferencesHandler.set('autenticou', "false");
     });
 
-    WidgetsBinding.instance!.addObserver(_observer!);
+    WidgetsBinding.instance!.addObserver(_observer);
   }
 }
 
