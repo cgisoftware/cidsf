@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cids_cgi/src/module/settings/domain/usecase/firebase_usecase.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:flutter/widgets.dart';
@@ -36,7 +34,7 @@ class AuthController {
     if(loginBool) {
       handlerDialog.show(message: "Autenticação por CPF/CNPJ", context: context);
       Navigator.of(this.state.context)
-          .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+          .pushNamedAndRemoveUntil('/login_cnpj', (Route<dynamic> route) => false);
     } else {
       handlerDialog.show(message: "Autenticação Padrão", context: context);
     }

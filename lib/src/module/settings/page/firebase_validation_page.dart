@@ -41,7 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   bool _biometria = false;
   bool _isLoading = false;
-  Map<String, dynamic> _version = {};
+  Map<String?, dynamic> _version = {};
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final maskFormatter = new MaskTextInputFormatter(mask: CPF);
@@ -274,7 +274,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                 onTap: () {
                                   _handler.logout();
                                   Navigator.of(context).pushNamedAndRemoveUntil(
-                                      '/index', (Route<dynamic> route) => false);
+                                      '/index',
+                                      (Route<dynamic> route) => false);
                                 },
                                 child: Text("Sair")),
                           ],

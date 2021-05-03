@@ -1,6 +1,5 @@
 import 'package:cids_cgi/src/core/domain/device/handler/shared_preferences_handler.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 
 class CidsHandler {
   final _handler = SharedPreferencesHandler();

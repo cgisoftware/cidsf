@@ -36,7 +36,7 @@ class Seguranca {
         } else {
           PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-          String sVersao = await await (handler.get("versao") as FutureOr<String>);
+          String sVersao = await (handler.get("versao") as FutureOr<String>);
 
           if (sVersao.toLowerCase() == packageInfo.version.toLowerCase()) {
             return '';
