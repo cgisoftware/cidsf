@@ -31,11 +31,6 @@ class AuthController {
       loginBool = login == 'true';
     }
     
-    if(loginBool) {
-      handlerDialog.show(message: "Autenticação por CPF/CNPJ", context: context);
-    } else {
-      handlerDialog.show(message: "Autenticação Padrão", context: context);
-    }
     this.state.setState(() {});
     return false;
   }
