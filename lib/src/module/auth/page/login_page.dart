@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final authController = AuthController();
+  
 
   @override
   void initState() {
@@ -26,7 +27,8 @@ class _LoginPageState extends State<LoginPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SingleChildScrollView(
+            child: Container(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -38,40 +40,44 @@ class _LoginPageState extends State<LoginPage> {
                       ? Image.asset("images/consultors.png")
                       : Image.asset("images/consultors_dark.png")),
               SizedBox(height: size.height * 0.09),
-              Column(
-                children: [
-                  FocusScope(
-                      child: Focus(
-                    onFocusChange: (focus) {
-                      if (focus == false) {
-                        authController.tryCode(context);
-                      }
-                    },
-                    child: RoundedInputField(
-                      controller: authController.codigo,
-                      icon: Icons.lock_open,
-                      hintText: "Código de acesso",
-                      readOnly: false,
-                    ),
-                  )),
-                  !authController.loginBool
-                      ? RoundedInputField(
-                          controller: authController.usuario,
-                          hintText: "Usuário",
-                          readOnly: false,
-                        )
-                      : Container(
-                          height: 100,
-                        ),
-                  !authController.loginBool
-                      ? RoundedPasswordField(
-                          controller: authController.senha,
-                          readOnly: false,
-                        )
-                      : Container(
-                          height: 50,
-                        )
-                ],
+              Form(
+                key: authController.formKey,
+                child: Column(
+                  children: [
+                    FocusScope(
+                        child: Focus(
+                      onFocusChange: (focus) {
+                        if (focus == false) {
+                          authController.tryCode(context);
+                        }
+                      },
+                      child: RoundedInputField(
+                        controller: authController.codigo,
+                        icon: Icons.lock_open,
+                        validatorText: "Preencha o código de acesso",
+                        hintText: "Código de acesso",
+                        readOnly: false,
+                      ),
+                    )),
+                    !authController.loginBool
+                        ? RoundedInputField(
+                            controller: authController.usuario,
+                            hintText: "Usuário",
+                            readOnly: false,
+                          )
+                        : Container(
+                            height: 100,
+                          ),
+                    !authController.loginBool
+                        ? RoundedPasswordField(
+                            controller: authController.senha,
+                            readOnly: false,
+                          )
+                        : Container(
+                            height: 50,
+                          )
+                  ],
+                ),
               ),
               SizedBox(height: size.height * 0.08),
               RoundedButton(
@@ -81,7 +87,8 @@ class _LoginPageState extends State<LoginPage> {
                   if (!authController.loading) {
                     if (!authController.loginBool) {
                       authController.login();
-                    } else if (authController.loginBool && authController.tentouLogarFirebase){
+                    } else if (authController.loginBool &&
+                        authController.tentouLogarFirebase) {
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           '/login_cnpj', (Route<dynamic> route) => false);
                     }
@@ -106,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
               RedesSociaisWidget()
             ],
           ),
-        ),
+        )),
       ),
     );
   }

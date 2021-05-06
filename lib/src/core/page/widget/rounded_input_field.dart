@@ -7,6 +7,7 @@ class RoundedInputField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final TextEditingController? controller;
   final FocusNode? focus;
+  final String? validatorText;
   final bool? readOnly;
   const RoundedInputField(
       {Key? key,
@@ -15,14 +16,20 @@ class RoundedInputField extends StatelessWidget {
       this.onChanged,
       this.controller,
       this.focus,
-      this.readOnly})
+      this.readOnly,
+      this.validatorText})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
         style: TextStyle(color: Colors.black),
+        validator: (value) {
+          if(value!.isEmpty){
+            return validatorText;
+          }
+        },
         controller: controller,
         onChanged: onChanged,
         focusNode: focus,

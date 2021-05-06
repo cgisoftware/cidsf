@@ -38,10 +38,10 @@ class _SettingsPageState extends State<SettingsPage> {
   final _edtServicoText = TextEditingController();
   final _edtMotoristaText = TextEditingController();
   final _edtPlacaText = TextEditingController();
-
+  bool loginBool = true;
   bool _biometria = false;
   bool _isLoading = false;
-  Map<String?, dynamic> _version = {};
+  Map<String, dynamic>? _version = {};
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final maskFormatter = new MaskTextInputFormatter(mask: CPF);
@@ -57,17 +57,27 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   setValues() async {
-    this._edtUsuarioText.text = await (_handler.get("edtUsuario"));
-    this._edtCodigoText.text = await (_handler.get("edtCodigo"));
-    this._edtSenhaText.text = await (_handler.get("edtSenha"));
-    this._edtServicoText.text = await (_handler.get("edtServico"));
-    if (this.widget.motorista) {
-      this._edtMotoristaText.text = await (_handler.get("edtMotorista"));
-    }
-    if (this.widget.placa) {
-      this._edtPlacaText.text = await (_handler.get("edtPlaca"));
-    }
+    var login = await _handler.getLogin();
 
+    if (login == null) {
+      loginBool = false;
+    } else {
+      loginBool = login == 'true';
+    }
+    if (!loginBool) {
+      this._edtUsuarioText.text = await (_handler.get("edtUsuario"));
+      this._edtCodigoText.text = await (_handler.get("edtCodigo"));
+      this._edtSenhaText.text = await (_handler.get("edtSenha"));
+      this._edtServicoText.text = await (_handler.get("edtServico"));
+      if (this.widget.motorista) {
+        this._edtMotoristaText.text = await (_handler.get("edtMotorista"));
+      }
+      if (this.widget.placa) {
+        this._edtPlacaText.text = await (_handler.get("edtPlaca"));
+      }
+    } else {
+       this._edtCodigoText.text = await (_handler.get("edtCodigo"));
+    }
     this._biometria = (await _handler.get("biometria")) == "true";
 
     _version = await _handler.getBuildVersion();
@@ -170,7 +180,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ))
                                 : Padding(
                                     padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: TextFormField(
+                                    child: !loginBool ? TextFormField(
                                         validator: (val) {
                                           if (val!.isEmpty) {
                                             return 'Informe o usuário';
@@ -181,10 +191,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                         decoration: InputDecoration(
                                             labelText: "Usuário",
                                             filled: this.widget.filled),
-                                        keyboardType: TextInputType.text)),
+                                        keyboardType: TextInputType.text) : Container()),
                             Padding(
                                 padding: EdgeInsets.symmetric(vertical: 5),
-                                child: TextFormField(
+                                child: !loginBool ? TextFormField(
                                     validator: (val) {
                                       if (val!.isEmpty) {
                                         return 'Informe a senha';
@@ -196,7 +206,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         labelText: "Senha",
                                         filled: this.widget.filled),
                                     keyboardType: TextInputType.text,
-                                    obscureText: true)),
+                                    obscureText: true) : Container()),
                             this.widget.placa
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(vertical: 5),
@@ -231,11 +241,11 @@ class _SettingsPageState extends State<SettingsPage> {
                                   children: <Widget>[
                                     _version != null
                                         ? Text(
-                                            "Versão atual do aplicativo: ${_version['v']}")
+                                            "Versão atual do aplicativo: ${_version?['v']}")
                                         : Container(),
                                     _version != null
                                         ? Text(
-                                            "Versão atual do build: ${_version['b']}")
+                                            "Versão atual do build: ${_version?['b']}")
                                         : Container(),
                                   ],
                                 )),

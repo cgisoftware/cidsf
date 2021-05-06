@@ -14,30 +14,32 @@ class AuthController {
   bool _loading = false;
   bool get loading => this._loading;
   bool tentouLogarFirebase = false;
+  final formKey = GlobalKey<FormState>();
 
   var state;
-  
+
   tryCode(BuildContext context) async {
-    this._loading = true;
-    this.tentouLogarFirebase = false;
-    final seguranca = new Seguranca(email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
-    await _handler.set("edtCodigo", codigo.text);
-    await seguranca.execute();
+    if (formKey.currentState!.validate()) {
+      this._loading = true;
+      this.tentouLogarFirebase = false;
+      final seguranca = new Seguranca(
+          email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
+      await _handler.set("edtCodigo", codigo.text);
+      await seguranca.execute();
 
-    var login = await _handler.get("login");
+      var login = await _handler.get("login");
 
-    this.state = state;
+      this.state = state;
 
-    if(login == null){
-      loginBool = false;
-    } else {
-      loginBool = login == 'true';
+      if (login == null) {
+        loginBool = false;
+      } else {
+        loginBool = login == 'true';
+      }
+      this.tentouLogarFirebase = true;
+      this._loading = false;
+      this.state.setState(() {});
     }
-    
-    this.state.setState(() {});
-    this.tentouLogarFirebase = true;
-    this._loading = false;
-    return false;
   }
 
   initState(state) {
