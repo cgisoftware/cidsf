@@ -1,3 +1,4 @@
+import 'package:cids_cgi_example/page.dart';
 import 'package:flutter/material.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import './router.dart' as r;
@@ -93,11 +94,7 @@ class _MyAppState extends State<MyApp> {
         theme: temaClaro,
         darkTheme: temaEscuro,
         themeMode: ThemeMode.system,
-        home: MyHome(
-          context: (context) {
-            biometricsContext = context;
-          },
-        ),
+        home: authPage,
         onGenerateRoute: r.Router.generateRoute);
   }
 }
