@@ -26,8 +26,7 @@ class _LoginPageState extends State<LoginPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
-        child: SingleChildScrollView(
-            child: Container(
+        child: Container(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -82,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                   if (!authController.loading) {
                     if (!authController.loginBool) {
                       authController.login();
-                    } else {
+                    } else if (authController.loginBool && authController.tentouLogarFirebase){
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           '/login_cnpj', (Route<dynamic> route) => false);
                     }
@@ -107,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
               RedesSociaisWidget()
             ],
           ),
-        )),
+        ),
       ),
     );
   }

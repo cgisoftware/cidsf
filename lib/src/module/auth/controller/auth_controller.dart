@@ -13,11 +13,13 @@ class AuthController {
   bool biometria = false;
   bool _loading = false;
   bool get loading => this._loading;
+  bool tentouLogarFirebase = false;
 
   var state;
   
   tryCode(BuildContext context) async {
     this._loading = true;
+    this.tentouLogarFirebase = false;
     final seguranca = new Seguranca(email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
     await _handler.set("edtCodigo", codigo.text);
     await seguranca.execute();
@@ -33,6 +35,7 @@ class AuthController {
     }
     
     this.state.setState(() {});
+    this.tentouLogarFirebase = true;
     this._loading = false;
     return false;
   }
