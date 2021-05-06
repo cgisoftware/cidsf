@@ -42,9 +42,9 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 children: [
                   FocusScope(
-                    child: Focus(
+                      child: Focus(
                     onFocusChange: (focus) {
-                      if(focus == false){
+                      if (focus == false) {
                         authController.tryCode(context);
                       }
                     },
@@ -79,10 +79,13 @@ class _LoginPageState extends State<LoginPage> {
                 loading: authController.loading,
                 text: "ENTRAR",
                 press: () {
-                  if(!authController.loginBool) {
-                    authController.login();
-                  } else {
-                     Navigator.of(context).pushNamedAndRemoveUntil('/login_cnpj', (Route<dynamic> route) => false);
+                  if (!authController.loading) {
+                    if (!authController.loginBool) {
+                      authController.login();
+                    } else {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/login_cnpj', (Route<dynamic> route) => false);
+                    }
                   }
                 },
               ),

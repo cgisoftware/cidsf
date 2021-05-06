@@ -17,6 +17,7 @@ class AuthController {
   var state;
   
   tryCode(BuildContext context) async {
+    this._loading = true;
     final seguranca = new Seguranca(email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
     await _handler.set("edtCodigo", codigo.text);
     await seguranca.execute();
@@ -32,6 +33,7 @@ class AuthController {
     }
     
     this.state.setState(() {});
+    this._loading = false;
     return false;
   }
 
