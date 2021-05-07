@@ -102,7 +102,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ? IconButton(
                     icon: Icon(Icons.save),
                     onPressed: () async {
-                      !loginBool ? _grava() : await _handler.set("biometria", _biometria.toString());
+                      !loginBool ? _grava() : _gravaLoginCnpjLigado();
                     })
                 : Padding(
                     padding: EdgeInsets.only(right: 20),
@@ -298,6 +298,25 @@ class _SettingsPageState extends State<SettingsPage> {
                 ],
               ),
             )));
+  }
+
+  _gravaLoginCnpjLigado() async {
+    this._isLoading = true;
+    setState(() {});
+    await _handler.set("biometria", _biometria.toString());
+
+    final snackBar = SnackBar(
+          content: Text('Configurações salvas com sucesso!'),
+        );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        await Future.delayed(new Duration(milliseconds: 2000));
+        Navigator.pop(context);
+
+    this._edtServicoText.text = await (_handler.getURL());
+    
+    this._isLoading = false;
+    setState(() {});
   }
 
   void _grava() async {

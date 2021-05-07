@@ -89,8 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                       authController.login();
                     } else if (authController.loginBool &&
                         authController.tentouLogarFirebase) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/login_cnpj', (Route<dynamic> route) => false);
+                          authController.loginCnpj(context);
                     }
                   }
                 },

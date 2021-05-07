@@ -25,7 +25,6 @@ class AuthController {
       final seguranca = new Seguranca(
           email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
       await _handler.set("edtCodigo", codigo.text);
-      await _handler.set("biometria", biometria.toString());
       var r = await seguranca.execute(context);
 
       var login = await _handler.get("login");
@@ -40,14 +39,20 @@ class AuthController {
       this._loading = false;
 
       if (r != "") {
-      handlerDialog.show(message: r, context: context);
-      return false;
+        handlerDialog.show(message: r, context: context);
+        return false;
       } else {
         this.tentouLogarFirebase = true;
       }
 
       this.state.setState(() {});
     }
+  }
+
+  loginCnpj(BuildContext context) async {
+    await _handler.set("biometria", biometria.toString());
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        '/login_cnpj', (Route<dynamic> route) => false);
   }
 
   initState(state) {
