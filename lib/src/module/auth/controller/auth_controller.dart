@@ -25,7 +25,7 @@ class AuthController {
       final seguranca = new Seguranca(
           email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
       await _handler.set("edtCodigo", codigo.text);
-      await seguranca.execute(context);
+      var r = await seguranca.execute(context);
 
       var login = await _handler.get("login");
 
@@ -35,9 +35,16 @@ class AuthController {
         loginBool = true;
       } else {
         loginBool = login == 'true';
-        this.tentouLogarFirebase = true;
       }
       this._loading = false;
+
+      if (r != "") {
+      handlerDialog.show(message: r, context: context);
+      return false;
+      } else {
+        this.tentouLogarFirebase = true;
+      }
+
       this.state.setState(() {});
     }
   }

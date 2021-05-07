@@ -77,6 +77,7 @@ class _SettingsPageState extends State<SettingsPage> {
       }
     } else {
        this._edtCodigoText.text = await (_handler.get("edtCodigo"));
+       this._edtServicoText.text = await (_handler.get("edtServico"));
     }
     this._biometria = (await _handler.get("biometria")) == "true";
 
