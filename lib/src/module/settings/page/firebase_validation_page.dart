@@ -99,11 +99,13 @@ class _SettingsPageState extends State<SettingsPage> {
           iconTheme: IconThemeData(color: widget.appBarTextColor),
           actions: <Widget>[
             !_isLoading
-                ? IconButton(
+                ? Container(
+                  child: !loginBool ? IconButton(
                     icon: Icon(Icons.save),
                     onPressed: () {
                       _grava();
-                    })
+                    }) : Container(),
+                )
                 : Padding(
                     padding: EdgeInsets.only(right: 20),
                     child: Center(
@@ -141,6 +143,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                       return null;
                                     },
                                     controller: _edtCodigoText,
+                                    readOnly: !loginBool ? false : true,
                                     decoration: InputDecoration(
                                         labelText: "Código de Acesso",
                                         filled: this.widget.filled),
