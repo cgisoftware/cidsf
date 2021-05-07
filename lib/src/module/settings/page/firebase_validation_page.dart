@@ -310,11 +310,11 @@ class _SettingsPageState extends State<SettingsPage> {
         );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        await Future.delayed(new Duration(milliseconds: 2000));
+        await Future.delayed(new Duration(milliseconds: 1000));
         Navigator.pop(context);
 
     this._edtServicoText.text = await (_handler.getURL());
-    
+
     this._isLoading = false;
     setState(() {});
   }
