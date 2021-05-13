@@ -95,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   } 
                   } else {
                     await authController.validateCnpj(context);
+                    setState(() {});
                   }
                 },
               ),

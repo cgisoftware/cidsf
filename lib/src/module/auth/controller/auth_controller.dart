@@ -42,10 +42,11 @@ class AuthController {
         this.tentouLogarFirebase = true;
       }
       this._loading = false;
-      this.state.setState(() {});
-
+     
       if(login == "true"){
         loginCnpj(context);
+      } else {
+         this.state.setState(() {});
       }
     }
   }
