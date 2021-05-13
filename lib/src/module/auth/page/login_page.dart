@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Focus(
                       onFocusChange: (focus) {
                         if (focus == false) {
-                          authController.tryCode(context);
+                          authController.validateCnpj(context);
                         }
                       },
                       child: RoundedInputField(
@@ -84,13 +84,15 @@ class _LoginPageState extends State<LoginPage> {
                 loading: authController.loading,
                 text: "ENTRAR",
                 press: () {
-                  if (!authController.loading) {
+                  if (!authController.loading && authController.tentouLogarFirebase) {
                     if (!authController.loginBool) {
                       authController.login();
                     } else if (authController.loginBool &&
                         authController.tentouLogarFirebase) {
                           authController.loginCnpj(context);
                     }
+                  } else if(!authController.tentouLogarFirebase) {
+                    authController.validateCnpj(context);
                   }
                 },
               ),

@@ -18,7 +18,7 @@ class AuthController {
 
   var state;
 
-  tryCode(BuildContext context) async {
+  validateCnpj(BuildContext context) async {
     if (formKey.currentState!.validate()) {
       this._loading = true;
       this.tentouLogarFirebase = false;
