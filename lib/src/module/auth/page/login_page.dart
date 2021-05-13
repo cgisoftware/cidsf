@@ -84,14 +84,16 @@ class _LoginPageState extends State<LoginPage> {
                 loading: authController.loading,
                 text: "ENTRAR",
                 press: () {
-                  if (!authController.loading) {
+                  if(authController.tentouLogarFirebase) {
+                    if (!authController.loading) {
                     if (!authController.loginBool) {
                       authController.login();
                     } else if (authController.loginBool &&
                         authController.tentouLogarFirebase) {
                           authController.loginCnpj(context);
                     }
-                  } else if(!authController.tentouLogarFirebase) {
+                  } 
+                  } else {
                     authController.validateCnpj(context);
                   }
                 },
