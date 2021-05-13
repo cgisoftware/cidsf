@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                 loading: authController.loading,
                 text: "ENTRAR",
                 press: () {
-                  if (!authController.loading && authController.tentouLogarFirebase) {
+                  if (!authController.loading) {
                     if (!authController.loginBool) {
                       authController.login();
                     } else if (authController.loginBool &&
