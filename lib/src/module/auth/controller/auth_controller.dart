@@ -29,23 +29,24 @@ class AuthController {
 
       var login = await _handler.get("login");
 
-      this.state = state;
-
       if (login == null) {
         loginBool = true;
       } else {
         loginBool = login == 'true';
       }
-      this._loading = false;
-
+      
       if (r != "") {
         handlerDialog.show(message: r, context: context);
         return false;
       } else {
         this.tentouLogarFirebase = true;
       }
-
+      this._loading = false;
       this.state.setState(() {});
+
+      if(login == "true"){
+        loginCnpj(context);
+      }
     }
   }
 

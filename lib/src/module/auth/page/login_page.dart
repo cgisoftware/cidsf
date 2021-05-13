@@ -83,18 +83,18 @@ class _LoginPageState extends State<LoginPage> {
               RoundedButton(
                 loading: authController.loading,
                 text: "ENTRAR",
-                press: () {
+                press: () async {
                   if(authController.tentouLogarFirebase) {
                     if (!authController.loading) {
                     if (!authController.loginBool) {
                       authController.login();
                     } else if (authController.loginBool &&
                         authController.tentouLogarFirebase) {
-                          authController.loginCnpj(context);
+                          await authController.loginCnpj(context);
                     }
                   } 
                   } else {
-                    authController.validateCnpj(context);
+                    await authController.validateCnpj(context);
                   }
                 },
               ),
