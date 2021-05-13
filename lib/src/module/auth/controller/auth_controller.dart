@@ -20,13 +20,13 @@ class AuthController {
 
   validateCnpj(BuildContext context) async {
     if (formKey.currentState!.validate()) {
+      this.state.setState(() {});
       this._loading = true;
       this.tentouLogarFirebase = false;
       final seguranca = new Seguranca(
           email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
       await _handler.set("edtCodigo", codigo.text);
       var r = await seguranca.execute(context);
-
       var login = await _handler.get("login");
 
       if (login == null) {
