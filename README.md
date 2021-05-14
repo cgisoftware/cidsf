@@ -112,6 +112,15 @@ void main() async {
   biometricsHandler();
 }
 
+//No build do main.dart, adicionar o home e a geração de rotas.
+@override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: defaultPage,
+      onGenerateRoute: r.Router.generateRoute
+    );
+  }
+
 ```
 <br>
 Crie um arquivo na raiz da pasta lib com o nome page.dart
