@@ -65,6 +65,16 @@ class SharedPreferencesHandler {
     return usuario;
   }
 
+  Future getUsuarioP() async {
+    var usuario = await this.get('usuarioP');
+    return usuario;
+  }
+
+  Future getSenhaP() async {
+    var usuario = await this.get('senhaP');
+    return usuario;
+  }
+
   Future getMotorista() async {
     var motorista = await this.get('edtMotorista');
     return motorista;
