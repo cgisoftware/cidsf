@@ -12,7 +12,7 @@ class SharedPreferencesHandler {
     await prefs.setString(key, value);
   }
 
-  Future get(String key) async {
+  Future<String?> get(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
   }
@@ -33,58 +33,73 @@ class SharedPreferencesHandler {
   }
 
   Future<int> getNumDevices() async {
-    int numDevices = int.parse(await (this.get('numDevices') as FutureOr<String>));
+    int numDevices = int.parse((await this.get('numDevices'))!);
     return numDevices;
   }
 
   Future<int> getNumDevicesVendedor() async {
-    int numDevices = int.parse(await (this.get('numDevicesVendedor') as FutureOr<String>));
+    int numDevices = int.parse((await (this.get('numDevicesVendedor')))!);
     return numDevices;
   }
 
-  Future getCodigo() async {
+  Future<String?> getLogin() async {
+    var login = await this.get('login');
+    return login;
+  }
+
+  Future<String?> getCodigo() async {
     var cod = await this.get('edtCodigo');
     return cod;
   }
 
-  Future getSenha() async {
+  Future<String?> getSenha() async {
     var senha = await this.get('edtSenha');
     return senha;
   }
 
-  Future getURL() async {
+  Future<String?> getURL() async {
     var url = await this.get('edtServico');
     return url;
   }
 
-  Future getUsuario() async {
+  Future<String?> getUsuario() async {
     var usuario = await this.get('edtUsuario');
     return usuario;
   }
 
-  Future getMotorista() async {
+  Future<String?> getUsuarioP() async {
+    var usuarioP = await this.get('usuarioP');
+    return usuarioP;
+  }
+
+  Future<String?> getSenhaP() async {
+    var senhaP = await this.get('senhaP');
+    return senhaP;
+  }
+
+  Future<String?> getMotorista() async {
     var motorista = await this.get('edtMotorista');
     return motorista;
   }
 
-  Future getPlaca() async {
+  Future<String?> getPlaca() async {
     var placa = await this.get('edtPlaca');
     return placa;
   }
 
-  Future getToken() async {
+  Future<String?> getToken() async {
     var token = await this.get('token');
     return token;
   }
 
-  Future getVersaoMinima() async {
+  Future<String?> getVersaoMinima() async {
     var token = await this.get('versao_minima');
     return token;
   }
 
   Future<int> getVersaoProgramaPacific() async {
     var token = await this.get('versaoProgramaPacific');
-    return int.parse(token);
+    return int.parse(token!);
   }
 
   Future setVersaoProgramaPacific(int version) async {
@@ -127,7 +142,7 @@ class SharedPreferencesHandler {
   }
 
   Future<bool> isAuth() async {
-    if ((await this.getURL()) != null && (await this.getURL()).isNotEmpty) {
+    if ((await this.getURL()) != null && (await this.getURL())!.isNotEmpty) {
       return true;
     }
 

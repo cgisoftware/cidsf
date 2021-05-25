@@ -5,16 +5,57 @@ import 'package:flutter/widgets.dart';
 class AuthController {
   final firebaseUseCase = FirebaseUseCase();
   final _handler = SharedPreferencesHandler();
-
   final codigo = TextEditingController();
   final usuario = TextEditingController();
   final senha = TextEditingController();
+  final handlerDialog = DialogHandler();
+  bool loginBool = true;
   bool biometria = false;
-
   bool _loading = false;
   bool get loading => this._loading;
+  bool tentouLogarFirebase = false;
+  final formKey = GlobalKey<FormState>();
 
   late var state;
+
+  validateCnpj(BuildContext context) async {
+    if (formKey.currentState!.validate()) {
+      this.state.setState(() {});
+      this._loading = true;
+      this.tentouLogarFirebase = false;
+      final seguranca = new Seguranca(
+          email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
+      await _handler.set("edtCodigo", codigo.text);
+      var r = await seguranca.execute(context);
+      var login = await _handler.get("login");
+
+      if (login == null) {
+        loginBool = true;
+      } else {
+        loginBool = login == 'true';
+      }
+      
+      if (r != "") {
+        handlerDialog.show(message: r, context: context);
+        return false;
+      } else {
+        this.tentouLogarFirebase = true;
+      }
+      this._loading = false;
+     
+      if(login == "true"){
+        loginCnpj(context);
+      } else {
+         this.state.setState(() {});
+      }
+    }
+  }
+
+  loginCnpj(BuildContext context) async {
+    await _handler.set("biometria", biometria.toString());
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        '/login_cnpj', (Route<dynamic> route) => false);
+  }
 
   initState(state) {
     this.state = state;

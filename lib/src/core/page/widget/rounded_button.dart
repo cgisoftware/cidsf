@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
   final String? text;
-  final Function? press;
+  final void Function()? press;
   final Color color, textColor;
   final bool loading;
   const RoundedButton(
@@ -22,10 +22,16 @@ class RoundedButton extends StatelessWidget {
       height: 60,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(29),
-        child: FlatButton(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-          color: color,
-          onPressed: press as void Function()?,
+        child: TextButton(
+          style: ButtonStyle(
+            padding: MaterialStateProperty.all(
+              EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+            ),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color(color.value)
+            ),
+          ),
+          onPressed: press,
           child: loading
               ? Container(
                   width: 20,

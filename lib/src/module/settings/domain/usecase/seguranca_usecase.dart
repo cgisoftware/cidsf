@@ -1,6 +1,7 @@
 library cids_cgi;
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/domain/device/handler/date_handler.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../../../module/settings/domain/infra/firebase_repository.dart';
 import '../../../../module/settings/domain/infra/gateway_repository.dart';
@@ -15,13 +16,14 @@ class Seguranca {
 
   Seguranca({this.email, this.password});
 
-  Future<String> execute() async {
-    final firebaseRepository =
-        FirebaseRepository(codigoAcesso: await (handler.get("edtCodigo") as FutureOr<String?>));
-     String diasAutenticacao = await  (handler.get("diasAutenticacao") as FutureOr<String?>) ?? '';
-     String dtUltimaAutenticacao = await  (handler.get("dtUltAutenticacao") as FutureOr<String?>) ?? '';
+  Future<String> execute(BuildContext context) async {
+    try {
+      final firebaseRepository =
+        FirebaseRepository(codigoAcesso: await (handler.get("edtCodigo")));
+     String diasAutenticacao = await  (handler.get("diasAutenticacao")) ?? '';
+     String dtUltimaAutenticacao = await  (handler.get("dtUltAutenticacao")) ?? '';
     int? iDataAtual =
-        int.tryParse(dateHandler.getData(dateHandler.getDate())[4]!);
+        int.tryParse(dateHandler.getData(dateHandler.getDate())[4]);
     int? iDataAutenticacao = int.tryParse(dtUltimaAutenticacao);
     int? iDias = int.tryParse(diasAutenticacao);
 
@@ -36,7 +38,7 @@ class Seguranca {
         } else {
           PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-          String sVersao = await await (handler.get("versao") as FutureOr<String>);
+          String sVersao = (await (handler.get("versao")))!;
 
           if (sVersao.toLowerCase() == packageInfo.version.toLowerCase()) {
             return '';
@@ -48,6 +50,12 @@ class Seguranca {
         return '';
       }
     }
+    } catch (e) {
+      DialogHandler().show(message: e.toString(), context: context);
+      throw e;
+    }
+
+    
   }
 
   refresh(String aplicativo) async {

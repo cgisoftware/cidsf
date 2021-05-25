@@ -47,7 +47,7 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
                     SizedBox(
                       height: 50,
                       width: MediaQuery.of(context).size.width * .4,
-                      child: OutlineButton(
+                      child: OutlinedButton(
                         onPressed: () {
                           _handler.logout();
                           Navigator.of(context).pushNamedAndRemoveUntil(
@@ -59,7 +59,7 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
                     SizedBox(
                         height: 50,
                         width: MediaQuery.of(context).size.width * .4,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () async {
                             widget.biometricsHandler();
                           },

@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:cids_cgi_example/page.dart';
 import 'package:flutter/material.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import './router.dart' as r;
@@ -7,6 +6,7 @@ import './router.dart' as r;
 var defaultPage;
 
 BuildContext biometricsContext;
+final cidsHandler = CidsHandler();
 
 final biometricsHandler = BiometricsHandler(autenticacaoPage: () {
   Navigator.of(biometricsContext)
@@ -19,7 +19,15 @@ final biometricsHandler = BiometricsHandler(autenticacaoPage: () {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   biometricsHandler.listen();
+  biometricsHandler();
+
+  await cidsHandler.initialize(
+      gateway: false,
+      aplicativo: "cidsf",
+      senha: "Mariana23",
+      versaoPacific: 1);
 
   runApp(MyApp());
 }
@@ -86,11 +94,7 @@ class _MyAppState extends State<MyApp> {
         theme: temaClaro,
         darkTheme: temaEscuro,
         themeMode: ThemeMode.system,
-        home: MyHome(
-          context: (context) {
-            biometricsContext = context;
-          },
-        ),
+        home: authPage,
         onGenerateRoute: r.Router.generateRoute);
   }
 }
@@ -123,6 +127,10 @@ class _MyHomeState extends State<MyHome> {
                 String response =
                     await QRScan().startScan(context, QRScanType.bar);
                 print(response);
+              }),
+              IconButton(icon: Icon(Icons.access_alarms), onPressed: () {
+                Navigator.of(biometricsContext)
+      .pushNamedAndRemoveUntil('/index', (Route<dynamic> route) => false);
               })
         ],
         title: const Text('CIDS for dev'),

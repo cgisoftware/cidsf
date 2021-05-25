@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 1.1.15` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 2.0.1` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -112,6 +112,15 @@ void main() async {
   biometricsHandler();
 }
 
+//No build do main.dart, adicionar o home e a geração de rotas.
+@override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: defaultPage,
+      onGenerateRoute: r.Router.generateRoute
+    );
+  }
+
 ```
 <br>
 Crie um arquivo na raiz da pasta lib com o nome page.dart
@@ -129,6 +138,13 @@ final homePage = HomePage(
   context: (context) {
     biometricsContext = context;
   }
+);
+
+// Se o login por CNPJ estiver como True no firebase crie essa rota:
+final loginPage = LoginCnpj(
+  context: (context) {
+    biometricsContext = context;
+  },
 );
 
 final authPage = AuthPage(
@@ -149,6 +165,9 @@ Arquivo para adicionar as strings das rotas do aplicativo
 const String homeRoute = '/home';
 const String authRoute = '/auth';
 const String indexRoute = '/index';
+
+// Se o login por CNPJ estiver como True no firebase crie essa rota:
+const String loginRoute = '/login_cnpj';
 ```
 <br>
 Crie um arquivo na raiz da pasta lib com o nome routes.dart importando as telas do arquivo page.dart
@@ -163,6 +182,10 @@ class Router {
 
       case homeRoute:
         return SlideRightRoute(widget: homePage);
+
+// Se o login por CNPJ estiver como True no firebase crie essa rota:
+      case loginRoute:
+        return SlideRightRoute(widget: loginPage);
 
       case indexRoute: 
         return SlideRightRoute(widget: authPage);
@@ -277,6 +300,7 @@ handler.getMotorista();                       // busca o motorista nas configs
 handler.getGateway();                         // busca se utiliza o gateway
 handler.getUsuario();                         // busca o usuario
 handler.getCodigo();                          // busca o codigo da empresa
+handler.getLogin();                           // busca se o login é por CNPJ
 handler.getSenha();                           // busca a senha
 handler.getPlaca();                           // busca a placa configurada
 handler.getToken();                           // busca o token de sessão do gateway

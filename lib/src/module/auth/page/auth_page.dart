@@ -6,7 +6,8 @@ class AuthPage extends StatefulWidget {
   final String? imagePath;
   final Function? dropDb;
 
-  const AuthPage({Key? key, this.frase, this.imagePath, this.dropDb}) : super(key: key);
+  const AuthPage({Key? key, this.frase, this.imagePath, this.dropDb})
+      : super(key: key);
 
   @override
   _AuthPageState createState() => _AuthPageState();
@@ -60,9 +61,15 @@ class _AuthPageState extends State<AuthPage> {
                 Container(
                     height: 45,
                     width: MediaQuery.of(context).size.width * 0.4,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(18.0)),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          )),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Color(0xffff6600))),
                       child: Center(child: Text('Acessar')),
                       onPressed: () async {
                         Navigator.of(context).push(MaterialPageRoute(

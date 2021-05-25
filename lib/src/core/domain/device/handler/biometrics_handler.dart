@@ -1,5 +1,3 @@
-import 'package:cids_cgi/src/module/auth/page/biometrics_error_page.dart';
-import 'package:cids_cgi/src/core/page/widget/router_widget.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -37,21 +35,24 @@ class BiometricsHandler {
 
           if (Platform.isIOS) {
             if (availableBiometrics.contains(BiometricType.face)) {
-              isAuth = await _localAuth.authenticateWithBiometrics(
+              isAuth = await _localAuth.authenticate(
+                  biometricOnly: true,
                   localizedReason: "Desbloqueio com Face ID",
                   stickyAuth: true,
                   sensitiveTransaction: false,
                   iOSAuthStrings: _iosStrings);
             } else if (availableBiometrics
                 .contains(BiometricType.fingerprint)) {
-              isAuth = await _localAuth.authenticateWithBiometrics(
+              isAuth = await _localAuth.authenticate(
+                  biometricOnly: true,
                   localizedReason: "Desbloqueio com Touch ID",
                   stickyAuth: true,
                   sensitiveTransaction: false,
                   iOSAuthStrings: _iosStrings);
             }
           } else {
-            isAuth = await _localAuth.authenticateWithBiometrics(
+            isAuth = await _localAuth.authenticate(
+                biometricOnly: true,
                 localizedReason: 'Para usar o app, autentique',
                 stickyAuth: true,
                 sensitiveTransaction: false);

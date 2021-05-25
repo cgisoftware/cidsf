@@ -32,12 +32,12 @@ class FirebaseRepository {
 
   Future<String> permissions() async {
     try {
-      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
           .collection("Permissoes")
           .doc(this.codigoAcesso)
           .get();
 
-      Firebase firebase = Firebase.fromJson(snapshot.data() as Map<String, dynamic>);
+      Firebase firebase = Firebase.fromJson(snapshot.data()!);
 
       // verifica se está ativo
       if (firebase.ativo!.toLowerCase() != "sim") {
@@ -48,9 +48,9 @@ class FirebaseRepository {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
       // verifica a validade do app
-      List<String?> vDtAtual = dateHandler.getData(dateHandler.getDate());
-      List<String?> vDtValidade = dateHandler.getData(firebase.dtValidade!);
-      if (int.tryParse(vDtAtual[4]!)! > int.tryParse(vDtValidade[4]!)!) {
+      List<String> vDtAtual = dateHandler.getData(dateHandler.getDate());
+      List<String> vDtValidade = dateHandler.getData(firebase.dtValidade!);
+      if (int.tryParse(vDtAtual[4])! > int.tryParse(vDtValidade[4])!) {
         return string003;
       }
 
@@ -75,9 +75,9 @@ class FirebaseRepository {
         return string005;
       }
 
-      String? sUsuario = await (handler.get("edtUsuario") as FutureOr<String?>);
-      String? sSenha = await (handler.get("edtSenha") as FutureOr<String?>);
-      String? sServico = await (handler.get("edtServico") as FutureOr<String?>);
+      String? sUsuario = await (handler.get("edtUsuario"));
+      String? sSenha = await (handler.get("edtSenha"));
+      String? sServico = await (handler.get("edtServico"));
 
       if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
@@ -138,12 +138,14 @@ class FirebaseRepository {
           "diasAutenticacao", firebase.diasAutenticacao.toString());
       await handler.set("edtServico", firebase.enderecoPacific!);
       await handler.set(
-          "dtUltAutenticacao", dateHandler.getData(dateHandler.getDate())[4]!);
+          "dtUltAutenticacao", dateHandler.getData(dateHandler.getDate())[4]);
       await handler.set("versao", packageInfo.version);
       await handler.set("numDevices", firebase.numDevices.toString());
       await handler.set(
           "numDevicesVendedor", firebase.numDevicesVendedor.toString());
-
+      await handler.set("login", firebase.login.toString());
+      await handler.set("usuarioP", firebase.usuarioP.toString());
+      await handler.set("senhaP", firebase.senhaP.toString());
       await handler.set("versao_minima", firebase.versaoMinima.toString());
       await handler.set("permite_alterar_quantidade_escaneada", firebase.permiteAlterarQuantidadeEscaneada.toString());
       return '';

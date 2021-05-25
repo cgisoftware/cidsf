@@ -5,8 +5,8 @@ class DateHandler {
     return new DateFormat("dd/MM/yyyy").format(new DateTime.now());
   }
 
-  List<String?> getData(String data) {
-    List<String?> vRetorno = new List.filled(9, null, growable: false);
+  List<String> getData(String data) {
+    List<String> vRetorno = List<String>.filled(9, data, growable: false);
     int? iDia = 0;
     int? iMes = 0;
     int? iAno = 0;

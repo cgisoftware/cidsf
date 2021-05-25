@@ -30,7 +30,7 @@ class FirebaseUseCase {
     await handler.set("edtMotorista", motorista);
     await handler.set("edtPlaca", placa);
     await handler.set("biometria", biometria.toString());
-    var r = await seguranca.execute();
+    var r = await seguranca.execute(context);
     if (r != "") {
       handlerDialog.show(message: r, context: context);
       return false;

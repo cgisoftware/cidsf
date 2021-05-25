@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final authController = AuthController();
+  
 
   @override
   void initState() {
@@ -39,28 +40,62 @@ class _LoginPageState extends State<LoginPage> {
                       ? Image.asset("images/consultors.png")
                       : Image.asset("images/consultors_dark.png")),
               SizedBox(height: size.height * 0.09),
-              Column(
-                children: [
-                  RoundedInputField(
-                    controller: authController.codigo,
-                    icon: Icons.lock_open,
-                    hintText: "Código de acesso",
-                  ),
-                  RoundedInputField(
-                    controller: authController.usuario,
-                    hintText: "Usuário",
-                  ),
-                  RoundedPasswordField(
-                    controller: authController.senha,
-                  )
-                ],
+              Form(
+                key: authController.formKey,
+                child: Column(
+                  children: [
+                    FocusScope(
+                        child: Focus(
+                      onFocusChange: (focus) {
+                        if (focus == false) {
+                          authController.validateCnpj(context);
+                        }
+                      },
+                      child: RoundedInputField(
+                        controller: authController.codigo,
+                        icon: Icons.lock_open,
+                        validatorText: "Preencha o código de acesso",
+                        hintText: "Código de acesso",
+                        readOnly: false,
+                      ),
+                    )),
+                    !authController.loginBool
+                        ? RoundedInputField(
+                            controller: authController.usuario,
+                            hintText: "Usuário",
+                            readOnly: false,
+                          )
+                        : Container(
+                            height: 100,
+                          ),
+                    !authController.loginBool
+                        ? RoundedPasswordField(
+                            controller: authController.senha,
+                            readOnly: false,
+                          )
+                        : Container(
+                            height: 50,
+                          )
+                  ],
+                ),
               ),
               SizedBox(height: size.height * 0.08),
               RoundedButton(
                 loading: authController.loading,
                 text: "ENTRAR",
-                press: () {
-                  authController.login();
+                press: () async {
+                  if(authController.tentouLogarFirebase) {
+                    if (!authController.loading) {
+                    if (!authController.loginBool) {
+                      authController.login();
+                    } else if (authController.loginBool &&
+                        authController.tentouLogarFirebase) {
+                          await authController.loginCnpj(context);
+                    }
+                  } 
+                  } else {
+                    await authController.validateCnpj(context);
+                  }
                 },
               ),
               Row(

@@ -19,7 +19,7 @@ class DialogHandler {
             ),
             content: new Text(message),
             actions: <Widget>[
-              new FlatButton(
+              new TextButton(
                 child: new Text(
                   "OK",
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -48,14 +48,14 @@ class DialogHandler {
       title: Text(title),
       content: Container(child: Text(message)),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text(textBtn1),
           onPressed: () {
             iRetorno = 1;
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text(textBtn2),
           onPressed: () {
             iRetorno = 2;
