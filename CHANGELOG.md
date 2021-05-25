@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [2.0.0] - 25/05/2021
+
+### Chanded
+
+- Migrado o projeto para null safety
+
 ## [1.1.15] - 12/04/2021
 
 ### Chanded

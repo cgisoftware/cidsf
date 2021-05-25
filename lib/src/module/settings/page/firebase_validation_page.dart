@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/firebase_usecase.dart';
@@ -57,15 +59,15 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   setValues() async {
-    this._edtUsuarioText.text = await _handler.get("edtUsuario");
-    this._edtCodigoText.text = await _handler.get("edtCodigo");
-    this._edtSenhaText.text = await _handler.get("edtSenha");
-    this._edtServicoText.text = await _handler.get("edtServico");
+    this._edtUsuarioText.text = await (_handler.get("edtUsuario") as FutureOr<String>);
+    this._edtCodigoText.text = await (_handler.get("edtCodigo") as FutureOr<String>);
+    this._edtSenhaText.text = await (_handler.get("edtSenha") as FutureOr<String>);
+    this._edtServicoText.text = await (_handler.get("edtServico") as FutureOr<String>);
     if (this.widget.motorista) {
-      this._edtMotoristaText.text = await _handler.get("edtMotorista");
+      this._edtMotoristaText.text = await (_handler.get("edtMotorista") as FutureOr<String>);
     }
     if (this.widget.placa) {
-      this._edtPlacaText.text = await _handler.get("edtPlaca");
+      this._edtPlacaText.text = await (_handler.get("edtPlaca") as FutureOr<String>);
     }
 
     this._biometria = (await _handler.get("biometria")) == "true";
@@ -124,7 +126,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 padding: EdgeInsets.symmetric(vertical: 5),
                                 child: TextFormField(
                                     validator: (val) {
-                                      if (val.isEmpty) {
+                                      if (val!.isEmpty) {
                                         return 'Informe o código de acesso';
                                       }
                                       return null;
@@ -139,7 +141,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     child: TextFormField(
                                         validator: (val) {
-                                          if (val.isEmpty) {
+                                          if (val!.isEmpty) {
                                             return 'Informe o código do motorista';
                                           }
                                           return null;
@@ -155,7 +157,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     child: TextFormField(
                                       validator: (val) {
-                                        if (val.isEmpty) {
+                                        if (val!.isEmpty) {
                                           return 'Informe o CPF';
                                         }
 
@@ -172,7 +174,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     child: TextFormField(
                                         validator: (val) {
-                                          if (val.isEmpty) {
+                                          if (val!.isEmpty) {
                                             return 'Informe o usuário';
                                           }
                                           return null;
@@ -186,7 +188,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 padding: EdgeInsets.symmetric(vertical: 5),
                                 child: TextFormField(
                                     validator: (val) {
-                                      if (val.isEmpty) {
+                                      if (val!.isEmpty) {
                                         return 'Informe a senha';
                                       }
                                       return null;
@@ -202,7 +204,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     child: TextFormField(
                                         validator: (val) {
-                                          if (val.isEmpty) {
+                                          if (val!.isEmpty) {
                                             return 'Informe a placa do veiculo';
                                           }
                                           return null;
@@ -288,15 +290,15 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _grava() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       this._isLoading = true;
       setState(() {});
 
-      String senha = await _handler.getPasswordFirebase();
-      String aplicativo = await _handler.getNomeAplicativo();
+      String? senha = await _handler.getPasswordFirebase();
+      String? aplicativo = await _handler.getNomeAplicativo();
       bool gateway = await _handler.getGateway();
       final bool response = await firebaseUseCase(
-          senha,
+          senha!,
           context,
           this._edtCodigoText.text,
           this._edtUsuarioText.text,
@@ -304,7 +306,7 @@ class _SettingsPageState extends State<SettingsPage> {
           this._edtServicoText.text,
           this._edtMotoristaText.text,
           this._edtPlacaText.text,
-          aplicativo,
+          aplicativo!,
           gateway,
           this._biometria);
 
@@ -313,11 +315,11 @@ class _SettingsPageState extends State<SettingsPage> {
           content: Text('Configurações salvas com sucesso!'),
         );
 
-        _scaffoldKey.currentState.showSnackBar(snackBar);
+        _scaffoldKey.currentState!.showSnackBar(snackBar);
         await Future.delayed(new Duration(milliseconds: 2000));
         Navigator.pop(context);
 
-        this._edtServicoText.text = await _handler.getURL();
+        this._edtServicoText.text = await (_handler.getURL() as FutureOr<String>);
       }
 
       this._isLoading = false;

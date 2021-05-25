@@ -1,15 +1,15 @@
 class Firebase {
-  String ativo;
-  String blackList;
-  int codCli;
-  int diasAutenticacao;
-  String dtValidade;
-  String enderecoPacific;
-  String nomeCli;
-  int versaoMinima;
-  int numDevices;
-  int numDevicesVendedor;
-  bool permiteAlterarQuantidadeEscaneada;
+  String? ativo;
+  String? blackList;
+  int? codCli;
+  int? diasAutenticacao;
+  String? dtValidade;
+  String? enderecoPacific;
+  String? nomeCli;
+  int? versaoMinima;
+  int? numDevices;
+  int? numDevicesVendedor;
+  bool? permiteAlterarQuantidadeEscaneada;
 
   Firebase(
       {this.ativo,

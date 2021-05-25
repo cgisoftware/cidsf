@@ -49,7 +49,7 @@ class ErrorHandler {
 
 class Retorno {
   bool erro;
-  String mensagem;
+  String? mensagem;
 
   Retorno(this.erro, this.mensagem);
 }

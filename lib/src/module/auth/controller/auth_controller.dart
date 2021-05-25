@@ -14,7 +14,7 @@ class AuthController {
   bool _loading = false;
   bool get loading => this._loading;
 
-  var state;
+  late var state;
 
   initState(state) {
     this.state = state;
@@ -24,12 +24,12 @@ class AuthController {
     this._loading = true;
     this.state.setState(() {});
 
-    String senha = await _handler.getPasswordFirebase();
-    String aplicativo = await _handler.getNomeAplicativo();
+    String? senha = await _handler.getPasswordFirebase();
+    String? aplicativo = await _handler.getNomeAplicativo();
     bool gateway = await _handler.getGateway();
 
     final bool response = await firebaseUseCase(
-        senha,
+        senha!,
         this.state.context,
         this.codigo.text,
         this.usuario.text,
@@ -37,7 +37,7 @@ class AuthController {
         "",
         "",
         "",
-        aplicativo,
+        aplicativo!,
         gateway,
         this.biometria);
 

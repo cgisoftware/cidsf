@@ -8,8 +8,8 @@ import 'package:package_info/package_info.dart';
 import 'dart:async';
 
 class Seguranca {
-  final String email;
-  final String password;
+  final String? email;
+  final String? password;
   final handler = SharedPreferencesHandler();
   final dateHandler = DateHandler();
 
@@ -17,31 +17,31 @@ class Seguranca {
 
   Future<String> execute() async {
     final firebaseRepository =
-        FirebaseRepository(codigoAcesso: await handler.get("edtCodigo"));
-     String diasAutenticacao = await  handler.get("diasAutenticacao") ?? '';
-     String dtUltimaAutenticacao = await  handler.get("dtUltAutenticacao") ?? '';
-    int iDataAtual =
-        int.tryParse(dateHandler.getData(dateHandler.getDate())[4]);
-    int iDataAutenticacao = int.tryParse(dtUltimaAutenticacao);
-    int iDias = int.tryParse(diasAutenticacao);
+        FirebaseRepository(codigoAcesso: await (handler.get("edtCodigo") as FutureOr<String?>));
+     String diasAutenticacao = await  (handler.get("diasAutenticacao") as FutureOr<String?>) ?? '';
+     String dtUltimaAutenticacao = await  (handler.get("dtUltAutenticacao") as FutureOr<String?>) ?? '';
+    int? iDataAtual =
+        int.tryParse(dateHandler.getData(dateHandler.getDate())[4]!);
+    int? iDataAutenticacao = int.tryParse(dtUltimaAutenticacao);
+    int? iDias = int.tryParse(diasAutenticacao);
 
     if (iDias == 0 || iDias == null) {
-      return await firebaseRepository.auth(email, password);
+      return await firebaseRepository.auth(email!, password!);
     } else {
       if (dtUltimaAutenticacao.trim().length == 0) {
-        return await firebaseRepository.auth(email, password);
+        return await firebaseRepository.auth(email!, password!);
       } else {
-        if (iDataAutenticacao + iDias <= iDataAtual) {
-          return await firebaseRepository.auth(email, password);
+        if (iDataAutenticacao! + iDias <= iDataAtual!) {
+          return await firebaseRepository.auth(email!, password!);
         } else {
           PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-          String sVersao = await await handler.get("versao");
+          String sVersao = await await (handler.get("versao") as FutureOr<String>);
 
           if (sVersao.toLowerCase() == packageInfo.version.toLowerCase()) {
             return '';
           } else {
-            await firebaseRepository.auth(email, password);
+            await firebaseRepository.auth(email!, password!);
           }
         }
 

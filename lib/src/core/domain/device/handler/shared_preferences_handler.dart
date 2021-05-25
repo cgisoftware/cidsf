@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info/package_info.dart';
 
@@ -31,12 +33,12 @@ class SharedPreferencesHandler {
   }
 
   Future<int> getNumDevices() async {
-    int numDevices = int.parse(await this.get('numDevices'));
+    int numDevices = int.parse(await (this.get('numDevices') as FutureOr<String>));
     return numDevices;
   }
 
   Future<int> getNumDevicesVendedor() async {
-    int numDevices = int.parse(await this.get('numDevicesVendedor'));
+    int numDevices = int.parse(await (this.get('numDevicesVendedor') as FutureOr<String>));
     return numDevices;
   }
 
@@ -89,7 +91,7 @@ class SharedPreferencesHandler {
     await this.set('versaoProgramaPacific', version.toString());
   }
 
-  Future<String> getNomeAplicativo() async {
+  Future<String?> getNomeAplicativo() async {
     var token = await this.get('aplicativo');
     return token;
   }
@@ -99,7 +101,7 @@ class SharedPreferencesHandler {
     return token == "true";
   }
 
-  Future<String> getPasswordFirebase() async {
+  Future<String?> getPasswordFirebase() async {
     var token = await this.get('senhaFirebase');
     return token;
   }

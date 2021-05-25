@@ -5,8 +5,8 @@ class DialogHandler {
 
   void show(
       {title = "Aviso!",
-      @required String message,
-      @required BuildContext context}) {
+      required String message,
+      required BuildContext context}) {
     if (!this._isDialogShowing) {
       this._isDialogShowing = true;
       showDialog(
@@ -38,10 +38,10 @@ class DialogHandler {
 
   Future<int> confirm({
     String title = "Confirme!",
-    @required String message,
-    @required String textBtn1,
-    @required String textBtn2,
-    @required BuildContext context,
+    required String message,
+    required String textBtn1,
+    required String textBtn2,
+    required BuildContext context,
   }) async {
     int iRetorno = -1;
     AlertDialog dlgConfirmar = AlertDialog(

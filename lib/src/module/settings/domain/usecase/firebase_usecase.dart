@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/domain/device/handler/dialog_handler.dart';
 import 'package:cids_cgi/src/core/domain/device/handler/shared_preferences_handler.dart';
@@ -33,7 +35,7 @@ class FirebaseUseCase {
       handlerDialog.show(message: r, context: context);
       return false;
     } else {
-      servico = await handler.get("edtServico");
+      servico = await (handler.get("edtServico") as FutureOr<String>);
       if (gateway) {
         try {
           Dio dio = new Dio();

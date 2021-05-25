@@ -5,11 +5,11 @@ class DateHandler {
     return new DateFormat("dd/MM/yyyy").format(new DateTime.now());
   }
 
-  List<String> getData(String data) {
-    List<String> vRetorno = new List(9);
-    int iDia = 0;
-    int iMes = 0;
-    int iAno = 0;
+  List<String?> getData(String data) {
+    List<String?> vRetorno = new List.filled(9, null, growable: false);
+    int? iDia = 0;
+    int? iMes = 0;
+    int? iAno = 0;
     String sAno = "";
     String sMes = "";
     String sDia = "";

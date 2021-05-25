@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
-  final String text;
-  final Function press;
+  final String? text;
+  final Function? press;
   final Color color, textColor;
   final bool loading;
   const RoundedButton(
-      {Key key,
+      {Key? key,
       this.text,
       this.press,
       this.color = Colors.blueAccent,
@@ -25,7 +25,7 @@ class RoundedButton extends StatelessWidget {
         child: FlatButton(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           color: color,
-          onPressed: press,
+          onPressed: press as void Function()?,
           child: loading
               ? Container(
                   width: 20,
@@ -33,7 +33,7 @@ class RoundedButton extends StatelessWidget {
                       valueColor:
                           new AlwaysStoppedAnimation<Color>(Colors.white)))
               : Text(
-                  text,
+                  text!,
                   style: TextStyle(color: textColor),
                 ),
         ),

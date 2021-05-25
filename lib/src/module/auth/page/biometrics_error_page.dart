@@ -6,7 +6,7 @@ class BiometricsErrorPage extends StatefulWidget {
   final Function(BuildContext) context;
 
   BiometricsErrorPage(
-      {Key key, @required this.biometricsHandler, @required this.context})
+      {Key? key, required this.biometricsHandler, required this.context})
       : super(key: key);
 
   @override

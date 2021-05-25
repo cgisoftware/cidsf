@@ -2,9 +2,9 @@ import 'package:cids_cgi/src/core/page/widget/text_field_container.dart';
 import 'package:flutter/material.dart';
 
 class RoundedPasswordField extends StatefulWidget {
-  final ValueChanged<String> onChanged;
-  final TextEditingController controller;
-  const RoundedPasswordField({Key key, this.onChanged, this.controller})
+  final ValueChanged<String>? onChanged;
+  final TextEditingController? controller;
+  const RoundedPasswordField({Key? key, this.onChanged, this.controller})
       : super(key: key);
 
   @override
