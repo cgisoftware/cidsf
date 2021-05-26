@@ -1,13 +1,11 @@
 library cids_cgi;
 
-import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/domain/device/handler/date_handler.dart';
+import 'package:package_info/package_info.dart';
+import 'package:cids_cgi/cids_cgi.dart';
 import 'package:flutter/material.dart';
 import 'firebase_repository.dart';
-import 'gateway_repository.dart';
-import 'package:package_info/package_info.dart';
 import 'dart:async';
-
 class SegurancaRepository {
   final String? email;
   final handler = SharedPreferencesHandler();
@@ -52,16 +50,6 @@ class SegurancaRepository {
         }
       }
       
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  refresh(String aplicativo) async {
-    try {
-      final gatewayRepository = GatewayRepository();
-
-      await gatewayRepository.refresh(aplicativo);
     } catch (e) {
       throw e;
     }
