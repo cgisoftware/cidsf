@@ -1,7 +1,6 @@
 import 'package:cids_cgi/src/module/settings/domain/controller/firebase_controller.dart';
 import 'package:cids_cgi/src/module/settings/domain/infra/login_gateway_repository.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/login_pacific_usecase.dart';
-import 'package:cids_cgi/src/module/settings/domain/usecase/login_personalizado_usecase.dart';
 import 'package:cids_cgi/src/module/auth/controller/auth_controller.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:flutter/widgets.dart';
