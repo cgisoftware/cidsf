@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:cids_cgi/src/core/domain/device/handler/date_handler.dart';
 import 'package:cids_cgi/src/module/settings/domain/model/firebase.dart';
 import 'package:cids_cgi/src/module/settings/error/messages.dart';
@@ -18,7 +17,6 @@ class FirebaseRepository {
 
   Future<String> auth(String email, String password) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
-      debugger();
     try {
       await _auth.signOut();
       await _auth.signInWithEmailAndPassword(

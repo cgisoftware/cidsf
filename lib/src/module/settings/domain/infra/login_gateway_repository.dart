@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cids_cgi/src/module/settings/domain/model/token.dart';
 import 'package:dio/dio.dart';
 

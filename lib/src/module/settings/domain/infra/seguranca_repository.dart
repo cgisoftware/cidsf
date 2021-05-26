@@ -1,7 +1,5 @@
 library cids_cgi;
 
-import 'dart:developer';
-
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/domain/device/handler/date_handler.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/login_pacific_usecase.dart';
 import 'package:flutter/material.dart';

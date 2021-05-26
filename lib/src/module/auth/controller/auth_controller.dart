@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cids_cgi/src/module/settings/domain/controller/firebase_controller.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/login_pacific_usecase.dart';
 import 'package:cids_cgi/cids_cgi.dart';
