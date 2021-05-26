@@ -1,7 +1,7 @@
 library cids_cgi;
 
 export 'src/core/domain/device/handler/shared_preferences_handler.dart';
-export 'src/module/settings/domain/usecase/seguranca_usecase.dart';
+export 'src/module/settings/domain/infra/seguranca_repository.dart';
 export 'src/core/domain/device/handler/biometrics_handler.dart';
 export 'src/module/settings/page/firebase_validation_page.dart';
 export 'src/core/domain/device/handler/cids_handler.dart';

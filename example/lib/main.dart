@@ -27,7 +27,9 @@ void main() async {
       gateway: false,
       aplicativo: "cidsf",
       senha: "Mariana23",
-      versaoPacific: 1);
+      versaoPacific: 1,
+      
+      loginPorCpfCnpj: true);
 
   runApp(MyApp());
 }
@@ -128,9 +130,10 @@ class _MyHomeState extends State<MyHome> {
                     await QRScan().startScan(context, QRScanType.bar);
                 print(response);
               }),
-              IconButton(icon: Icon(Icons.access_alarms), onPressed: () {
-                Navigator.of(biometricsContext)
-      .pushNamedAndRemoveUntil('/index', (Route<dynamic> route) => false);
+          IconButton(
+              icon: Icon(Icons.access_alarms),
+              onPressed: () {
+                Navigator.of(biometricsContext).pushNamed('/settings');
               })
         ],
         title: const Text('CIDS for dev'),

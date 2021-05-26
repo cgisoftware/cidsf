@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case settingsRoute:
+        return SlideRightRoute(widget: settingsPage);
       case authRoute:
         return SlideRightRoute(widget: biometricsPage);
 

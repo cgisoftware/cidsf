@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:developer';
 import 'package:cids_cgi/src/core/domain/device/handler/date_handler.dart';
 import 'package:cids_cgi/src/module/settings/domain/model/firebase.dart';
 import 'package:cids_cgi/src/module/settings/error/messages.dart';
@@ -18,7 +18,7 @@ class FirebaseRepository {
 
   Future<String> auth(String email, String password) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
-
+      debugger();
     try {
       await _auth.signOut();
       await _auth.signInWithEmailAndPassword(
@@ -32,12 +32,15 @@ class FirebaseRepository {
 
   Future<String> permissions() async {
     try {
+
       DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
           .collection("Permissoes")
           .doc(this.codigoAcesso)
           .get();
 
       Firebase firebase = Firebase.fromJson(snapshot.data()!);
+
+      
 
       // verifica se está ativo
       if (firebase.ativo!.toLowerCase() != "sim") {
@@ -143,7 +146,6 @@ class FirebaseRepository {
       await handler.set("numDevices", firebase.numDevices.toString());
       await handler.set(
           "numDevicesVendedor", firebase.numDevicesVendedor.toString());
-      await handler.set("login", firebase.login.toString());
       await handler.set("usuarioP", firebase.usuarioP.toString());
       await handler.set("senhaP", firebase.senhaP.toString());
       await handler.set("versao_minima", firebase.versaoMinima.toString());

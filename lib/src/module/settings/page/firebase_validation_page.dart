@@ -1,15 +1,10 @@
-import 'dart:async';
-
-import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
-import 'package:cids_cgi/src/module/settings/domain/usecase/firebase_usecase.dart';
+import 'package:cids_cgi/src/di/di.dart';
+import 'package:cids_cgi/src/module/settings/domain/controller/firebase_controller.dart';
 import '../../../module/settings/page/politica_privacidade_page.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-const CPF = '###.###.###-##';
-const CNPJ = '###.###.###/####-##';
+import 'dart:async';
 
 class SettingsPage extends StatefulWidget {
   final Color appBarTextColor;
@@ -18,6 +13,7 @@ class SettingsPage extends StatefulWidget {
   final bool filled;
   final bool placa;
   final bool cpf;
+  final Function? validaLogin; 
 
   SettingsPage({
     this.appBarColor = Colors.transparent,
@@ -26,73 +22,30 @@ class SettingsPage extends StatefulWidget {
     this.filled = false,
     this.placa = false,
     this.cpf = false,
+    this.validaLogin
   });
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final _handler = SharedPreferencesHandler();
-
-  final _edtCodigoText = TextEditingController();
-  final _edtUsuarioText = TextEditingController();
-  final _edtSenhaText = TextEditingController();
-  final _edtServicoText = TextEditingController();
-  final _edtMotoristaText = TextEditingController();
-  final _edtPlacaText = TextEditingController();
-  bool loginBool = true;
-  bool _biometria = false;
-  bool _isLoading = false;
-  Map<String, dynamic>? _version = {};
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final maskFormatter = new MaskTextInputFormatter(mask: CPF);
-
-  final _formKey = GlobalKey<FormState>();
-
-  final firebaseUseCase = FirebaseUseCase();
+  FirebaseController? controller;
   @override
   void initState() {
     super.initState();
 
-    setValues();
-  }
-
-  setValues() async {
-    var login = await _handler.getLogin();
-
-    if (login == null) {
-      loginBool = false;
-    } else {
-      loginBool = login == 'true';
-    }
-    if (!loginBool) {
-      this._edtUsuarioText.text = (await (_handler.get("edtUsuario")))!;
-      this._edtCodigoText.text = (await (_handler.get("edtCodigo")))!;
-      this._edtSenhaText.text = (await (_handler.get("edtSenha")))!;
-      this._edtServicoText.text = (await (_handler.get("edtServico")))!;
-      if (this.widget.motorista) {
-        this._edtMotoristaText.text = (await (_handler.get("edtMotorista")))!;
-      }
-      if (this.widget.placa) {
-        this._edtPlacaText.text = (await (_handler.get("edtPlaca")))!;
-      }
-    } else {
-       this._edtCodigoText.text = (await (_handler.get("edtCodigo")))!;
-       this._edtServicoText.text = (await (_handler.get("edtServico")))!;
-    }
-    this._biometria = (await _handler.get("biometria")) == "true";
-
-    _version = await _handler.getBuildVersion();
-    setState(() {});
+    Future.delayed(Duration.zero)
+        .then((_) => {this.controller!.initState(this)});
   }
 
   @override
   Widget build(BuildContext context) {
+    if (this.controller == null) {
+      this.controller = firebaseController(context, widget.validaLogin);
+    }
     return Scaffold(
-        key: _scaffoldKey,
         appBar: AppBar(
-          automaticallyImplyLeading: !_isLoading,
+          automaticallyImplyLeading: !controller!.isLoading,
           backgroundColor: widget.appBarColor,
           title: Text(
             "Configurações",
@@ -100,11 +53,11 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           iconTheme: IconThemeData(color: widget.appBarTextColor),
           actions: <Widget>[
-            !_isLoading
+            !controller!.isLoading
                 ? IconButton(
                     icon: Icon(Icons.save),
                     onPressed: () async {
-                      !loginBool ? _grava() : _gravaLoginCnpjLigado();
+                      controller!.login();
                     })
                 : Padding(
                     padding: EdgeInsets.only(right: 20),
@@ -122,7 +75,7 @@ class _SettingsPageState extends State<SettingsPage> {
         body: Container(
             padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 20),
             child: Form(
-              key: _formKey,
+              key: controller!.formKey,
               child: Stack(
                 children: <Widget>[
                   Positioned(
@@ -142,8 +95,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                       }
                                       return null;
                                     },
-                                    controller: _edtCodigoText,
-                                    enabled: !loginBool ? true : false,
+                                    controller: controller!.edtCodigoText,
+                                    enabled:
+                                        controller!.loginBool ? true : false,
                                     decoration: InputDecoration(
                                         labelText: "Código de Acesso",
                                         filled: this.widget.filled),
@@ -158,13 +112,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                           }
                                           return null;
                                         },
-                                        controller: _edtMotoristaText,
+                                        controller:
+                                            controller!.edtMotoristaText,
                                         decoration: InputDecoration(
                                             labelText: "Código do Motorista",
                                             filled: this.widget.filled),
                                         keyboardType: TextInputType.number))
                                 : Container(),
-                            this.widget.cpf
+                            this.controller!.loginBool
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     child: TextFormField(
@@ -175,42 +130,49 @@ class _SettingsPageState extends State<SettingsPage> {
 
                                         return null;
                                       },
-                                      controller: _edtUsuarioText,
+                                      controller: controller!.edtUsuarioText,
                                       decoration: InputDecoration(
                                           labelText: "CPF",
                                           filled: this.widget.filled),
                                       keyboardType: TextInputType.number,
-                                      inputFormatters: [maskFormatter],
+                                      inputFormatters: [
+                                        controller!.maskFormatter
+                                      ],
                                     ))
                                 : Padding(
                                     padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: !loginBool ? TextFormField(
+                                    child: controller!.loginBool
+                                        ? TextFormField(
+                                            validator: (val) {
+                                              if (val!.isEmpty) {
+                                                return 'Informe o usuário';
+                                              }
+                                              return null;
+                                            },
+                                            controller:
+                                                controller!.edtUsuarioText,
+                                            decoration: InputDecoration(
+                                                labelText: "Usuário",
+                                                filled: this.widget.filled),
+                                            keyboardType: TextInputType.text)
+                                        : Container()),
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                child: controller!.loginBool
+                                    ? TextFormField(
                                         validator: (val) {
                                           if (val!.isEmpty) {
-                                            return 'Informe o usuário';
+                                            return 'Informe a senha';
                                           }
                                           return null;
                                         },
-                                        controller: _edtUsuarioText,
+                                        controller: controller!.edtSenhaText,
                                         decoration: InputDecoration(
-                                            labelText: "Usuário",
+                                            labelText: "Senha",
                                             filled: this.widget.filled),
-                                        keyboardType: TextInputType.text) : Container()),
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 5),
-                                child: !loginBool ? TextFormField(
-                                    validator: (val) {
-                                      if (val!.isEmpty) {
-                                        return 'Informe a senha';
-                                      }
-                                      return null;
-                                    },
-                                    controller: _edtSenhaText,
-                                    decoration: InputDecoration(
-                                        labelText: "Senha",
-                                        filled: this.widget.filled),
-                                    keyboardType: TextInputType.text,
-                                    obscureText: true) : Container()),
+                                        keyboardType: TextInputType.text,
+                                        obscureText: true)
+                                    : Container()),
                             this.widget.placa
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(vertical: 5),
@@ -221,7 +183,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                           }
                                           return null;
                                         },
-                                        controller: _edtPlacaText,
+                                        controller: controller!.edtPlacaText,
                                         decoration: InputDecoration(
                                             labelText: "Placa do veículo",
                                             filled: this.widget.filled),
@@ -231,7 +193,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 padding: EdgeInsets.symmetric(vertical: 5),
                                 child: TextFormField(
                                     enabled: false,
-                                    controller: _edtServicoText,
+                                    controller: controller!.edtServicoText,
                                     decoration: InputDecoration(
                                         labelText: "Serviço",
                                         filled: this.widget.filled),
@@ -243,13 +205,13 @@ class _SettingsPageState extends State<SettingsPage> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
-                                    _version != null
+                                    controller!.version != null
                                         ? Text(
-                                            "Versão atual do aplicativo: ${_version?['v']}")
+                                            "Versão atual do aplicativo: ${controller!.version?['v']}")
                                         : Container(),
-                                    _version != null
+                                    controller!.version != null
                                         ? Text(
-                                            "Versão atual do build: ${_version?['b']}")
+                                            "Versão atual do build: ${controller!.version?['b']}")
                                         : Container(),
                                   ],
                                 )),
@@ -260,9 +222,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                 Text("Habilitar autenticação por biometria"),
                                 Switch(
                                   activeColor: Colors.blue,
-                                  value: _biometria,
+                                  value: controller!.biometria,
                                   onChanged: (val) {
-                                    _biometria = val;
+                                    controller!.biometria = val;
                                     setState(() {});
                                   },
                                 ),
@@ -286,7 +248,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             GestureDetector(
                                 onTap: () {
-                                  _handler.logout();
+                                  // handler.logout();
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                       '/index',
                                       (Route<dynamic> route) => false);
@@ -302,60 +264,60 @@ class _SettingsPageState extends State<SettingsPage> {
             )));
   }
 
-  _gravaLoginCnpjLigado() async {
-    this._isLoading = true;
-    setState(() {});
-    await _handler.set("biometria", _biometria.toString());
+  // _gravaLoginCnpjLigado() async {
+  //   this._isLoading = true;
+  //   setState(() {});
+  //   await _handler.set("biometria", _biometria.toString());
 
-    final snackBar = SnackBar(
-          content: Text('Configurações salvas com sucesso!'),
-        );
+  //   final snackBar = SnackBar(
+  //         content: Text('Configurações salvas com sucesso!'),
+  //       );
 
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        await Future.delayed(new Duration(milliseconds: 1000));
-        Navigator.pop(context);
+  //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //       await Future.delayed(new Duration(milliseconds: 1000));
+  //       Navigator.pop(context);
 
-    this._edtServicoText.text = (await (_handler.getURL()))!;
+  //   this._edtServicoText.text = (await (_handler.getURL()))!;
 
-    this._isLoading = false;
-    setState(() {});
-  }
+  //   this._isLoading = false;
+  //   setState(() {});
+  // }
 
-  void _grava() async {
-    if (_formKey.currentState!.validate()) {
-      this._isLoading = true;
-      setState(() {});
+  // void _grava() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     this._isLoading = true;
+  //     setState(() {});
 
-      String? senha = await _handler.getPasswordFirebase();
-      String? aplicativo = await _handler.getNomeAplicativo();
-      bool gateway = await _handler.getGateway();
-      final bool response = await firebaseUseCase(
-          senha!,
-          context,
-          this._edtCodigoText.text,
-          this._edtUsuarioText.text,
-          this._edtSenhaText.text,
-          this._edtServicoText.text,
-          this._edtMotoristaText.text,
-          this._edtPlacaText.text,
-          aplicativo!,
-          gateway,
-          this._biometria);
+  //     String? senha = await _handler.getPasswordFirebase();
+  //     String? aplicativo = await _handler.getNomeAplicativo();
+  //     bool gateway = await _handler.getGateway();
+  //     final bool response = await firebaseUseCase(
+  //         senha!,
+  //         context,
+  //         this._edtCodigoText.text,
+  //         this._edtUsuarioText.text,
+  //         this._edtSenhaText.text,
+  //         this._edtServicoText.text,
+  //         this._edtMotoristaText.text,
+  //         this._edtPlacaText.text,
+  //         aplicativo!,
+  //         gateway,
+  //         this._biometria);
 
-      if (response) {
-        final snackBar = SnackBar(
-          content: Text('Configurações salvas com sucesso!'),
-        );
+  //     if (response) {
+  //       final snackBar = SnackBar(
+  //         content: Text('Configurações salvas com sucesso!'),
+  //       );
 
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        await Future.delayed(new Duration(milliseconds: 2000));
-        Navigator.pop(context);
+  //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //       await Future.delayed(new Duration(milliseconds: 2000));
+  //       Navigator.pop(context);
 
-        this._edtServicoText.text = (await (_handler.getURL()))!;
-      }
+  //       this._edtServicoText.text = (await (_handler.getURL()))!;
+  //     }
 
-      this._isLoading = false;
-      setState(() {});
-    }
-  }
+  //     this._isLoading = false;
+  //     setState(() {});
+  //   }
+  // }
 }

@@ -42,8 +42,8 @@ class SharedPreferencesHandler {
     return numDevices;
   }
 
-  Future<String?> getLogin() async {
-    var login = await this.get('login');
+  Future<bool> getLogin() async {
+    var login = await this.get('login') == 'true';
     return login;
   }
 
@@ -131,6 +131,10 @@ class SharedPreferencesHandler {
 
   Future setPasswordFirebase(String password) async {
     await this.set('senhaFirebase', password);
+  }
+
+  Future setLogin(bool login) async {
+    await this.set('login', login.toString());
   }
 
   logout() {

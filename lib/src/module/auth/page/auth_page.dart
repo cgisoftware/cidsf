@@ -5,8 +5,9 @@ class AuthPage extends StatefulWidget {
   final String? frase;
   final String? imagePath;
   final Function? dropDb;
+  final Function? validaLogin;
 
-  const AuthPage({Key? key, this.frase, this.imagePath, this.dropDb})
+  const AuthPage({Key? key, this.frase, this.imagePath, this.dropDb, this.validaLogin})
       : super(key: key);
 
   @override
@@ -73,7 +74,7 @@ class _AuthPageState extends State<AuthPage> {
                       child: Center(child: Text('Acessar')),
                       onPressed: () async {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => LoginPage()));
+                            builder: (context) => LoginPage(validaLogin: widget.validaLogin,)));
                       },
                     ))
               ],

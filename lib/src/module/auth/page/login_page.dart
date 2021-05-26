@@ -1,30 +1,38 @@
 import 'package:cids_cgi/src/core/page/widget/rounded_password_field.dart';
-import 'package:cids_cgi/src/module/auth/controller/auth_controller.dart';
 import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
 import 'package:cids_cgi/src/core/page/widget/rounded_input_field.dart';
 import 'package:cids_cgi/src/core/page/widget/rounded_button.dart';
+import 'package:cids_cgi/src/di/di.dart';
+import 'package:cids_cgi/src/module/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
+  final Function? validaLogin;
+
+  LoginPage({this.validaLogin});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final authController = AuthController();
-  
-
+  AuthController? controller;
   @override
   void initState() {
     super.initState();
 
     Future.delayed(Duration.zero)
-        .then((value) => authController.initState(this));
+        .then((_) => {this.controller!.initState(this)});
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
+  
+    if (this.controller == null) {
+      this.controller = authController(context, widget.validaLogin);
+    }
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -41,61 +49,53 @@ class _LoginPageState extends State<LoginPage> {
                       : Image.asset("images/consultors_dark.png")),
               SizedBox(height: size.height * 0.09),
               Form(
-                key: authController.formKey,
+                key: controller!.formKey,
                 child: Column(
                   children: [
                     FocusScope(
                         child: Focus(
-                      onFocusChange: (focus) {
-                        if (focus == false) {
-                          authController.validateCnpj(context);
-                        }
-                      },
+                      // onFocusChange: (focus) {
+                      //   if (!focus) {
+                      //     controller!.login();
+                      //   }
+                      // },
                       child: RoundedInputField(
-                        controller: authController.codigo,
+                        controller: controller!.codigo,
                         icon: Icons.lock_open,
                         validatorText: "Preencha o código de acesso",
                         hintText: "Código de acesso",
                         readOnly: false,
                       ),
                     )),
-                    !authController.loginBool
+                    !controller!.loginBool
                         ? RoundedInputField(
-                            controller: authController.usuario,
+                            controller: controller!.usuario,
                             hintText: "Usuário",
                             readOnly: false,
+                            validatorText: "Preencha o usuário"
                           )
-                        : Container(
-                            height: 100,
-                          ),
-                    !authController.loginBool
-                        ? RoundedPasswordField(
-                            controller: authController.senha,
+                        : RoundedInputField(
+                            controller: controller!.usuario,
+                            hintText: "CPF",
+                            validatorText: "Preencha o CPF",
                             readOnly: false,
-                          )
-                        : Container(
-                            height: 50,
-                          )
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [controller!.maskFormatter],
+                          ),
+                    RoundedPasswordField(
+                      controller: controller!.senha,
+                      validatorText: "Preencha o usuário",
+                      readOnly: false,
+                    )
                   ],
                 ),
               ),
               SizedBox(height: size.height * 0.08),
               RoundedButton(
-                loading: authController.loading,
+                loading: controller!.loading,
                 text: "ENTRAR",
                 press: () async {
-                  if(authController.tentouLogarFirebase) {
-                    if (!authController.loading) {
-                    if (!authController.loginBool) {
-                      authController.login();
-                    } else if (authController.loginBool &&
-                        authController.tentouLogarFirebase) {
-                          await authController.loginCnpj(context);
-                    }
-                  } 
-                  } else {
-                    await authController.validateCnpj(context);
-                  }
+                  controller!.login();
                 },
               ),
               Row(
@@ -105,9 +105,9 @@ class _LoginPageState extends State<LoginPage> {
                   Text("Habilitar autenticação por biometria"),
                   Switch(
                     activeColor: Colors.blue,
-                    value: authController.biometria,
+                    value: controller!.biometria,
                     onChanged: (val) {
-                      authController.changeBiometria(val);
+                      controller!.changeBiometria(val);
                     },
                   ),
                 ],

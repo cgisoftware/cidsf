@@ -1,94 +1,63 @@
-import 'package:cids_cgi/src/module/settings/domain/usecase/firebase_usecase.dart';
+import 'dart:developer';
+
+import 'package:cids_cgi/src/module/settings/domain/controller/firebase_controller.dart';
+import 'package:cids_cgi/src/module/settings/domain/usecase/login_pacific_usecase.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class AuthController {
-  final firebaseUseCase = FirebaseUseCase();
-  final _handler = SharedPreferencesHandler();
+  final BuildContext? context;
+  final LoginPacificUseCase? loginPacificUseCase;
+  final Function? validaLogin;
+
+  AuthController({this.context, this.loginPacificUseCase, this.validaLogin});
+
   final codigo = TextEditingController();
   final usuario = TextEditingController();
   final senha = TextEditingController();
   final handlerDialog = DialogHandler();
-  bool loginBool = true;
+  final maskFormatter = new MaskTextInputFormatter(mask: CPF);
+
+  late bool loginBool = false;
   bool biometria = false;
   bool _loading = false;
   bool get loading => this._loading;
-  bool tentouLogarFirebase = false;
+
   final formKey = GlobalKey<FormState>();
 
   late var state;
 
-  validateCnpj(BuildContext context) async {
-    if (formKey.currentState!.validate()) {
-      this.state.setState(() {});
-      this._loading = true;
-      this.tentouLogarFirebase = false;
-      final seguranca = new Seguranca(
-          email: "@cgi.com.br", password: await _handler.getPasswordFirebase());
-      await _handler.set("edtCodigo", codigo.text);
-      var r = await seguranca.execute(context);
-      var login = await _handler.get("login");
-
-      if (login == null) {
-        loginBool = true;
-      } else {
-        loginBool = login == 'true';
-      }
-      
-      if (r != "") {
-        handlerDialog.show(message: r, context: context);
-        return false;
-      } else {
-        this.tentouLogarFirebase = true;
-      }
-      this._loading = false;
-     
-      if(login == "true"){
-        loginCnpj(context);
-      } else {
-         this.state.setState(() {});
-      }
-    }
-  }
-
-  loginCnpj(BuildContext context) async {
-    await _handler.set("biometria", biometria.toString());
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        '/login_cnpj', (Route<dynamic> route) => false);
-  }
-
-  initState(state) {
+  initState(state) async {
     this.state = state;
+
+    this.loginBool = await SharedPreferencesHandler().getLogin();
+    this.state.setState(() {});
   }
 
   login() async {
-    this._loading = true;
-    this.state.setState(() {});
+    if (formKey.currentState!.validate()) {
+      this._loading = true;
+      this.state.setState(() {});
+      try {
+        await this.loginPacificUseCase!(this.usuario.text, this.senha.text,
+            this.codigo.text, this.biometria);
 
-    String? senha = await _handler.getPasswordFirebase();
-    String? aplicativo = await _handler.getNomeAplicativo();
-    bool gateway = await _handler.getGateway();
+        if (this.loginBool) {
+          await this.validaLogin!();
+        }
 
-    final bool response = await firebaseUseCase(
-        senha!,
-        this.state.context,
-        this.codigo.text,
-        this.usuario.text,
-        this.senha.text,
-        "",
-        "",
-        "",
-        aplicativo!,
-        gateway,
-        this.biometria);
+        Navigator.of(this.state.context)
+            .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
 
-    if (response) {
-      Navigator.of(this.state.context)
-          .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+        this.state.setState(() {});
+      } catch (e) {
+        handlerDialog.show(message: e.toString(), context: context!);
+      } finally {
+        this._loading = false;
+        this.state.setState(() {});
+      }
     }
-
-    this._loading = false;
-    this.state.setState(() {});
   }
 
   changeBiometria(bool biometria) {

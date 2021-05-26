@@ -30,7 +30,6 @@ class Firebase {
       this.permiteAlterarQuantidadeEscaneada,
       this.usuario,
       this.senha,
-      this.login,
       this.usuarioP,
       this.senhaP});
 
@@ -52,7 +51,6 @@ class Firebase {
           : json["num_devices_vendedor"],
       usuario: json["usuario"] == null ? null : json["usuario"],
       senha: json["senha"] == null ? null : json["senha"],
-      login: json["login"] == null ? null : json["login"],
       usuarioP: json["usuarioP"] == null ? null : json["usuarioP"],
       senhaP: json["senhaP"] == null ? null : json["senhaP"],
       permiteAlterarQuantidadeEscaneada:

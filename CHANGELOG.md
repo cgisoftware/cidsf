@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [2.0.2] - 26/05/2021
+
+### Added
+
+- Criado tela de login por CPF no aplicativo, passando funções de validação por parametro
+
 ## [2.0.1] - 25/05/2021
 
 ### Chanded
