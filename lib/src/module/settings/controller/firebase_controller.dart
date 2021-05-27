@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 const CPF = '###.###.###-##';
-const CNPJ = '###.###.###/####-##';
+const CNPJ = '##.###.###/####-##';
 
 class FirebaseController {
   final BuildContext? context;
