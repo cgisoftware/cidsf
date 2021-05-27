@@ -28,6 +28,8 @@ void main() async {
       aplicativo: "cidsf",
       senha: "Mariana23",
       versaoPacific: 1,
+      loginPorCpfCnpj: true,
+      useCnpj: true
 );
 
   runApp(MyApp());

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/login_pacific_usecase.dart';
 import 'package:flutter/material.dart';
@@ -28,17 +26,23 @@ class FirebaseController {
   var state;
 
   bool loginBool = true;
+  bool useCnpj = false;
   bool biometria = false;
   bool isLoading = false;
   Map<String, dynamic>? version = {};
 
-  final maskFormatter = new MaskTextInputFormatter(mask: CPF);
+  var maskFormatter = new MaskTextInputFormatter(mask: CPF);
 
   final formKey = GlobalKey<FormState>();
 
   initState(state) async {
     this.state = state;
     this.loginBool = await _handler.getLogin();
+    this.useCnpj = await _handler.useCnpj();
+
+    if (useCnpj) {
+      maskFormatter = new MaskTextInputFormatter(mask: CNPJ);
+    }
 
     this.edtUsuarioText.text = (await (_handler.get("edtUsuario"))) ?? '';
     this.edtCodigoText.text = (await (_handler.get("edtCodigo"))) ?? '';
@@ -63,7 +67,7 @@ class FirebaseController {
         await this.loginPacificUseCase!(this.edtUsuarioText.text,
             this.edtSenhaText.text, this.edtCodigoText.text, this.biometria);
 
-        if (this.loginBool) {
+        if (this.loginBool && this.validaLogin != null) {
           await this.validaLogin!();
         }
 

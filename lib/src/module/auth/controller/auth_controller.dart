@@ -1,4 +1,3 @@
-
 import 'package:cids_cgi/src/module/settings/domain/usecase/login_pacific_usecase.dart';
 import 'package:cids_cgi/src/module/settings/controller/firebase_controller.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -16,9 +15,10 @@ class AuthController {
   final usuario = TextEditingController();
   final senha = TextEditingController();
   final handlerDialog = DialogHandler();
-  final maskFormatter = new MaskTextInputFormatter(mask: CPF);
+  var maskFormatter = new MaskTextInputFormatter(mask: CPF);
 
   late bool loginBool = false;
+  late bool useCnpj = false;
   bool biometria = false;
   bool _loading = false;
   bool get loading => this._loading;
@@ -31,6 +31,11 @@ class AuthController {
     this.state = state;
 
     this.loginBool = await SharedPreferencesHandler().getLogin();
+    this.useCnpj = await SharedPreferencesHandler().useCnpj();
+
+    if (useCnpj) {
+      maskFormatter = new MaskTextInputFormatter(mask: CNPJ);
+    }
     this.state.setState(() {});
   }
 
@@ -42,7 +47,7 @@ class AuthController {
         await this.loginPacificUseCase!(this.usuario.text, this.senha.text,
             this.codigo.text, this.biometria);
 
-        if (this.loginBool) {
+        if (this.loginBool && this.validaLogin != null) {
           await this.validaLogin!();
         }
 

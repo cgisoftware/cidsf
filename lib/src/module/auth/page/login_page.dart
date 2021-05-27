@@ -76,8 +76,8 @@ class _LoginPageState extends State<LoginPage> {
                           )
                         : RoundedInputField(
                             controller: controller!.usuario,
-                            hintText: "CPF",
-                            validatorText: "Preencha o CPF",
+                            hintText: controller!.useCnpj ? "CNPJ" : "CPF",
+                            validatorText: controller!.useCnpj ? "Preencha o CNPJ" :  "Preencha o CPF",
                             readOnly: false,
                             keyboardType: TextInputType.number,
                             inputFormatters: [controller!.maskFormatter],

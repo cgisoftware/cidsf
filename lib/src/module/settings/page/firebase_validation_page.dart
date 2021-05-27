@@ -13,17 +13,16 @@ class SettingsPage extends StatefulWidget {
   final bool filled;
   final bool placa;
   final bool cpf;
-  final Function? validaLogin; 
+  final Function? validaLogin;
 
-  SettingsPage({
-    this.appBarColor = Colors.transparent,
-    this.appBarTextColor = Colors.white,
-    this.motorista = false,
-    this.filled = false,
-    this.placa = false,
-    this.cpf = false,
-    this.validaLogin
-  });
+  SettingsPage(
+      {this.appBarColor = Colors.transparent,
+      this.appBarTextColor = Colors.white,
+      this.motorista = false,
+      this.filled = false,
+      this.placa = false,
+      this.cpf = false,
+      this.validaLogin});
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -125,14 +124,18 @@ class _SettingsPageState extends State<SettingsPage> {
                                     child: TextFormField(
                                       validator: (val) {
                                         if (val!.isEmpty) {
-                                          return 'Informe o CPF';
+                                          return controller!.useCnpj
+                                              ? " Informe o CNPJ"
+                                              : "Informe o CPF";
                                         }
 
                                         return null;
                                       },
                                       controller: controller!.edtUsuarioText,
                                       decoration: InputDecoration(
-                                          labelText: "CPF",
+                                          labelText: controller!.useCnpj
+                                              ? "CNPJ"
+                                              : "CPF",
                                           filled: this.widget.filled),
                                       keyboardType: TextInputType.number,
                                       inputFormatters: [
@@ -141,36 +144,33 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ))
                                 : Padding(
                                     padding: EdgeInsets.symmetric(vertical: 5),
-                                    child:  TextFormField(
-                                            validator: (val) {
-                                              if (val!.isEmpty) {
-                                                return 'Informe o usuário';
-                                              }
-                                              return null;
-                                            },
-                                            controller:
-                                                controller!.edtUsuarioText,
-                                            decoration: InputDecoration(
-                                                labelText: "Usuário",
-                                                filled: this.widget.filled),
-                                            keyboardType: TextInputType.text)
-                                       ),
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 5),
-                                child:  TextFormField(
+                                    child: TextFormField(
                                         validator: (val) {
                                           if (val!.isEmpty) {
-                                            return 'Informe a senha';
+                                            return 'Informe o usuário';
                                           }
                                           return null;
                                         },
-                                        controller: controller!.edtSenhaText,
+                                        controller: controller!.edtUsuarioText,
                                         decoration: InputDecoration(
-                                            labelText: "Senha",
+                                            labelText: "Usuário",
                                             filled: this.widget.filled),
-                                        keyboardType: TextInputType.text,
-                                        obscureText: true)
-                                    ),
+                                        keyboardType: TextInputType.text)),
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                child: TextFormField(
+                                    validator: (val) {
+                                      if (val!.isEmpty) {
+                                        return 'Informe a senha';
+                                      }
+                                      return null;
+                                    },
+                                    controller: controller!.edtSenhaText,
+                                    decoration: InputDecoration(
+                                        labelText: "Senha",
+                                        filled: this.widget.filled),
+                                    keyboardType: TextInputType.text,
+                                    obscureText: true)),
                             this.widget.placa
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(vertical: 5),
@@ -234,8 +234,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               width: double.infinity,
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.orange
-                                  ),
+                                      primary: Colors.orange),
                                   child: Text(
                                     "Política de Privacidade",
                                     style: TextStyle(fontSize: 20),

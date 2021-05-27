@@ -8,8 +8,9 @@ class CidsHandler {
       required String aplicativo,
       required int versaoPacific,
       bool gateway = false,
-      bool loginPorCpfCnpj = false}) async {
-
+      bool loginPorCpfCnpj = false,
+      bool useCnpj = false}) async {
+         await _handler.setUseCnpj(useCnpj);
     await _handler.setVersaoProgramaPacific(versaoPacific);
     await _handler.setNomeAplicativo(aplicativo);
     await _handler.setPasswordFirebase(senha);

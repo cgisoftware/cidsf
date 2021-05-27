@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.0.7] - 27/05/2021
+
+### Added
+
+- Adicionado tratamento para login com CNPJ
 
 ## [2.0.6] - 26/05/2021
 

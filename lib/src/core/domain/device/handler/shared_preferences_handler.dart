@@ -47,6 +47,11 @@ class SharedPreferencesHandler {
     return login;
   }
 
+  Future<bool> useCnpj() async {
+    var cnpj = await this.get('useCnpj') == 'true';
+    return cnpj;
+  }
+
   Future<String?> getCodigo() async {
     var cod = await this.get('edtCodigo');
     return cod;
@@ -135,6 +140,10 @@ class SharedPreferencesHandler {
 
   Future setLogin(bool login) async {
     await this.set('login', login.toString());
+  }
+
+  Future setUseCnpj(bool useCnpj) async {
+    await this.set('useCnpj', useCnpj.toString());
   }
 
   logout() {
