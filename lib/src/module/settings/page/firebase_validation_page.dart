@@ -141,8 +141,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ))
                                 : Padding(
                                     padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: controller!.loginBool
-                                        ? TextFormField(
+                                    child:  TextFormField(
                                             validator: (val) {
                                               if (val!.isEmpty) {
                                                 return 'Informe o usuário';
@@ -155,11 +154,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 labelText: "Usuário",
                                                 filled: this.widget.filled),
                                             keyboardType: TextInputType.text)
-                                        : Container()),
+                                       ),
                             Padding(
                                 padding: EdgeInsets.symmetric(vertical: 5),
-                                child: controller!.loginBool
-                                    ? TextFormField(
+                                child:  TextFormField(
                                         validator: (val) {
                                           if (val!.isEmpty) {
                                             return 'Informe a senha';
@@ -172,7 +170,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                             filled: this.widget.filled),
                                         keyboardType: TextInputType.text,
                                         obscureText: true)
-                                    : Container()),
+                                    ),
                             this.widget.placa
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(vertical: 5),
@@ -235,6 +233,9 @@ class _SettingsPageState extends State<SettingsPage> {
                               height: 50,
                               width: double.infinity,
                               child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.orange
+                                  ),
                                   child: Text(
                                     "Política de Privacidade",
                                     style: TextStyle(fontSize: 20),

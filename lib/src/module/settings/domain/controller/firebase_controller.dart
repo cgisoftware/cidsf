@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/login_pacific_usecase.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,8 @@ class FirebaseController {
   final LoginPacificUseCase? loginPacificUseCase;
   final Function? validaLogin;
 
-  FirebaseController({this.context, this.loginPacificUseCase, this.validaLogin});
+  FirebaseController(
+      {this.context, this.loginPacificUseCase, this.validaLogin});
 
   final edtCodigoText = TextEditingController();
   final edtUsuarioText = TextEditingController();
@@ -36,6 +39,7 @@ class FirebaseController {
   initState(state) async {
     this.state = state;
     this.loginBool = await _handler.getLogin();
+    debugger();
 
     this.edtUsuarioText.text = (await (_handler.get("edtUsuario"))) ?? '';
     this.edtCodigoText.text = (await (_handler.get("edtCodigo"))) ?? '';
@@ -54,6 +58,8 @@ class FirebaseController {
 
   login() async {
     if (formKey.currentState!.validate()) {
+      this.isLoading = true;
+      this.state.setState(() {});
       try {
         await this.loginPacificUseCase!(this.edtUsuarioText.text,
             this.edtSenhaText.text, this.edtCodigoText.text, this.biometria);
@@ -70,6 +76,9 @@ class FirebaseController {
         this.state.setState(() {});
       } catch (e) {
         handlerDialog.show(message: e.toString(), context: context!);
+      } finally {
+        this.isLoading = true;
+        this.state.setState(() {});
       }
     }
   }
