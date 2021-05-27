@@ -1,7 +1,7 @@
+import 'package:cids_cgi/src/module/settings/controller/firebase_controller.dart';
 import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
-import 'package:cids_cgi/src/di/di.dart';
-import 'package:cids_cgi/src/module/settings/domain/controller/firebase_controller.dart';
 import '../../../module/settings/page/politica_privacidade_page.dart';
+import 'package:cids_cgi/src/di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';

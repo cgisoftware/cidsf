@@ -39,7 +39,6 @@ class FirebaseController {
   initState(state) async {
     this.state = state;
     this.loginBool = await _handler.getLogin();
-    debugger();
 
     this.edtUsuarioText.text = (await (_handler.get("edtUsuario"))) ?? '';
     this.edtCodigoText.text = (await (_handler.get("edtCodigo"))) ?? '';

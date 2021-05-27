@@ -1,8 +1,9 @@
-import 'package:cids_cgi/src/module/settings/domain/controller/firebase_controller.dart';
+
 import 'package:cids_cgi/src/module/settings/domain/usecase/login_pacific_usecase.dart';
+import 'package:cids_cgi/src/module/settings/controller/firebase_controller.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class AuthController {
   final BuildContext? context;
