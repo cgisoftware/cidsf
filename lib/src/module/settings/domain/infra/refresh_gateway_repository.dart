@@ -12,7 +12,7 @@ class RefreshGatewayRepository {
       final String? usuarioP = await handler.getUsuarioP();
       final String? usuario = await handler.getUsuario();
       final String? senhaP = await handler.getSenhaP();
-      final String? codigo = await handler.getSenha();
+      final String? codigo = await handler.getCodigo();
       final String? senha = await handler.getSenha();
       final String? servico = await handler.getURL();
 
