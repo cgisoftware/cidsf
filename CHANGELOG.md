@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.0] - 28/05/2021
+
+### Added
+
+- Adicionado validações de erro retornadas pelo gateway
+
 ## [2.0.8] - 27/05/2021
 
 ### Added
