@@ -47,6 +47,11 @@ class ErrorHandler {
       return r;
     }
 
+    if (result['msg'] != null) {
+      Retorno r = new Retorno(true, result['msg']);
+      return r;
+    }
+
     Retorno r = new Retorno(false, "Não foi encontrado erro");
     return r;
   }
