@@ -14,7 +14,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
-# Componens
+# Components
 
 ## SettingsPage
 
