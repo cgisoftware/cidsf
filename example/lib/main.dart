@@ -29,8 +29,7 @@ void main() async {
       senha: "Mariana23",
       versaoPacific: 1,
       loginPorCpfCnpj: true,
-      useCnpj: true
-);
+      useCnpj: false);
 
   runApp(MyApp());
 }
@@ -125,14 +124,14 @@ class _MyHomeState extends State<MyHome> {
       appBar: AppBar(
         actions: [
           IconButton(
-              icon: Icon(Icons.settings),
+              icon: Icon(Icons.camera),
               onPressed: () async {
                 String response =
                     await QRScan().startScan(context, QRScanType.bar);
                 print(response);
               }),
           IconButton(
-              icon: Icon(Icons.access_alarms),
+              icon: Icon(Icons.settings),
               onPressed: () {
                 Navigator.of(biometricsContext).pushNamed('/settings');
               })

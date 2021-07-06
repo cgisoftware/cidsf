@@ -71,6 +71,9 @@ class FirebaseController {
           await this.validaLogin!();
         }
 
+        await Future.delayed(
+          Duration(milliseconds: 1500),
+        );
         Navigator.of(this.state.context)
             .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
 
@@ -80,7 +83,7 @@ class FirebaseController {
       } catch (e) {
         handlerDialog.show(message: e.toString(), context: context!);
       } finally {
-        this.isLoading = true;
+        this.isLoading = false;
         this.state.setState(() {});
       }
     }
