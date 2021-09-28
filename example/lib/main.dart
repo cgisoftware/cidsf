@@ -133,7 +133,10 @@ class _MyHomeState extends State<MyHome> {
           IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
-                Navigator.of(biometricsContext).pushNamed('/settings');
+                Navigator.of(biometricsContext).push(MaterialPageRoute(
+                    builder: (context) => SettingsPage(
+                          motorista: true,
+                        )));
               })
         ],
         title: const Text('CIDS for dev'),
