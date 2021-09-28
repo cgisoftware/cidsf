@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 2.1.3` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 2.1.4` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -110,6 +110,12 @@ final biometricsHandler = BiometricsHandler(
 void main() async {
   biometricsHandler.listen();
   biometricsHandler();
+
+  await cidsHandler.initialize(
+      gateway: bool,
+      loginPorCpfCnpj: bool,
+      aplicativo: "nome_app",
+      versaoPacific: 1);
 }
 
 //No build do main.dart, adicionar o home e a geração de rotas.
@@ -194,6 +200,22 @@ class Router {
         return SlideRightRoute(widget: authPage);
     }
   }
+}
+
+class SlideRightRoute extends PageRouteBuilder {
+  final Widget widget;
+  SlideRightRoute({required this.widget})
+      : super(
+            pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation) {
+              return widget;
+            },
+            transitionsBuilder: (BuildContext context,
+                    Animation<double> animation,
+                    Animation<double> secondaryAnimation,
+                    Widget child) =>
+                FadeTransition(opacity: animation, child: child),
+            transitionDuration: Duration(milliseconds: 500));
 }
 ```
 <br>
