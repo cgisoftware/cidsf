@@ -14,7 +14,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
-# Componens
+# Components
 
 ## SettingsPage
 
@@ -155,7 +155,7 @@ final loginPage = LoginCnpj(
 
 final authPage = AuthPage(
   dropDb: () async {
-    //manupula os dados salvos
+    //manipula os dados salvos
   },
   frase: 'Todos os indicadores da sua empresa',
   imagePath: "images/index.jpg",
@@ -222,7 +222,7 @@ class SlideRightRoute extends PageRouteBuilder {
 No arquivo da tela principal do aplicativo, geralmente a tela Home, adicione algumas configurações extras para buscar o contexto
 
 ```dart
-//home.dart sua padina de home do aplicativo
+//home.dart sua pagina de home do aplicativo
 class HomePage extends StatefulWidget { //TORNE A HOME UM STATEFULL WIDGET!!!!
   @override
   _HomePageState createState() => _HomePageState();
@@ -237,7 +237,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
-    //LEMBRE-SE DE PASSAR O CONTEXT AO CRIAR A TELA, SEM ISSO A BIOMETRIA NUNCA IRÁ FNUNCIONAR CORRETAMENTE!!!!
+    //LEMBRE-SE DE PASSAR O CONTEXT AO CRIAR A TELA, SEM ISSO A BIOMETRIA NUNCA IRÁ FUNCIONAR CORRETAMENTE!!!!
     widget.context(context);
   }
 }
