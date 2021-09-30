@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 2.1.3` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 2.1.4` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -110,6 +110,12 @@ final biometricsHandler = BiometricsHandler(
 void main() async {
   biometricsHandler.listen();
   biometricsHandler();
+
+  await cidsHandler.initialize(
+      gateway: bool,
+      loginPorCpfCnpj: bool,
+      aplicativo: "nome_app",
+      versaoPacific: 1);
 }
 
 //No build do main.dart, adicionar o home e a geração de rotas.
@@ -149,7 +155,7 @@ final loginPage = LoginCnpj(
 
 final authPage = AuthPage(
   dropDb: () async {
-    //manupula os dados salvos
+    //manipula os dados salvos
   },
   frase: 'Todos os indicadores da sua empresa',
   imagePath: "images/index.jpg",
@@ -195,12 +201,28 @@ class Router {
     }
   }
 }
+
+class SlideRightRoute extends PageRouteBuilder {
+  final Widget widget;
+  SlideRightRoute({required this.widget})
+      : super(
+            pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation) {
+              return widget;
+            },
+            transitionsBuilder: (BuildContext context,
+                    Animation<double> animation,
+                    Animation<double> secondaryAnimation,
+                    Widget child) =>
+                FadeTransition(opacity: animation, child: child),
+            transitionDuration: Duration(milliseconds: 500));
+}
 ```
 <br>
 No arquivo da tela principal do aplicativo, geralmente a tela Home, adicione algumas configurações extras para buscar o contexto
 
 ```dart
-//home.dart sua padina de home do aplicativo
+//home.dart sua pagina de home do aplicativo
 class HomePage extends StatefulWidget { //TORNE A HOME UM STATEFULL WIDGET!!!!
   @override
   _HomePageState createState() => _HomePageState();
@@ -215,7 +237,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
-    //LEMBRE-SE DE PASSAR O CONTEXT AO CRIAR A TELA, SEM ISSO A BIOMETRIA NUNCA IRÁ FNUNCIONAR CORRETAMENTE!!!!
+    //LEMBRE-SE DE PASSAR O CONTEXT AO CRIAR A TELA, SEM ISSO A BIOMETRIA NUNCA IRÁ FUNCIONAR CORRETAMENTE!!!!
     widget.context(context);
   }
 }
