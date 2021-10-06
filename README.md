@@ -146,13 +146,6 @@ final homePage = HomePage(
   }
 );
 
-// Se o login por CNPJ estiver como True no firebase crie essa rota:
-final loginPage = LoginCnpj(
-  context: (context) {
-    biometricsContext = context;
-  },
-);
-
 final authPage = AuthPage(
   dropDb: () async {
     //manipula os dados salvos
@@ -171,9 +164,6 @@ Arquivo para adicionar as strings das rotas do aplicativo
 const String homeRoute = '/home';
 const String authRoute = '/auth';
 const String indexRoute = '/index';
-
-// Se o login por CNPJ estiver como True no firebase crie essa rota:
-const String loginRoute = '/login_cnpj';
 ```
 <br>
 Crie um arquivo na raiz da pasta lib com o nome routes.dart importando as telas do arquivo page.dart
@@ -188,10 +178,6 @@ class Router {
 
       case homeRoute:
         return SlideRightRoute(widget: homePage);
-
-// Se o login por CNPJ estiver como True no firebase crie essa rota:
-      case loginRoute:
-        return SlideRightRoute(widget: loginPage);
 
       case indexRoute: 
         return SlideRightRoute(widget: authPage);
