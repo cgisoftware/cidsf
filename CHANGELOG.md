@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.5] - 13/10/2021
+
+### Added
+
+- Adicionado opção para mostrar campo de código do motorista na tela de login.
+
 ## [2.1.1] - 28/05/2021
 
 ### Added
