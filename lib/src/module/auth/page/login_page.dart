@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-  
+
     if (this.controller == null) {
       this.controller = authController(context, widget.validaLogin);
     }
@@ -72,16 +72,26 @@ class _LoginPageState extends State<LoginPage> {
                             controller: controller!.usuario,
                             hintText: "Usuário",
                             readOnly: false,
-                            validatorText: "Preencha o usuário"
-                          )
+                            validatorText: "Preencha o usuário")
                         : RoundedInputField(
                             controller: controller!.usuario,
                             hintText: controller!.useCnpj ? "CNPJ" : "CPF",
-                            validatorText: controller!.useCnpj ? "Preencha o CNPJ" :  "Preencha o CPF",
+                            validatorText: controller!.useCnpj
+                                ? "Preencha o CNPJ"
+                                : "Preencha o CPF",
                             readOnly: false,
                             keyboardType: TextInputType.number,
                             inputFormatters: [controller!.maskFormatter],
                           ),
+                    controller!.campoMotorista
+                        ? RoundedInputField(
+                            controller: controller!.motorista,
+                            icon: Icons.lock_open,
+                            validatorText: "Preencha o código do motorista",
+                            hintText: "Código do motorista",
+                            readOnly: false,
+                          )
+                        : Container(),
                     RoundedPasswordField(
                       controller: controller!.senha,
                       validatorText: "Preencha o usuário",

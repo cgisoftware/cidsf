@@ -11,8 +11,8 @@ class LoginPacificUseCase {
 
   LoginPacificUseCase(this.loginGatewayRepository, this.segurancaRepository);
 
-  Future call(
-      String usuario, String senha, String codigo, bool biometria) async {
+  Future call(String usuario, String senha, String codigo, bool biometria,
+      String motorista) async {
     try {
       final handler = SharedPreferencesHandler();
       final password = await handler.getPasswordFirebase();
@@ -21,6 +21,7 @@ class LoginPacificUseCase {
       await handler.set('edtSenha', senha);
       await handler.set('biometria', biometria.toString());
       await handler.set('edtCodigo', codigo);
+      await handler.set('edtMotorista', motorista);
 
       var r = await segurancaRepository!(password!);
 

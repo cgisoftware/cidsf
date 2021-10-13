@@ -10,7 +10,7 @@ _"O projeto veio para trazer um conforto a todos os desenvolvedores com casos on
 
 ## Instalação
 
-- Adicione o `cids_cgi: 2.1.4` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `cids_cgi: 2.1.5` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -114,6 +114,7 @@ void main() async {
   await cidsHandler.initialize(
       gateway: bool,
       loginPorCpfCnpj: bool,
+      campoMotorista: bool,
       aplicativo: "nome_app",
       versaoPacific: 1);
 }

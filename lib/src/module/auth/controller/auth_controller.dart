@@ -14,11 +14,13 @@ class AuthController {
   final codigo = TextEditingController();
   final usuario = TextEditingController();
   final senha = TextEditingController();
+  final motorista = TextEditingController();
   final handlerDialog = DialogHandler();
   var maskFormatter = new MaskTextInputFormatter(mask: CPF);
 
   late bool loginBool = false;
   late bool useCnpj = false;
+  late bool campoMotorista = false;
   bool biometria = false;
   bool _loading = false;
   bool get loading => this._loading;
@@ -32,6 +34,7 @@ class AuthController {
 
     this.loginBool = await SharedPreferencesHandler().getLogin();
     this.useCnpj = await SharedPreferencesHandler().useCnpj();
+    this.campoMotorista = await SharedPreferencesHandler().getCampoMotorista();
 
     if (useCnpj) {
       maskFormatter = new MaskTextInputFormatter(mask: CNPJ);
@@ -45,7 +48,7 @@ class AuthController {
       this.state.setState(() {});
       try {
         await this.loginPacificUseCase!(this.usuario.text, this.senha.text,
-            this.codigo.text, this.biometria);
+            this.codigo.text, this.biometria, this.motorista.text);
 
         if (this.loginBool && this.validaLogin != null) {
           await this.validaLogin!();

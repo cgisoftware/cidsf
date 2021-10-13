@@ -102,6 +102,11 @@ class SharedPreferencesHandler {
     return token;
   }
 
+  Future getCampoMotorista() async {
+    var campoMotorista = await this.get('campo_motorista') == 'true';
+    return campoMotorista;
+  }
+
   Future<int> getVersaoProgramaPacific() async {
     var token = await this.get('versaoProgramaPacific');
     return int.parse(token!);
@@ -140,6 +145,10 @@ class SharedPreferencesHandler {
 
   Future setLogin(bool login) async {
     await this.set('login', login.toString());
+  }
+
+  Future setCampoMotorista(bool campoMotorista) async {
+    await this.set('campo_motorista', campoMotorista.toString());
   }
 
   Future setUseCnpj(bool useCnpj) async {
