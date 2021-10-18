@@ -64,8 +64,12 @@ class FirebaseController {
       this.isLoading = true;
       this.state.setState(() {});
       try {
-        await this.loginPacificUseCase!(this.edtUsuarioText.text,
-            this.edtSenhaText.text, this.edtCodigoText.text, this.biometria);
+        await this.loginPacificUseCase!(
+            this.edtUsuarioText.text,
+            this.edtSenhaText.text,
+            this.edtCodigoText.text,
+            this.biometria,
+            this.edtMotoristaText.text);
 
         if (edtMotoristaText.text.isNotEmpty) {
           await _handler.set("edtMotorista", edtMotoristaText.text);

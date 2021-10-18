@@ -28,7 +28,7 @@ void main() async {
       aplicativo: "cidsf",
       senha: "Mariana23",
       versaoPacific: 1,
-      loginPorCpfCnpj: true,
+      campoMotorista: true,
       useCnpj: false);
 
   runApp(MyApp());
