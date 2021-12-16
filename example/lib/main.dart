@@ -28,7 +28,7 @@ void main() async {
       aplicativo: "cidsf",
       senha: "Mariana23",
       versaoPacific: 1,
-      campoMotorista: true,
+      campoMotorista: false,
       useCnpj: false);
 
   runApp(MyApp());
@@ -122,20 +122,28 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xff1D2745),
         actions: [
           IconButton(
-              icon: Icon(Icons.camera),
+              icon: Icon(
+                Icons.camera,
+                color: Colors.white,
+              ),
               onPressed: () async {
-                String response =
-                    await QRScan().startScan(context, QRScanType.bar);
+                String response = await QRScan().startScan(
+                  context,
+                  QRScanType.bar,
+                );
                 print(response);
               }),
           IconButton(
-              icon: Icon(Icons.settings),
+              icon: Icon(Icons.settings, color: Colors.white),
               onPressed: () {
                 Navigator.of(biometricsContext).push(MaterialPageRoute(
                     builder: (context) => SettingsPage(
-                          motorista: true,
+                          appBarColor: Color(0xff1D2745),
+                          motorista: false,
+                          placa: true,
                         )));
               })
         ],

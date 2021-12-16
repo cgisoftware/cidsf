@@ -75,6 +75,10 @@ class FirebaseController {
           await _handler.set("edtMotorista", edtMotoristaText.text);
         }
 
+        if (edtPlacaText.text.isNotEmpty) {
+          await _handler.set("edtPlaca", edtPlacaText.text);
+        }
+
         if (this.loginBool && this.validaLogin != null) {
           await this.validaLogin!();
         }
