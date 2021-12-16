@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.6] - 13/10/2021
+
+### Added
+
+- Consertado bug que não salvava a placa na tela de configurações.
+
 ## [2.1.5] - 13/10/2021
 
 ### Added
