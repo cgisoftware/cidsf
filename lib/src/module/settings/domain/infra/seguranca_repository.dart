@@ -1,7 +1,7 @@
 library cids_cgi;
 
 import 'package:cids_cgi/src/core/domain/device/handler/date_handler.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:flutter/material.dart';
 import 'firebase_repository.dart';

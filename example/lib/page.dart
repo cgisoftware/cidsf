@@ -1,6 +1,5 @@
 import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi_example/main.dart';
-import 'package:cids_cgi_example/validaLogin.dart';
 import 'package:flutter/material.dart';
 
 final biometricsPage = BiometricsErrorPage(
@@ -14,7 +13,7 @@ final homePage = MyHome(context: (context) {
 });
 
 final authPage = AuthPage(
-  validaLogin: ValidaLogin().call,
+  validaLogin: null,
   dropDb: () async {
     //manupula os dados salvos
   },
@@ -23,7 +22,7 @@ final authPage = AuthPage(
 );
 
 final settingsPage = SettingsPage(
-  validaLogin: ValidaLogin().call,
+  validaLogin: null,
   appBarColor: Colors.red,
   appBarTextColor: Colors.white,
 );

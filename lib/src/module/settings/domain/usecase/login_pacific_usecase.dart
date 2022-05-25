@@ -1,6 +1,5 @@
-import 'package:cids_cgi/src/core/domain/device/handler/shared_preferences_handler.dart';
-import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/module/settings/domain/infra/login_gateway_repository.dart';
+import 'package:cids_cgi/cids_cgi.dart';
 import 'dart:async';
 
 import 'package:cids_cgi/src/module/settings/domain/model/token.dart';

@@ -1,9 +1,9 @@
 import 'package:cids_cgi/src/module/settings/controller/firebase_controller.dart';
 import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
+import 'package:local_auth/local_auth.dart';
 import '../../../module/settings/page/politica_privacidade_page.dart';
 import 'package:cids_cgi/src/di/di.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:async';
 
 class SettingsPage extends StatefulWidget {
@@ -14,6 +14,7 @@ class SettingsPage extends StatefulWidget {
   final bool placa;
   final bool cpf;
   final Function? validaLogin;
+  
 
   SettingsPage(
       {this.appBarColor = Colors.transparent,
@@ -29,12 +30,18 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   FirebaseController? controller;
+  bool canUseBiometrics = false;
+  final localAuth = LocalAuthentication();
+  
   @override
   void initState() {
     super.initState();
 
     Future.delayed(Duration.zero)
-        .then((_) => {this.controller!.initState(this)});
+        .then((_) async {
+          this.controller!.initState(this);
+          this.canUseBiometrics = await localAuth.isDeviceSupported();
+        });
   }
 
   @override
@@ -213,7 +220,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         : Container(),
                                   ],
                                 )),
-                            Row(
+                            canUseBiometrics ? Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -227,7 +234,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   },
                                 ),
                               ],
-                            ),
+                            ) : Container(),
                             Container(
                               margin: EdgeInsets.symmetric(vertical: 20),
                               height: 50,

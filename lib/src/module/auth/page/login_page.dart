@@ -1,10 +1,12 @@
+import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/page/widget/rounded_password_field.dart';
+import 'package:cids_cgi/src/module/auth/controller/auth_controller.dart';
 import 'package:cids_cgi/src/core/page/widget/redes_sociais_widget.dart';
 import 'package:cids_cgi/src/core/page/widget/rounded_input_field.dart';
 import 'package:cids_cgi/src/core/page/widget/rounded_button.dart';
 import 'package:cids_cgi/src/di/di.dart';
-import 'package:cids_cgi/src/module/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 
 class LoginPage extends StatefulWidget {
   final Function? validaLogin;
@@ -17,12 +19,20 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   AuthController? controller;
+  bool canUseBiometrics = true;
+  final localAuth = LocalAuthentication();
+  final _handler = SharedPreferencesHandler();
+  bool rh = false;
+
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero)
-        .then((_) => {this.controller!.initState(this)});
+    Future.delayed(Duration.zero).then((_) async {
+      this.controller!.initState(this);
+      this.canUseBiometrics = await localAuth.isDeviceSupported();
+      this.rh = (await _handler.get('rh')) == 'true';
+    });
   }
 
   @override
@@ -45,8 +55,8 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                   height: 70,
                   child: Theme.of(context).brightness == Brightness.light
-                      ? Image.asset("images/consultors.png")
-                      : Image.asset("images/consultors_dark.png")),
+                      ? Image.asset(rh ? "images/admrh.png" : "images/consultors.png")
+                      : Image.asset(rh ? "images/admrh.png" : "images/consultors_dark.png")),
               SizedBox(height: size.height * 0.09),
               Form(
                 key: controller!.formKey,
@@ -103,25 +113,28 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: size.height * 0.08),
               RoundedButton(
                 loading: controller!.loading,
+                color: rh ? Color(0xffFFA856) : Colors.blueAccent,
                 text: "ENTRAR",
                 press: () async {
                   controller!.login();
                 },
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Habilitar autenticação por biometria"),
-                  Switch(
-                    activeColor: Colors.blue,
-                    value: controller!.biometria,
-                    onChanged: (val) {
-                      controller!.changeBiometria(val);
-                    },
-                  ),
-                ],
-              ),
+              canUseBiometrics
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Habilitar autenticação por biometria"),
+                        Switch(
+                          activeColor: rh ? Colors.orange : Colors.blue,
+                          value: controller!.biometria,
+                          onChanged: (val) {
+                            controller!.changeBiometria(val);
+                          },
+                        ),
+                      ],
+                    )
+                  : Container(),
               SizedBox(height: size.height * 0.07),
               RedesSociaisWidget()
             ],

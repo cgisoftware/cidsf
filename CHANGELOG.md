@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.0] - 25/05/2022
+
+### Chanded
+
+- Migrado pacotes e atualizado todas as dependências do projeto.
+
 ## [2.1.5] - 13/10/2021
 
 ### Added

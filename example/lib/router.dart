@@ -25,7 +25,7 @@ class Router {
 
 class SlideRightRoute extends PageRouteBuilder {
   final Widget widget;
-  SlideRightRoute({this.widget})
+  SlideRightRoute({required this.widget})
       : super(
             pageBuilder: (BuildContext context, Animation<double> animation,
                 Animation<double> secondaryAnimation) {
@@ -36,5 +36,5 @@ class SlideRightRoute extends PageRouteBuilder {
                     Animation<double> secondaryAnimation,
                     Widget child) =>
                 FadeTransition(opacity: animation, child: child),
-            transitionDuration: Duration(milliseconds: 500));
+            transitionDuration: const Duration(milliseconds: 500));
 }

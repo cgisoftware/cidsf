@@ -1,9 +1,27 @@
+import 'package:cids_cgi/cids_cgi.dart';
 import 'package:cids_cgi/src/core/domain/usecase/launch_social_usecase.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 
-class RedesSociaisWidget extends StatelessWidget {
+class RedesSociaisWidget extends StatefulWidget {
+  @override
+  State<RedesSociaisWidget> createState() => _RedesSociaisWidgetState();
+}
+
+class _RedesSociaisWidgetState extends State<RedesSociaisWidget> {
   final launchSocialUseCase = LaunchSocialUseCaseImpl();
+
+  bool rh = false;
+  final _handler = SharedPreferencesHandler();
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration.zero).then((_) async {
+      this.rh = (await _handler.get("rh")) == "true";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +40,7 @@ class RedesSociaisWidget extends StatelessWidget {
               },
               child: Icon(
                 FontAwesomeIcons.facebook,
-                color: Color(0xff3A5997),
+                color: rh ? Colors.orange : Color(0xff3A5997),
                 size: 30,
               ),
             ),
@@ -33,7 +51,7 @@ class RedesSociaisWidget extends StatelessWidget {
                 },
                 child: Icon(
                   FontAwesomeIcons.instagram,
-                  color: Color(0xff3E729A),
+                  color: rh ? Colors.orange : Color(0xff3E729A),
                   size: 30,
                 )),
             InkWell(
@@ -43,7 +61,7 @@ class RedesSociaisWidget extends StatelessWidget {
                 },
                 child: Icon(
                   FontAwesomeIcons.linkedin,
-                  color: Color(0xff027BB6),
+                  color: rh ? Colors.orange : Color(0xff027BB6),
                   size: 30,
                 )),
             InkWell(
@@ -54,7 +72,7 @@ class RedesSociaisWidget extends StatelessWidget {
                 child: Center(
                   child: Icon(
                     FontAwesomeIcons.twitter,
-                    color: Color(0xff2995E8),
+                    color: rh ? Colors.orange : Color(0xff2995E8),
                     size: 30,
                   ),
                 ))

@@ -10,7 +10,8 @@ class CidsHandler {
       bool gateway = false,
       bool loginPorCpfCnpj = false,
       bool campoMotorista = false,
-      bool useCnpj = false}) async {
+      bool useCnpj = false,
+      bool rh = false}) async {
     await _handler.setUseCnpj(useCnpj);
     await _handler.setVersaoProgramaPacific(versaoPacific);
     await _handler.setNomeAplicativo(aplicativo);
@@ -18,6 +19,7 @@ class CidsHandler {
     await _handler.setGateway(gateway);
     await _handler.setLogin(loginPorCpfCnpj);
     await _handler.setCampoMotorista(campoMotorista);
+    await _handler.setRH(rh);
     await Firebase.initializeApp();
   }
 }

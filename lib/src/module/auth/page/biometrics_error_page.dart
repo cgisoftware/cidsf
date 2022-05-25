@@ -15,10 +15,16 @@ class BiometricsErrorPage extends StatefulWidget {
 
 class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
   final _handler = SharedPreferencesHandler();
+  bool rh = false;
 
   @override
   void initState() {
     super.initState();
+
+    Future.delayed(Duration.zero).then((_) async {
+      this.rh = (await _handler.get('rh')) == 'true';
+      setState(() {});
+    });
 
     widget.context(context);
   }
@@ -35,8 +41,11 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
               child: Container(
                   height: 70,
                   child: Theme.of(context).brightness == Brightness.light
-                      ? Image.asset("images/consultors.png")
-                      : Image.asset("images/consultors_dark.png"))),
+                      ? Image.asset(
+                          rh ? "images/admrh.png" : "images/consultors.png")
+                      : Image.asset(rh
+                          ? "images/admrh.png"
+                          : "images/consultors_dark.png"))),
           Positioned(
               left: 16,
               right: 16,
@@ -53,13 +62,19 @@ class _BiometricsErrorPageState extends State<BiometricsErrorPage> {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/index', (Route<dynamic> route) => false);
                         },
-                        child: Text("Sair do app"),
+                        child: Text(
+                          "Sair do app",
+                          style: TextStyle(
+                              color: rh ? Colors.orange : Colors.blue),
+                        ),
                       ),
                     ),
                     SizedBox(
                         height: 50,
                         width: MediaQuery.of(context).size.width * .4,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: rh ? Colors.orange : Colors.blue),
                           onPressed: () async {
                             widget.biometricsHandler();
                           },

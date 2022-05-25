@@ -1,6 +1,6 @@
 name: cids_cgi
 description: CGI Design System for Flutter
-version: 2.1.5
+version: 3.0.0
 homepage: http://www.webcgi.com.br
 
 environment:
@@ -10,20 +10,22 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  mask_text_input_formatter: ^2.0.0
-  font_awesome_flutter: ^9.1.0
-  shared_preferences: ^2.0.6
-  cloud_firestore: ^2.5.3
-  firebase_auth: ^3.1.1
-  device_info: ^2.0.2
-  url_launcher: ^6.0.4
-  flutter_html: ^2.1.2
-  firebase_core: ^1.6.0
-  package_info: ^2.0.2
+  mask_text_input_formatter: ^2.3.0
+  font_awesome_flutter: ^10.1.0
+  shared_preferences: ^2.0.15
+  cloud_firestore: ^3.1.16
+  firebase_auth: ^3.3.18
+  device_info_plus: ^3.2.3
+  url_launcher: ^6.1.2
+  flutter_html: ^2.2.1
+  firebase_core: ^1.17.0
+  package_info_plus: ^1.4.2
   intl: ^0.17.0
-  dio: ^4.0.0
-  local_auth: ^1.1.5
-  scan: ^1.4.3
+  dio: ^4.0.6
+  local_auth: ^2.1.0
+  local_auth_android: ^1.0.4
+  local_auth_ios: ^1.0.6
+  scan: ^1.6.0
 
 dev_dependencies:
   flutter_test:

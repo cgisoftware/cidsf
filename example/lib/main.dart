@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import './router.dart' as r;
 
-var defaultPage;
+Widget? defaultPage;
 
-BuildContext biometricsContext;
+late BuildContext biometricsContext;
 final cidsHandler = CidsHandler();
 
 final biometricsHandler = BiometricsHandler(autenticacaoPage: () {
   Navigator.of(biometricsContext)
       .pushNamedAndRemoveUntil('/auth', (Route<dynamic> route) => false);
 }, homePage: () {
-  print(biometricsContext);
   Navigator.of(biometricsContext)
       .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
 });
@@ -28,26 +27,26 @@ void main() async {
       aplicativo: "cidsf",
       senha: "Mariana23",
       versaoPacific: 1,
-      campoMotorista: true,
-      useCnpj: false);
+      campoMotorista: false,
+      rh: true);
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   final temaClaro = ThemeData(
-      appBarTheme: AppBarTheme(
-          brightness: Brightness.light,
-          color: Colors.transparent,
-          iconTheme: IconThemeData(color: Colors.black),
-          textTheme: TextTheme(
-              headline6: TextStyle(color: Colors.black, fontSize: 18))),
-      textTheme: TextTheme(
+      appBarTheme: const AppBarTheme(
+        color: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
+      textTheme: const TextTheme(
         headline6: TextStyle(
           color: Color(0xff1D2745),
         ),
@@ -55,21 +54,20 @@ class _MyAppState extends State<MyApp> {
           color: Color(0xff1D2745),
         ),
       ),
-      primaryColor: Color(0xff1D2745),
-      backgroundColor: Color(0xff1D2745),
+      primaryColor: const Color(0xff1D2745),
+      backgroundColor: const Color(0xff1D2745),
       fontFamily: 'PT_Sans-Narrow-Web',
       primarySwatch: Colors.blue,
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      buttonTheme: ButtonThemeData(
+      buttonTheme: const ButtonThemeData(
           buttonColor: Color(0xffff6600), textTheme: ButtonTextTheme.primary));
 
   final temaEscuro = ThemeData(
-      appBarTheme: AppBarTheme(
-          iconTheme: IconThemeData(color: Colors.white),
-          color: Colors.transparent,
-          textTheme: TextTheme(
-              headline6: TextStyle(color: Colors.white, fontSize: 18))),
-      textTheme: TextTheme(
+      appBarTheme: const AppBarTheme(
+        iconTheme: IconThemeData(color: Colors.white),
+        color: Colors.transparent,
+      ),
+      textTheme: const TextTheme(
         headline6: TextStyle(
           color: Colors.white,
         ),
@@ -82,7 +80,7 @@ class _MyAppState extends State<MyApp> {
       fontFamily: 'PT_Sans-Narrow-Web',
       primarySwatch: Colors.blue,
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      buttonTheme: ButtonThemeData(
+      buttonTheme: const ButtonThemeData(
           buttonColor: Color(0xffff6600), textTheme: ButtonTextTheme.primary));
 
   @override
@@ -104,10 +102,10 @@ class _MyAppState extends State<MyApp> {
 class MyHome extends StatefulWidget {
   final Function(BuildContext) context;
 
-  const MyHome({Key key, @required this.context}) : super(key: key);
+  const MyHome({Key? key, required this.context}) : super(key: key);
 
   @override
-  _MyHomeState createState() => _MyHomeState();
+  createState() => _MyHomeState();
 }
 
 class _MyHomeState extends State<MyHome> {
@@ -124,18 +122,18 @@ class _MyHomeState extends State<MyHome> {
       appBar: AppBar(
         actions: [
           IconButton(
-              icon: Icon(Icons.camera),
+              icon: const Icon(Icons.camera),
               onPressed: () async {
-                String response =
+                String? response =
                     await QRScan().startScan(context, QRScanType.bar);
-                print(response);
+                    print(response);
               }),
           IconButton(
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.settings),
               onPressed: () {
                 Navigator.of(biometricsContext).push(MaterialPageRoute(
                     builder: (context) => SettingsPage(
-                          motorista: true,
+                          motorista: false,
                         )));
               })
         ],

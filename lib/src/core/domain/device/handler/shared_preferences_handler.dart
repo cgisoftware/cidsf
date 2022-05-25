@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SharedPreferencesHandler {
   Future set(
@@ -149,6 +149,10 @@ class SharedPreferencesHandler {
 
   Future setCampoMotorista(bool campoMotorista) async {
     await this.set('campo_motorista', campoMotorista.toString());
+  }
+
+  Future setRH(bool rh) async {
+    await this.set('rh', rh.toString());
   }
 
   Future setUseCnpj(bool useCnpj) async {

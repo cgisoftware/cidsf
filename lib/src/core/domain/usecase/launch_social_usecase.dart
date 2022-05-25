@@ -7,15 +7,13 @@ abstract class LaunchSocialUseCase {
 class LaunchSocialUseCaseImpl implements LaunchSocialUseCase {
   @override
   call(String url, String fallbackUrl) async {
-    // Don't use canLaunch because of fbProtocolUrl (fb://)
     try {
-      bool launched =
-          await launch(url, forceSafariVC: false, forceWebView: false);
+      bool launched = await launchUrl(Uri.parse(url));
       if (!launched) {
-        await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
+        await launchUrl(Uri.parse(fallbackUrl));
       }
     } catch (e) {
-      await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
+      await launchUrl(Uri.parse(fallbackUrl));
     }
   }
 }
