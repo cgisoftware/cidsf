@@ -155,6 +155,33 @@ class SharedPreferencesHandler {
     await this.set('rh', rh.toString());
   }
 
+  Future setUseFirebase(bool useFirebaes) async {
+    await this.set('useFirebase', useFirebaes.toString());
+  }
+
+  Future setUsePacificUrl(bool usePacificUrl) async {
+    await this.set('usePacificUrl', usePacificUrl.toString());
+  }
+
+  Future<bool> useFirebase() async {
+    var token = await this.get('useFirebase');
+    return token == "true";
+  }
+
+  Future setChaveDev(String chave) async {
+    await this.set('chaveDev', chave);
+  }
+
+  Future<String> getChaveDev() async {
+    var token = await this.get('chaveDev');
+    return token ?? "";
+  }
+
+  Future<bool> usePacificUrl() async {
+    var token = await this.get('usePacificUrl');
+    return token == "true";
+  }
+
   Future setUseCnpj(bool useCnpj) async {
     await this.set('useCnpj', useCnpj.toString());
   }

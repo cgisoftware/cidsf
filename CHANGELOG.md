@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.1.1] - 30/11/2022
+
+### Added
+
+- Adiciona controle para logar no dev e nao no firebase
+
 ## [3.0.0] - 25/05/2022
 
 ### Chanded

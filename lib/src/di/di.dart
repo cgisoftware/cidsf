@@ -1,3 +1,4 @@
+import 'package:cids_cgi/src/module/settings/domain/infra/busca_acesso_dev_repository.dart';
 import 'package:cids_cgi/src/module/settings/domain/infra/login_gateway_repository.dart';
 import 'package:cids_cgi/src/module/settings/domain/usecase/login_pacific_usecase.dart';
 import 'package:cids_cgi/src/module/settings/controller/firebase_controller.dart';
@@ -11,10 +12,12 @@ final dio = Dio(dioOptions);
 
 final segurancaRepository = new SegurancaRepository(email: "@cgi.com.br");
 
+final buscaAcessoDevRepository= new BuscaAcessoDevRepository();
+
 final loginGatewayRepository = new LoginGatewayRepository(dio);
 
 
-final loginPacificUseCase = LoginPacificUseCase(loginGatewayRepository, segurancaRepository);
+final loginPacificUseCase = LoginPacificUseCase(loginGatewayRepository, segurancaRepository, buscaAcessoDevRepository);
 
 final authController = (BuildContext context, Function? validaLogin) => new AuthController(
     context: context,
