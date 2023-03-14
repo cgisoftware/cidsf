@@ -14,7 +14,6 @@ class SettingsPage extends StatefulWidget {
   final bool placa;
   final bool cpf;
   final Function? validaLogin;
-  
 
   SettingsPage(
       {this.appBarColor = Colors.transparent,
@@ -32,16 +31,15 @@ class _SettingsPageState extends State<SettingsPage> {
   FirebaseController? controller;
   bool canUseBiometrics = false;
   final localAuth = LocalAuthentication();
-  
+
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero)
-        .then((_) async {
-          this.controller!.initState(this);
-          this.canUseBiometrics = await localAuth.isDeviceSupported();
-        });
+    Future.delayed(Duration.zero).then((_) async {
+      this.controller!.initState(this);
+      this.canUseBiometrics = await localAuth.isDeviceSupported();
+    });
   }
 
   @override
@@ -72,8 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             height: 25.0,
                             width: 25.0,
                             child: CircularProgressIndicator(
-                              valueColor: new AlwaysStoppedAnimation<Color>(
-                                  Colors.blue),
+                              valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
                               backgroundColor: Colors.white,
                             )))),
           ],
@@ -102,11 +99,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                       return null;
                                     },
                                     controller: controller!.edtCodigoText,
-                                    enabled:
-                                        controller!.loginBool ? true : false,
-                                    decoration: InputDecoration(
-                                        labelText: "Código de Acesso",
-                                        filled: this.widget.filled),
+                                    enabled: controller!.loginBool ? true : false,
+                                    decoration: InputDecoration(labelText: "Código de Acesso", filled: this.widget.filled),
                                     keyboardType: TextInputType.text)),
                             this.widget.motorista
                                 ? Padding(
@@ -118,11 +112,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                           }
                                           return null;
                                         },
-                                        controller:
-                                            controller!.edtMotoristaText,
-                                        decoration: InputDecoration(
-                                            labelText: "Código do Motorista",
-                                            filled: this.widget.filled),
+                                        controller: controller!.edtMotoristaText,
+                                        decoration: InputDecoration(labelText: "Código do Motorista", filled: this.widget.filled),
                                         keyboardType: TextInputType.number))
                                 : Container(),
                             this.controller!.loginBool
@@ -131,23 +122,15 @@ class _SettingsPageState extends State<SettingsPage> {
                                     child: TextFormField(
                                       validator: (val) {
                                         if (val!.isEmpty) {
-                                          return controller!.useCnpj
-                                              ? " Informe o CNPJ"
-                                              : "Informe o CPF";
+                                          return controller!.useCnpj ? " Informe o CNPJ" : "Informe o CPF";
                                         }
 
                                         return null;
                                       },
                                       controller: controller!.edtUsuarioText,
-                                      decoration: InputDecoration(
-                                          labelText: controller!.useCnpj
-                                              ? "CNPJ"
-                                              : "CPF",
-                                          filled: this.widget.filled),
+                                      decoration: InputDecoration(labelText: controller!.useCnpj ? "CNPJ" : "CPF", filled: this.widget.filled),
                                       keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        controller!.maskFormatter
-                                      ],
+                                      inputFormatters: [controller!.maskFormatter],
                                     ))
                                 : Padding(
                                     padding: EdgeInsets.symmetric(vertical: 5),
@@ -159,9 +142,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                           return null;
                                         },
                                         controller: controller!.edtUsuarioText,
-                                        decoration: InputDecoration(
-                                            labelText: "Usuário",
-                                            filled: this.widget.filled),
+                                        decoration: InputDecoration(labelText: "Usuário", filled: this.widget.filled),
                                         keyboardType: TextInputType.text)),
                             Padding(
                                 padding: EdgeInsets.symmetric(vertical: 5),
@@ -173,9 +154,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                       return null;
                                     },
                                     controller: controller!.edtSenhaText,
-                                    decoration: InputDecoration(
-                                        labelText: "Senha",
-                                        filled: this.widget.filled),
+                                    decoration: InputDecoration(labelText: "Senha", filled: this.widget.filled),
                                     keyboardType: TextInputType.text,
                                     obscureText: true)),
                             this.widget.placa
@@ -189,9 +168,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                           return null;
                                         },
                                         controller: controller!.edtPlacaText,
-                                        decoration: InputDecoration(
-                                            labelText: "Placa do veículo",
-                                            filled: this.widget.filled),
+                                        decoration: InputDecoration(labelText: "Placa do veículo", filled: this.widget.filled),
                                         keyboardType: TextInputType.text))
                                 : Container(),
                             Padding(
@@ -199,9 +176,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 child: TextFormField(
                                     enabled: false,
                                     controller: controller!.edtServicoText,
-                                    decoration: InputDecoration(
-                                        labelText: "Serviço",
-                                        filled: this.widget.filled),
+                                    decoration: InputDecoration(labelText: "Serviço", filled: this.widget.filled),
                                     keyboardType: TextInputType.url)),
                             Container(
                                 padding: EdgeInsets.only(top: 10),
@@ -210,62 +185,51 @@ class _SettingsPageState extends State<SettingsPage> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
-                                    controller!.version != null
-                                        ? Text(
-                                            "Versão atual do aplicativo: ${controller!.version?['v']}")
-                                        : Container(),
-                                    controller!.version != null
-                                        ? Text(
-                                            "Versão atual do build: ${controller!.version?['b']}")
-                                        : Container(),
+                                    controller!.version != null ? Text("Versão atual do aplicativo: ${controller!.version?['v']}") : Container(),
+                                    controller!.version != null ? Text("Versão atual do build: ${controller!.version?['b']}") : Container(),
                                   ],
                                 )),
-                            canUseBiometrics ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Habilitar autenticação por biometria"),
-                                Switch(
-                                  activeColor: Colors.blue,
-                                  value: controller!.biometria,
-                                  onChanged: (val) {
-                                    controller!.biometria = val;
-                                    setState(() {});
-                                  },
-                                ),
-                              ],
-                            ) : Container(),
+                            canUseBiometrics
+                                ? Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Habilitar autenticação por biometria"),
+                                      Switch(
+                                        activeColor: Colors.blue,
+                                        value: controller!.biometria,
+                                        onChanged: (val) {
+                                          controller!.biometria = val;
+                                          setState(() {});
+                                        },
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
                             Container(
                               margin: EdgeInsets.symmetric(vertical: 20),
                               height: 50,
                               width: double.infinity,
                               child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.orange),
+                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
                                   child: Text(
                                     "Política de Privacidade",
                                     style: TextStyle(fontSize: 20),
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PoliticaPage()));
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PoliticaPage()));
                                   }),
                             ),
                             GestureDetector(
                                 onTap: () {
                                   // handler.logout();
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                      '/index',
-                                      (Route<dynamic> route) => false);
+                                  Navigator.of(context).pushNamedAndRemoveUntil('/index', (Route<dynamic> route) => false);
                                 },
                                 child: Text("Sair")),
                           ],
                         ),
                       )),
-                  Positioned(
-                      bottom: 0, left: 0, right: 0, child: RedesSociaisWidget())
+                  Positioned(bottom: 0, left: 0, right: 0, child: RedesSociaisWidget())
                 ],
               ),
             )));

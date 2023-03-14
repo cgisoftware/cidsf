@@ -1,7 +1,6 @@
 import 'package:cids_cgi/src/module/settings/domain/infra/busca_acesso_dev_repository.dart';
 import 'package:cids_cgi/src/module/settings/domain/infra/login_gateway_repository.dart';
 import 'package:cids_cgi/cids_cgi.dart';
-import 'package:cids_cgi/src/module/settings/domain/model/acesso_app.dart';
 import 'dart:async';
 
 import 'package:cids_cgi/src/module/settings/domain/model/token.dart';
@@ -11,11 +10,9 @@ class LoginPacificUseCase {
   final SegurancaRepository? segurancaRepository;
   final BuscaAcessoDevRepository? buscaAcessoDevRepository;
 
-  LoginPacificUseCase(this.loginGatewayRepository, this.segurancaRepository,
-      this.buscaAcessoDevRepository);
+  LoginPacificUseCase(this.loginGatewayRepository, this.segurancaRepository, this.buscaAcessoDevRepository);
 
-  Future call(String usuario, String senha, String codigo, bool biometria,
-      String motorista) async {
+  Future call(String usuario, String senha, String codigo, bool biometria, String motorista) async {
     try {
       final handler = SharedPreferencesHandler();
       final password = await handler.getPasswordFirebase();
@@ -27,9 +24,7 @@ class LoginPacificUseCase {
       await handler.set('edtMotorista', motorista);
       final useFirebase = await handler.useFirebase();
 
-      final r = useFirebase
-          ? await segurancaRepository!(password!)
-          : await buscaAcessoDevRepository!(codigo);
+      final r = useFirebase ? await segurancaRepository!(password!) : await buscaAcessoDevRepository!(codigo);
 
       if (r != "") {
         throw r;

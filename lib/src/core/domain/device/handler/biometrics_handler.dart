@@ -33,8 +33,7 @@ class BiometricsHandler {
     final biometricCheck = await _localAuth.canCheckBiometrics;
 
     if (biometricCheck && isDeviceSupported) {
-      bool biometriaHabilitada =
-          (await _sharedPreferencesHandler.get('biometria')) == "true";
+      bool biometriaHabilitada = (await _sharedPreferencesHandler.get('biometria')) == "true";
       bool isAuth = false;
 
       print(biometriaHabilitada);
@@ -47,8 +46,7 @@ class BiometricsHandler {
           // if (Platform.isIOS) {
           //   if (availableBiometrics.contains(BiometricType.face)) {
           isAuth = await _localAuth.authenticate(
-            localizedReason:
-                "Desbloqueie o acesso as informações com a autenticação do seu dispositivo",
+            localizedReason: "Desbloqueie o acesso as informações com a autenticação do seu dispositivo",
             authMessages: const <AuthMessages>[_androidStrings, _iosStrings],
             options: const AuthenticationOptions(
               biometricOnly: true,
@@ -86,14 +84,12 @@ class BiometricsHandler {
       //       stickyAuth: true,
       //       sensitiveTransaction: false);
       // }
-
     }
   }
 
   listen() async {
     final isDeviceSupported = await _localAuth.isDeviceSupported();
     final biometricCheck = await _localAuth.canCheckBiometrics;
-    
 
     if (biometricCheck && isDeviceSupported) {
       _observer = BiometricsCallback(resumeCallBack: () async {
@@ -102,8 +98,7 @@ class BiometricsHandler {
         }
 
         if (Platform.isIOS) {
-          bool paused =
-              (await _sharedPreferencesHandler.get('paused')) == "true";
+          bool paused = (await _sharedPreferencesHandler.get('paused')) == "true";
           if (paused) {
             call();
             await _sharedPreferencesHandler.set('paused', "false");
@@ -127,11 +122,7 @@ class BiometricsCallback extends WidgetsBindingObserver {
   final AsyncCallback? pausedCallback;
   final AsyncCallback? inactiveCallBack;
 
-  BiometricsCallback(
-      {this.resumeCallBack,
-      this.suspendingCallBack,
-      this.pausedCallback,
-      this.inactiveCallBack});
+  BiometricsCallback({this.resumeCallBack, this.suspendingCallBack, this.pausedCallback, this.inactiveCallBack});
 
   @override
   Future<Null> didChangeAppLifecycleState(AppLifecycleState state) async {

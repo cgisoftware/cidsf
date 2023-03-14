@@ -19,8 +19,7 @@ class FirebaseRepository {
     FirebaseAuth _auth = FirebaseAuth.instance;
     try {
       await _auth.signOut();
-      await _auth.signInWithEmailAndPassword(
-          email: this.codigoAcesso! + email, password: password);
+      await _auth.signInWithEmailAndPassword(email: this.codigoAcesso! + email, password: password);
 
       return await permissions();
     } catch (e) {
@@ -30,15 +29,9 @@ class FirebaseRepository {
 
   Future<String> permissions() async {
     try {
-
-      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
-          .collection("Permissoes")
-          .doc(this.codigoAcesso)
-          .get();
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection("Permissoes").doc(this.codigoAcesso).get();
 
       Firebase firebase = Firebase.fromJson(snapshot.data()!);
-
-      
 
       // verifica se está ativo
       if (firebase.ativo!.toLowerCase() != "sim") {
@@ -65,7 +58,7 @@ class FirebaseRepository {
           }
         } else {
           AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-          if (vLista[i].contains(androidInfo.androidId.toString())) {
+          if (vLista[i].contains(androidInfo.id.toString())) {
             return string004;
           }
         }
@@ -82,12 +75,7 @@ class FirebaseRepository {
 
       if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-        FirebaseFirestore.instance
-            .collection("Permissoes")
-            .doc(this.codigoAcesso)
-            .collection("Devices")
-            .doc(iosInfo.identifierForVendor.toString())
-            .set({
+        FirebaseFirestore.instance.collection("Permissoes").doc(this.codigoAcesso).collection("Devices").doc(iosInfo.identifierForVendor.toString()).set({
           "identifierForVendor": iosInfo.identifierForVendor.toString(),
           "model": iosInfo.model.toString(),
           "localizedModel": iosInfo.localizedModel.toString(),
@@ -104,13 +92,8 @@ class FirebaseRepository {
         });
       } else {
         AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-        FirebaseFirestore.instance
-            .collection("Permissoes")
-            .doc(this.codigoAcesso)
-            .collection("Devices")
-            .doc(androidInfo.androidId.toString())
-            .set({
-          "androidId": androidInfo.androidId.toString(),
+        FirebaseFirestore.instance.collection("Permissoes").doc(this.codigoAcesso).collection("Devices").doc(androidInfo.id.toString()).set({
+          "androidId": androidInfo.id.toString(),
           "device": androidInfo.device.toString(),
           "model": androidInfo.model.toString(),
           "version": androidInfo.version.toString(),
@@ -135,15 +118,12 @@ class FirebaseRepository {
         });
       }
 
-      await handler.set(
-          "diasAutenticacao", firebase.diasAutenticacao.toString());
+      await handler.set("diasAutenticacao", firebase.diasAutenticacao.toString());
       await handler.set("edtServico", firebase.enderecoPacific!);
-      await handler.set(
-          "dtUltAutenticacao", dateHandler.getData(dateHandler.getDate())[4]);
+      await handler.set("dtUltAutenticacao", dateHandler.getData(dateHandler.getDate())[4]);
       await handler.set("versao", packageInfo.version);
       await handler.set("numDevices", firebase.numDevices.toString());
-      await handler.set(
-          "numDevicesVendedor", firebase.numDevicesVendedor.toString());
+      await handler.set("numDevicesVendedor", firebase.numDevicesVendedor.toString());
       await handler.set("usuarioP", firebase.usuarioP.toString());
       await handler.set("senhaP", firebase.senhaP.toString());
       await handler.set("versao_minima", firebase.versaoMinima.toString());

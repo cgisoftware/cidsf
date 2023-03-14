@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cids_cgi.iml" filepath="$PROJECT_DIR$/.idea/modules/cids_cgi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cids_cgi.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/cids_cgi.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cids_cgi.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cids_cgi.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cids_cgi.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/cids_cgi.unitTest.iml" />
     </modules>
   </component>
 </project>

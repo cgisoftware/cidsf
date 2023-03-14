@@ -1,31 +1,31 @@
 name: cids_cgi
 description: CGI Design System for Flutter
-version: 3.1.1
+version: 3.1.3
 homepage: http://www.webcgi.com.br
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.19.3 <3.0.0'
   flutter: ">=1.20.0"
 
 dependencies:
+  cloud_firestore: ^4.4.4
+  device_info_plus: ^8.1.0
+  dio: ^5.0.2
+  firebase_auth: ^4.2.10
+  firebase_core: ^2.7.1
   flutter:
     sdk: flutter
-  mask_text_input_formatter: ^2.3.0
-  font_awesome_flutter: ^10.1.0
-  shared_preferences: ^2.0.15
-  cloud_firestore: ^3.1.16
-  firebase_auth: ^3.3.18
-  device_info_plus: ^3.2.3
-  url_launcher: ^6.1.2
   flutter_html: ^2.2.1
-  firebase_core: ^1.17.0
-  package_info_plus: ^1.4.2
+  font_awesome_flutter: ^10.4.0
   intl: ^0.17.0
-  dio: ^4.0.6
-  local_auth: ^2.1.0
-  local_auth_android: ^1.0.4
-  local_auth_ios: ^1.0.6
+  local_auth: ^2.1.6
+  local_auth_android: ^1.0.21
+  local_auth_ios: ^1.1.1
+  mask_text_input_formatter: ^2.4.0
+  package_info_plus: ^3.0.3
   scan: ^1.6.0
+  shared_preferences: ^2.0.18
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:
@@ -33,7 +33,6 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
   # This section identifies this Flutter project as a plugin project.
@@ -47,7 +46,6 @@ flutter:
         pluginClass: CidsCgiPlugin
       ios:
         pluginClass: CidsCgiPlugin
-
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
   #   - assets/
@@ -56,7 +54,6 @@ flutter:
   #
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # To add custom fonts to your plugin package, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

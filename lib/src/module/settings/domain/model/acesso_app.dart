@@ -1,7 +1,7 @@
 class AcessoApp {
   int? id;
-  dynamic? usuario;
-  dynamic? senha;
+  dynamic usuario;
+  dynamic senha;
   String? apiToken;
   int? idProjeto;
   int? idProxy;
@@ -53,27 +53,15 @@ class AcessoApp {
         idProjeto: json["idProjeto"] == null ? null : json["idProjeto"],
         idProxy: json["idProxy"] == null ? null : json["idProxy"],
         ativo: json["ativo"] == null ? null : json["ativo"],
-        moduloMaisUsados:
-            json["moduloMaisUsados"] == null ? null : json["moduloMaisUsados"],
-        moduloAvaliacaoUsados: json["moduloAvaliacaoUsados"] == null
-            ? null
-            : json["moduloAvaliacaoUsados"],
-        moduloMaisNegocios: json["moduloMaisNegocios"] == null
-            ? null
-            : json["moduloMaisNegocios"],
-        moduloMaisPedidos: json["moduloMaisPedidos"] == null
-            ? null
-            : json["moduloMaisPedidos"],
-        moduloVisitas:
-            json["moduloVisitas"] == null ? null : json["moduloVisitas"],
+        moduloMaisUsados: json["moduloMaisUsados"] == null ? null : json["moduloMaisUsados"],
+        moduloAvaliacaoUsados: json["moduloAvaliacaoUsados"] == null ? null : json["moduloAvaliacaoUsados"],
+        moduloMaisNegocios: json["moduloMaisNegocios"] == null ? null : json["moduloMaisNegocios"],
+        moduloMaisPedidos: json["moduloMaisPedidos"] == null ? null : json["moduloMaisPedidos"],
+        moduloVisitas: json["moduloVisitas"] == null ? null : json["moduloVisitas"],
         qtdDevices: json["qtdDevices"] == null ? null : json["qtdDevices"],
-        qtdDevicesPorUsuario: json["qtdDevicesPorUsuario"] == null
-            ? null
-            : json["qtdDevicesPorUsuario"],
-        versaoMinima:
-            json["versaoMinima"] == null ? null : json["versaoMinima"],
-        versaoServico:
-            json["versaoServico"] == null ? null : json["versaoServico"],
+        qtdDevicesPorUsuario: json["qtdDevicesPorUsuario"] == null ? null : json["qtdDevicesPorUsuario"],
+        versaoMinima: json["versaoMinima"] == null ? null : json["versaoMinima"],
+        versaoServico: json["versaoServico"] == null ? null : json["versaoServico"],
         proxyUrl: json["proxyURL"] == null ? null : json["proxyURL"],
         pacificUrl: json["pacificURL"] == null ? null : json["pacificURL"],
         nomeCliente: json["nomeCliente"] == null ? null : json["nomeCliente"],
