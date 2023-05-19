@@ -1,4 +1,10 @@
 # Changelog
+## [3.1.4] - 19/05/2023
+
+### Added
+
+- Atualização de pacotes
+
 ## [3.1.3] - 14/03/2023
 
 ### Added
