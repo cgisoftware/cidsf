@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class PoliticaPage extends StatefulWidget {
   @override
@@ -19,8 +19,7 @@ class _PoliticaPageState extends State<PoliticaPage> {
           backgroundColor: Theme.of(context).primaryColor,
           title: Text("Privacidade"),
         ),
-        body: SingleChildScrollView(
-            child: Container(padding: EdgeInsets.all(10), child: Html(data: """
+        body: SingleChildScrollView(child: Container(padding: EdgeInsets.all(10), child: HtmlWidget("""
             <!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8">
             <title>Política de privacidade</title></head><body><h1>Política de Privacidade</h1>
             <h2>Tipos de dados coletados</h2>

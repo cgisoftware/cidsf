@@ -9,11 +9,9 @@ late BuildContext biometricsContext;
 final cidsHandler = CidsHandler();
 
 final biometricsHandler = BiometricsHandler(autenticacaoPage: () {
-  Navigator.of(biometricsContext)
-      .pushNamedAndRemoveUntil('/auth', (Route<dynamic> route) => false);
+  Navigator.of(biometricsContext).pushNamedAndRemoveUntil('/auth', (Route<dynamic> route) => false);
 }, homePage: () {
-  Navigator.of(biometricsContext)
-      .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+  Navigator.of(biometricsContext).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
 });
 
 void main() async {
@@ -22,13 +20,7 @@ void main() async {
   biometricsHandler.listen();
   biometricsHandler();
 
-  await cidsHandler.initialize(
-      gateway: false,
-      aplicativo: "cidsf",
-      senha: "Mariana23",
-      versaoPacific: 1,
-      campoMotorista: false,
-      rh: true);
+  await cidsHandler.initialize(gateway: false, aplicativo: "cidsf", senha: "Mariana23", versaoPacific: 1, campoMotorista: false, rh: true);
 
   runApp(const MyApp());
 }
@@ -59,8 +51,7 @@ class _MyAppState extends State<MyApp> {
       fontFamily: 'PT_Sans-Narrow-Web',
       primarySwatch: Colors.blue,
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      buttonTheme: const ButtonThemeData(
-          buttonColor: Color(0xffff6600), textTheme: ButtonTextTheme.primary));
+      buttonTheme: const ButtonThemeData(buttonColor: Color(0xffff6600), textTheme: ButtonTextTheme.primary));
 
   final temaEscuro = ThemeData(
       appBarTheme: const AppBarTheme(
@@ -80,8 +71,7 @@ class _MyAppState extends State<MyApp> {
       fontFamily: 'PT_Sans-Narrow-Web',
       primarySwatch: Colors.blue,
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      buttonTheme: const ButtonThemeData(
-          buttonColor: Color(0xffff6600), textTheme: ButtonTextTheme.primary));
+      buttonTheme: const ButtonThemeData(buttonColor: Color(0xffff6600), textTheme: ButtonTextTheme.primary));
 
   @override
   void initState() {
@@ -90,12 +80,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: temaClaro,
-        darkTheme: temaEscuro,
-        themeMode: ThemeMode.system,
-        home: authPage,
-        onGenerateRoute: r.Router.generateRoute);
+    return MaterialApp(theme: temaClaro, darkTheme: temaEscuro, themeMode: ThemeMode.system, home: authPage, onGenerateRoute: r.Router.generateRoute);
   }
 }
 
@@ -124,9 +109,8 @@ class _MyHomeState extends State<MyHome> {
           IconButton(
               icon: const Icon(Icons.camera),
               onPressed: () async {
-                String? response =
-                    await QRScan().startScan(context, QRScanType.bar);
-                    print(response);
+                String? response = await QRScan().startScan(context, QRScanType.bar);
+                print(response);
               }),
           IconButton(
               icon: const Icon(Icons.settings),
