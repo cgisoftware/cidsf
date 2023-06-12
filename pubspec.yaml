@@ -18,7 +18,7 @@ dependencies:
   # flutter_html: ^2.2.1
   flutter_widget_from_html: ^0.10.1
   font_awesome_flutter: ^10.4.0
-  intl: ^0.17.0
+  intl: ^0.18.1
   local_auth: ^2.1.6
   local_auth_android: ^1.0.21
   local_auth_ios: ^1.1.1
