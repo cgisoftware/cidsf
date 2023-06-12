@@ -1,4 +1,11 @@
 # Changelog
+## [3.1.6] - 19/05/2023
+
+### Added
+
+- Atualização de pacotes
+
+# Changelog
 ## [3.1.4] - 19/05/2023
 
 ### Added
