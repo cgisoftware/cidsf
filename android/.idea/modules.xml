@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/br.com.cgisoftware.cids_cgi.cids_cgi.iml" filepath="$PROJECT_DIR$/.idea/modules/br.com.cgisoftware.cids_cgi.cids_cgi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/br.com.cgisoftware.cids_cgi.cids_cgi.androidTest~1.iml" filepath="$PROJECT_DIR$/.idea/modules/br.com.cgisoftware.cids_cgi.cids_cgi.androidTest~1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/br.com.cgisoftware.cids_cgi.cids_cgi.main~1.iml" filepath="$PROJECT_DIR$/.idea/modules/br.com.cgisoftware.cids_cgi.cids_cgi.main~1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/br.com.cgisoftware.cids_cgi.cids_cgi.unitTest~1.iml" filepath="$PROJECT_DIR$/.idea/modules/br.com.cgisoftware.cids_cgi.cids_cgi.unitTest~1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cids_cgi.iml" filepath="$PROJECT_DIR$/.idea/modules/cids_cgi.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cids_cgi.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/cids_cgi.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cids_cgi.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cids_cgi.main.iml" />
