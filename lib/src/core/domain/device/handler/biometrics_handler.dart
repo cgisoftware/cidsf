@@ -7,11 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:cids_cgi/cids_cgi.dart';
 import 'dart:io';
 
-const _iosStrings = const IOSAuthMessages(
-    cancelButton: 'Cancelar',
-    goToSettingsButton: 'Configurações',
-    goToSettingsDescription: 'Por favor configure sua autenticação.',
-    lockOut: 'Por favor permita o uso da sua autenticação');
+const _iosStrings = const IOSAuthMessages(cancelButton: 'Cancelar', goToSettingsButton: 'Configurações', goToSettingsDescription: 'Por favor configure sua autenticação.', lockOut: 'Por favor permita o uso da sua autenticação');
 
 const _androidStrings = const AndroidAuthMessages(
   cancelButton: 'Cancelar',
@@ -150,6 +146,9 @@ class BiometricsCallback extends WidgetsBindingObserver {
         if (suspendingCallBack != null) {
           await suspendingCallBack!();
         }
+        break;
+      case AppLifecycleState.hidden:
+        // TODO: Handle this case.
         break;
     }
   }

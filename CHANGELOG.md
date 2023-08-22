@@ -1,4 +1,18 @@
 # Changelog
+## [3.1.8] - 21/08/2023
+
+### Added
+
+- Atualização de pacotes - Gradle
+
+# Changelog
+## [3.1.7] - 21/08/2023
+
+### Added
+
+- Atualização de pacotes
+
+# Changelog
 ## [3.1.6] - 12/06/2023
 
 ### Added
