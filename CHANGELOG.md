@@ -1,4 +1,11 @@
 # Changelog
+## [3.1.9] - 25/08/2023
+
+### Added
+
+- Atualização Biometric Handler - removido AppLifecycleState.hidden
+
+# Changelog
 ## [3.1.8] - 21/08/2023
 
 ### Added
