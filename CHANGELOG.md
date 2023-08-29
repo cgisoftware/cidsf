@@ -1,4 +1,11 @@
 # Changelog
+## [3.1.10] - 25/08/2023
+
+### Added
+
+- DioException
+
+# Changelog
 ## [3.1.9] - 25/08/2023
 
 ### Added
