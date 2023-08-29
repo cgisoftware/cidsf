@@ -1,4 +1,12 @@
 # Changelog
+## [3.1.12] - 29/08/2023
+
+### Added
+
+- Atualização package Intl;
+
+
+# Changelog
 ## [3.1.11] - 29/08/2023
 
 ### Added
