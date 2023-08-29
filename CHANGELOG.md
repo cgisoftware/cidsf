@@ -1,4 +1,11 @@
 # Changelog
+## [3.1.11] - 29/08/2023
+
+### Added
+
+- Atualização package Dio;
+
+# Changelog
 ## [3.1.10] - 25/08/2023
 
 ### Added
